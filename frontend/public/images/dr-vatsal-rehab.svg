@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 1024" width="768" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f" />
+      <stop offset="60%" stop-color="#08284d" />
+      <stop offset="100%" stop-color="#051830" />
+    </linearGradient>
+    <radialGradient id="glow" cx="70%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffd86b" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#1e3a5f" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.07" />
+    </pattern>
+  </defs>
+
+  <rect width="768" height="1024" fill="url(#bg)" />
+  <rect width="768" height="1024" fill="url(#glow)" />
+  <rect width="768" height="1024" fill="url(#grid)" />
+
+  <!-- Medical Joint / Cross Graphic Emblem -->
+  <g transform="translate(384, 430.08)" opacity="0.12">
+    <circle r="215.04000000000002" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="8 8" />
+    <circle r="153.60000000000002" fill="none" stroke="#ffffff" stroke-width="3" />
+    <path d="M -115.19999999999999 0 L 115.19999999999999 0 M 0 -115.19999999999999 L 0 115.19999999999999" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+  </g>
+
+  <!-- Doctor Silhouette / Medical Caduceus Icon -->
+  <g transform="translate(344, 327.68)">
+    <circle cx="40" cy="20" r="28" fill="#ffd86b" opacity="0.9" />
+    <path d="M 12 85 C 12 55, 68 55, 68 85 Z" fill="#ffffff" opacity="0.85" />
+    <!-- Stethoscope -->
+    <path d="M 24 55 Q 40 75 56 55" fill="none" stroke="#ffd86b" stroke-width="4" stroke-linecap="round" />
+  </g>
+
+  <!-- Tag / Badge -->
+  <g transform="translate(384, 593.92)">
+    <rect x="-140" y="-18" width="280" height="36" rx="18" fill="#ffd86b" />
+    <text text-anchor="middle" y="5" font-family="'Space Mono', monospace" font-size="12" font-weight="700" fill="#ffffff" letter-spacing="2">PATIENT OUTCOME SLOT</text>
+  </g>
+
+  <!-- Title & Subtitle -->
+  <text x="384" y="716.8" text-anchor="middle" font-family="'Manrope', sans-serif" font-size="34.56" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Restored Mobility</text>
+  <text x="384" y="778.24" text-anchor="middle" font-family="'Manrope', sans-serif" font-size="18.432000000000002" font-weight="500" fill="#c3d8ec">Empowering Patients to Walk, Run & Live Pain-Free</text>
+
+  <!-- Bottom File Placement Note -->
+  <rect x="76.80000000000001" y="979" width="614.4000000000001" height="30" rx="6" fill="#000000" fill-opacity="0.4" />
+  <text x="384" y="999" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#fed7aa" letter-spacing="1">📸 Photo Slot: Replace with Dr. Vatsal Khetan photo (768×1024)</text>
+</svg>
