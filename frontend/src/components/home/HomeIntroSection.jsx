@@ -130,13 +130,15 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
 
   const [pillars] = useState(INITIAL_PILLARS);
   const [patternIndex, setPatternIndex] = useState(0);
+  const [rotationCount, setRotationCount] = useState(0);
   const [isConverged, setIsConverged] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [mobileIndex, setMobileIndex] = useState(0);
 
   const isInView = useInView(sectionRef, { amount: 0.15 });
 
-  // Timed cycle: Stationary (4.5s) -> Converge to Center (1.5s) -> Return to original position
+  // Option 2 (3-Way Carousel Swap):
+  // Stationary at current slots (4.5s) -> Converge to Center (1.2s) -> Expand out to swapped positions!
   useEffect(() => {
     if (!isInView || isPaused) return;
 
@@ -144,14 +146,13 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
       // 1. Glide together into the center
       setIsConverged(true);
 
-      // Advance mobile active card
-      setMobileIndex((prev) => (prev + 1) % 3);
-
-      // 2. Hold at center for 1.4s, then expand back out
+      // 2. While together in the center, advance the slot rotation and theme
       setTimeout(() => {
-        setIsConverged(false);
+        setRotationCount((prev) => (prev + 1) % 3);
+        setMobileIndex((prev) => (prev + 1) % 3);
         setPatternIndex((prev) => (prev + 1) % 3);
-      }, 1400);
+        setIsConverged(false);
+      }, 1200);
 
     }, 5500);
 
@@ -194,37 +195,56 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                 const Icon = pillar.icon;
                 const theme = COLOR_PATTERNS[patternIndex][pillar.colorIndex];
 
-                // Coordinate calculation for Option 3 (3D Forward Pop):
-                // Index 0 (Left): moves right by (100% + gap), tucks slightly underneath with -4° tilt
-                // Index 1 (Center): zooms forward (scale: 1.15, y: -14px) hovering above both side cards
-                // Index 2 (Right): moves left by (100% + gap), tucks slightly underneath with +4° tilt
+                // Option 2 (3-Way Carousel Swap):
+                // Current slot for this card (0 = Left, 1 = Center, 2 = Right)
+                const currentSlot = (index + rotationCount) % 3;
+
+                // Destination column:
+                // During convergence: all 3 cards glide to Center (Col 1)
+                // When stationary: each card sits at its currentSlot
+                const targetCol = isConverged ? 1 : currentSlot;
+                const colDiff = targetCol - index;
+
                 let targetX = 0;
+                if (colDiff === 1) targetX = 'calc(100% + 12px)';
+                else if (colDiff === 2) targetX = 'calc(200% + 24px)';
+                else if (colDiff === -1) targetX = 'calc(-100% - 12px)';
+                else if (colDiff === -2) targetX = 'calc(-200% - 24px)';
+
                 let targetY = 0;
                 let targetRotate = 0;
-                let targetZIndex = 1;
                 let targetScale = 1;
+                let targetZIndex = 1;
                 let extraShadow = '';
 
                 if (isConverged) {
+                  // Stack together at the center with layered 3D depth
                   if (index === 0) {
-                    targetX = 'calc(100% + 12px)';
-                    targetY = 6;
-                    targetRotate = -4;
+                    targetRotate = -3.5;
+                    targetScale = 0.96;
                     targetZIndex = 10;
-                    targetScale = 0.95;
                   } else if (index === 1) {
-                    targetX = 0;
-                    targetY = -14;
-                    targetRotate = 0;
-                    targetZIndex = 35;
-                    targetScale = 1.15;
-                    extraShadow = 'ring-2 ring-sky-400/80 shadow-[0_20px_50px_rgba(8,40,77,0.3)]';
+                    targetY = -12;
+                    targetScale = 1.12;
+                    targetZIndex = 30;
+                    extraShadow = 'ring-2 ring-sky-400 shadow-[0_20px_45px_rgba(8,40,77,0.3)]';
                   } else if (index === 2) {
-                    targetX = 'calc(-100% - 12px)';
-                    targetY = 6;
-                    targetRotate = 4;
+                    targetRotate = 3.5;
+                    targetScale = 0.96;
                     targetZIndex = 15;
-                    targetScale = 0.95;
+                  }
+                } else {
+                  // Stationary at destination slot:
+                  // Whichever card is in Center (slot 1) gets spotlight focus
+                  if (currentSlot === 1) {
+                    targetY = -3;
+                    targetScale = 1.03;
+                    targetZIndex = 20;
+                    extraShadow = 'ring-1 ring-sky-300/70 shadow-md';
+                  } else {
+                    targetY = 0;
+                    targetScale = 1;
+                    targetZIndex = 1;
                   }
                 }
 
@@ -240,11 +260,11 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                     }}
                     transition={{
                       type: "spring",
-                      stiffness: 75,
+                      stiffness: 70,
                       damping: 14,
                       mass: 1.1,
                     }}
-                    whileHover={{ scale: 1.04, zIndex: 40 }}
+                    whileHover={{ scale: 1.05, zIndex: 40 }}
                     className={`relative p-3.5 sm:p-4 rounded-xl border-2 transition-all duration-700 flex flex-col justify-between cursor-default min-h-[140px] ${theme.cardBg} ${theme.border} ${extraShadow || theme.shadow}`}
                   >
                     <div>
