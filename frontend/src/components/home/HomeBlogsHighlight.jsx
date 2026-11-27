@@ -35,58 +35,65 @@ export const HomeBlogsHighlight = () => {
           </Link>
         </div>
 
-        {/* 3-Column Editorial Grid - Equal dimensions, inside padding, dark border */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-          {featuredGuides.map((guide, idx) => (
-            <Link
-              key={guide.id || idx}
-              to="/blogs"
-              className="bg-white rounded-2xl border-2 border-slate-900 shadow-xs hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer p-3.5 sm:p-4 h-full"
-            >
-              {/* Thumbnail with inside padding & rounded corners */}
-              <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shrink-0">
-                <img
-                  src={guide.featuredImage || '/images/dr-vatsal-rehab.webp'}
-                  alt={guide.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = '/images/dr-vatsal-rehab.webp';
-                  }}
-                />
-                <div className="absolute top-2.5 left-2.5">
-                  <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9.5px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                    {guide.category || 'Orthopaedics'}
-                  </span>
-                </div>
+        {/* 3-Column Editorial Grid - Catchy Up & Down Myntra Rhythm */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start pb-4">
+          {featuredGuides.map((guide, idx) => {
+            const isDown = idx === 1; // Middle card shifted down in Myntra rhythm
+            return (
+              <div
+                key={guide.id || idx}
+                className={`transition-all duration-300 ${isDown ? 'md:pt-10' : 'md:pt-0'}`}
+              >
+                <Link
+                  to="/blogs"
+                  className="bg-white rounded-2xl border-2 border-slate-900 shadow-xs hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer p-3.5 sm:p-4 h-full"
+                >
+                  {/* Thumbnail with inside padding & rounded corners */}
+                  <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shrink-0">
+                    <img
+                      src={guide.featuredImage || '/images/dr-vatsal-rehab.webp'}
+                      alt={guide.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/images/dr-vatsal-rehab.webp';
+                      }}
+                    />
+                    <div className="absolute top-2.5 left-2.5">
+                      <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9.5px] font-mono font-bold uppercase tracking-wider shadow-xs">
+                        {guide.category || 'Orthopaedics'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div className="pt-3.5 sm:pt-4 flex-1 flex flex-col justify-between space-y-3">
+                    <div className="space-y-1.5">
+                      <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2 h-10 sm:h-11 flex items-start">
+                        {guide.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 font-light leading-relaxed line-clamp-2 h-8 sm:h-9">
+                        {guide.excerpt || guide.textContent?.slice(0, 120)}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+                      <span className="inline-flex items-center gap-1 text-slate-400">
+                        <Clock className="w-3 h-3 text-amber-500" />
+                        <span>{guide.readTime || '3 min read'}</span>
+                      </span>
+
+                      <span className="font-bold text-[#08284d] group-hover:text-sky-600 inline-flex items-center gap-1 transition-colors">
+                        <span>Read Article</span>
+                        <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               </div>
-
-              {/* Body */}
-              <div className="pt-3.5 sm:pt-4 flex-1 flex flex-col justify-between space-y-3">
-                <div className="space-y-1.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2 h-10 sm:h-11 flex items-start">
-                    {guide.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 font-light leading-relaxed line-clamp-2 h-8 sm:h-9">
-                    {guide.excerpt || guide.textContent?.slice(0, 120)}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                  <span className="inline-flex items-center gap-1 text-slate-400">
-                    <Clock className="w-3 h-3 text-amber-500" />
-                    <span>{guide.readTime || '3 min read'}</span>
-                  </span>
-
-                  <span className="font-bold text-[#08284d] group-hover:text-sky-600 inline-flex items-center gap-1 transition-colors">
-                    <span>Read Article</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
+            );
+          })}
         </div>
 
       </div>

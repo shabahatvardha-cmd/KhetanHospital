@@ -94,6 +94,33 @@ export const BlogsPage = ({ onBookClick }) => {
     });
   }, [searchQuery, selectedCategory]);
 
+  // Distribute into 5 columns for Desktop (Up / Down / Up / Down / Up)
+  const cols5 = useMemo(() => {
+    const cols = [[], [], [], [], []];
+    filteredBlogs.forEach((blog, idx) => {
+      cols[idx % 5].push(blog);
+    });
+    return cols;
+  }, [filteredBlogs]);
+
+  // Distribute into 3 columns for Tablet (Up / Down / Up)
+  const cols3 = useMemo(() => {
+    const cols = [[], [], []];
+    filteredBlogs.forEach((blog, idx) => {
+      cols[idx % 3].push(blog);
+    });
+    return cols;
+  }, [filteredBlogs]);
+
+  // Distribute into 2 columns for Mobile (Up / Down)
+  const cols2 = useMemo(() => {
+    const cols = [[], []];
+    filteredBlogs.forEach((blog, idx) => {
+      cols[idx % 2].push(blog);
+    });
+    return cols;
+  }, [filteredBlogs]);
+
   const handleShare = () => {
     if (navigator.clipboard && selectedBlog) {
       const url = `${window.location.origin}/blogs/${selectedBlog.slug}`;
@@ -285,11 +312,68 @@ export const BlogsPage = ({ onBookClick }) => {
           </div>
         </div>
 
-        {/* Uniform Grid - Clean row alignment across all screen sizes */}
+        {/* ── Myntra Up-and-Down Alternating Staggered Feed ── */}
         {filteredBlogs.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 items-stretch">
-            {filteredBlogs.map((blog, idx) => renderCard(blog, `blog-${blog.id || idx}`))}
-          </div>
+          <>
+            {/* Desktop: 5-Column Alternating Up / Down (lg & up) */}
+            <div className="hidden lg:grid grid-cols-5 gap-5 items-start">
+              {/* Column 0: UP */}
+              <div className="flex flex-col gap-5 pt-0">
+                {cols5[0].map((blog, idx) => renderCard(blog, `col0-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 1: DOWN (Shifted down by 64px) */}
+              <div className="flex flex-col gap-5 pt-16">
+                {cols5[1].map((blog, idx) => renderCard(blog, `col1-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 2: UP */}
+              <div className="flex flex-col gap-5 pt-0">
+                {cols5[2].map((blog, idx) => renderCard(blog, `col2-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 3: DOWN (Shifted down by 64px) */}
+              <div className="flex flex-col gap-5 pt-16">
+                {cols5[3].map((blog, idx) => renderCard(blog, `col3-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 4: UP */}
+              <div className="flex flex-col gap-5 pt-0">
+                {cols5[4].map((blog, idx) => renderCard(blog, `col4-${blog.id || idx}`))}
+              </div>
+            </div>
+
+            {/* Tablet: 3-Column Alternating Up / Down (md to lg) */}
+            <div className="hidden md:grid lg:hidden grid-cols-3 gap-4 items-start">
+              {/* Column 0: UP */}
+              <div className="flex flex-col gap-4 pt-0">
+                {cols3[0].map((blog, idx) => renderCard(blog, `tab0-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 1: DOWN (Shifted down by 48px) */}
+              <div className="flex flex-col gap-4 pt-12">
+                {cols3[1].map((blog, idx) => renderCard(blog, `tab1-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 2: UP */}
+              <div className="flex flex-col gap-4 pt-0">
+                {cols3[2].map((blog, idx) => renderCard(blog, `tab2-${blog.id || idx}`))}
+              </div>
+            </div>
+
+            {/* Mobile: 2-Column Alternating Up / Down (sm & below) */}
+            <div className="grid md:hidden grid-cols-2 gap-3.5 items-start">
+              {/* Column 0: UP */}
+              <div className="flex flex-col gap-3.5 pt-0">
+                {cols2[0].map((blog, idx) => renderCard(blog, `mob0-${blog.id || idx}`))}
+              </div>
+
+              {/* Column 1: DOWN (Shifted down by 40px) */}
+              <div className="flex flex-col gap-3.5 pt-10">
+                {cols2[1].map((blog, idx) => renderCard(blog, `mob1-${blog.id || idx}`))}
+              </div>
+            </div>
+          </>
         ) : (
           <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 shadow-xs">
             <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
