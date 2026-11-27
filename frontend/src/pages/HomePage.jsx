@@ -81,7 +81,6 @@ export const HomePage = ({ onBookClick }) => {
       <HomeIntroSection
         onNextClick={scrollToFooter}
         onExpandModal={(idx) => openVideoModal(idx)}
-        onBookClick={onBookClick}
       />
 
       {/* 6. 100% CASHLESS HEALTH INSURANCE & TPA TRUST STRIP */}

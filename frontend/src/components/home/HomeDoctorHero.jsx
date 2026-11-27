@@ -218,52 +218,52 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-3 sm:mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4"
+          className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-200/80 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6"
         >
-          <div className="p-3 sm:p-3.5 rounded-2xl bg-white border-2 border-slate-900 shadow-2xs hover:shadow-md hover:border-sky-600 transition-all space-y-0.5">
-            <div className="text-xl sm:text-2xl font-black text-[#08284d] tracking-tight">
+          <div className="space-y-0.5">
+            <div className="text-xl sm:text-2xl font-extrabold text-[#08284d] tracking-tight">
               {clinicInfo.stats.experienceYears}
             </div>
-            <div className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">
+            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
               Clinical Experience
             </div>
-            <div className="text-[10px] text-slate-500 font-medium">
+            <div className="text-[10px] text-slate-500 font-light">
               UK Fellowship &amp; NHS Trained
             </div>
           </div>
 
-          <div className="p-3 sm:p-3.5 rounded-2xl bg-white border-2 border-slate-900 shadow-2xs hover:shadow-md hover:border-sky-600 transition-all space-y-0.5">
-            <div className="text-xl sm:text-2xl font-black text-sky-600 tracking-tight">
+          <div className="space-y-0.5">
+            <div className="text-xl sm:text-2xl font-extrabold text-sky-600 tracking-tight">
               {clinicInfo.stats.kneeReplacements}
             </div>
-            <div className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">
+            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
               Robotic Knee Surgeries
             </div>
-            <div className="text-[10px] text-slate-500 font-medium">
+            <div className="text-[10px] text-slate-500 font-light">
               Sub-Millimeter Precision
             </div>
           </div>
 
-          <div className="p-3 sm:p-3.5 rounded-2xl bg-white border-2 border-slate-900 shadow-2xs hover:shadow-md hover:border-sky-600 transition-all space-y-0.5">
-            <div className="text-xl sm:text-2xl font-black text-[#08284d] tracking-tight">
+          <div className="space-y-0.5">
+            <div className="text-xl sm:text-2xl font-extrabold text-[#08284d] tracking-tight">
               {clinicInfo.stats.surgeries}
             </div>
-            <div className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">
+            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
               Procedures Completed
             </div>
-            <div className="text-[10px] text-slate-500 font-medium">
+            <div className="text-[10px] text-slate-500 font-light">
               Trauma &amp; Joint Care
             </div>
           </div>
 
-          <div className="p-3 sm:p-3.5 rounded-2xl bg-white border-2 border-slate-900 shadow-2xs hover:shadow-md hover:border-sky-600 transition-all space-y-0.5">
-            <div className="text-xl sm:text-2xl font-black text-emerald-600 tracking-tight">
+          <div className="space-y-0.5">
+            <div className="text-xl sm:text-2xl font-extrabold text-emerald-600 tracking-tight">
               100%
             </div>
-            <div className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">
+            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
               UK Governance
             </div>
-            <div className="text-[10px] text-slate-500 font-medium">
+            <div className="text-[10px] text-slate-500 font-light">
               Sterility &amp; Rapid Mobility
             </div>
           </div>
