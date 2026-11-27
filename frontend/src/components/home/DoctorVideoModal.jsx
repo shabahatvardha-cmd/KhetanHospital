@@ -46,26 +46,26 @@ export const DoctorVideoModal = ({ isOpen, onClose, initialIndex = 0 }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200 z-10 my-auto flex flex-col"
+          className="relative w-full max-w-md max-h-[92vh] bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 z-10 my-auto flex flex-col"
         >
           {/* Header Bar with Instagram Gradient Accent */}
-          <div className="relative p-4 sm:p-5 bg-gradient-to-r from-slate-900 via-[#08284d] to-slate-900 text-white flex items-center justify-between border-b border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 p-0.5 flex items-center justify-center shadow-md">
-                <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
-                  <Instagram className="w-5 h-5 text-rose-400" />
+          <div className="relative p-3 sm:p-4 bg-gradient-to-r from-slate-900 via-[#08284d] to-slate-900 text-white flex items-center justify-between border-b border-white/10 shrink-0">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 p-0.5 flex items-center justify-center shadow-md shrink-0">
+                <div className="w-full h-full bg-slate-900 rounded-[9px] flex items-center justify-center">
+                  <Instagram className="w-4 h-4 text-rose-400" />
                 </div>
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <h3 className="text-xs sm:text-sm font-extrabold text-white tracking-tight truncate">
                     Dr. Vatsal Khetan
                   </h3>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                  <span className="px-1 py-0.2 rounded text-[8.5px] font-mono font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30 shrink-0">
                     FRCS (Edin)
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300 font-mono">
+                <p className="text-[10px] text-slate-300 font-mono truncate">
                   {INSTAGRAM_PROFILE.handle}
                 </p>
               </div>
@@ -74,21 +74,21 @@ export const DoctorVideoModal = ({ isOpen, onClose, initialIndex = 0 }) => {
             <button
               onClick={onClose}
               aria-label="Close video player"
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shrink-0"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Reel Switcher Tabs */}
-          <div className="p-2 sm:p-2.5 bg-slate-100/90 border-b border-slate-200 flex items-center gap-2">
+          <div className="p-1.5 sm:p-2 bg-slate-100 border-b border-slate-200 flex items-center gap-1.5 shrink-0">
             {DOCTOR_REELS.map((reel, idx) => (
               <button
                 key={reel.id}
                 onClick={() => setActiveIndex(idx)}
-                className={`flex-1 py-2 px-2.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all text-center truncate cursor-pointer ${
+                className={`flex-1 py-1.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all text-center truncate cursor-pointer ${
                   activeIndex === idx
-                    ? 'bg-[#08284d] text-white shadow-sm'
+                    ? 'bg-[#08284d] text-white shadow-xs'
                     : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200/60'
                 }`}
               >
@@ -99,13 +99,13 @@ export const DoctorVideoModal = ({ isOpen, onClose, initialIndex = 0 }) => {
             ))}
           </div>
 
-          {/* Video Player Frame */}
-          <div className="p-3 sm:p-4 bg-slate-50 flex flex-col items-center">
-            <div className="relative w-full max-w-[360px] h-[480px] sm:h-[510px] rounded-2xl overflow-hidden bg-black shadow-lg border border-slate-300/80">
+          {/* Video Player Frame with Mobile-Safe Flexible Height */}
+          <div className="p-2 sm:p-3 bg-slate-50 flex flex-col items-center overflow-y-auto flex-1">
+            <div className="relative w-full max-w-[340px] h-[360px] xs:h-[400px] sm:h-[460px] max-h-[58vh] rounded-2xl overflow-hidden bg-black shadow-lg border border-slate-300/80 shrink-0">
               <iframe
                 key={currentReel.id}
                 src={currentReel.embedUrl}
-                className="w-full h-full border-0"
+                className="w-full h-full border-0 select-none"
                 frameBorder="0"
                 scrolling="no"
                 allowTransparency="true"
@@ -115,22 +115,22 @@ export const DoctorVideoModal = ({ isOpen, onClose, initialIndex = 0 }) => {
             </div>
 
             {/* Video Context & Direct Instagram Trigger */}
-            <div className="w-full max-w-[360px] mt-3 space-y-2 text-center">
-              <p className="text-xs text-slate-600 font-medium leading-relaxed">
+            <div className="w-full max-w-[340px] mt-2 space-y-1.5 text-center">
+              <p className="text-[11px] text-slate-600 font-medium leading-snug">
                 {currentReel.description}
               </p>
 
-              <div className="pt-1 flex items-center justify-between gap-2">
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+              <div className="pt-0.5 flex items-center justify-between gap-2">
+                <span className="text-[9.5px] font-mono text-slate-400 uppercase tracking-wider">
                   Instagram Verified Reel
                 </span>
                 <a
                   href={currentReel.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 hover:text-rose-700 transition-colors"
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 hover:text-rose-700 transition-colors"
                 >
-                  <span>Open on Instagram</span>
+                  <span>Open in Instagram</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </div>

@@ -164,9 +164,9 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
     <section
       id="hospital-intro"
       ref={sectionRef}
-      className="relative w-full min-h-[calc(100vh-60px)] bg-slate-50 border-t border-slate-200/90 select-none flex flex-col justify-center py-6 sm:py-8 lg:py-10"
+      className="relative w-full bg-slate-50 border-t border-slate-200/90 select-none py-8 sm:py-12 lg:py-14 scroll-mt-20"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
 
           {/* Left Column: Hospital Mission & 3 Dynamic Shuffling Pillars (7 Cols) */}
