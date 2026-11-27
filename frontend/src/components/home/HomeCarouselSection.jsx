@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Sparkles, Orbit, Layers } from 'lucide-react';
+import { ChevronDown, Orbit, Layers } from 'lucide-react';
 import { FeaturedServicesShowcase } from './FeaturedServicesShowcase';
 import { PerspectiveCarousel3D } from '../3d/PerspectiveCarousel3D';
 
 /**
- * 🏥 SECTION 2 — FEATURED SURGICAL SERVICES SHOWCASE (POLPHARMA BIOTECH 3D THEME)
+ * 🏥 SCENE 3 — SURGICAL SERVICES INTERACTIVE STAGE
  * 
- * Deep midnight stage, kinetic per-service neon contour vector loops,
- * and seamless interactive 3D perspective carousel.
+ * An interactive clinical stage rather than a basic card grid.
+ * Default view is the grand editorial showcase with telemetry and procedure parameters.
+ * Progressive enhancement toggle allows viewing in 3D circular track.
  */
 export const HomeCarouselSection = ({ onNextClick }) => {
   const [viewMode, setViewMode] = useState('showcase'); // 'showcase' | 'carousel3d'
@@ -24,7 +25,7 @@ export const HomeCarouselSection = ({ onNextClick }) => {
   return (
     <section 
       id="explore-carousel"
-      className="relative w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] flex flex-col justify-between items-center py-2 sm:py-4 bg-[#030712] border-t border-white/10 select-none overflow-hidden text-white"
+      className="relative w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] flex flex-col justify-between items-center py-4 sm:py-6 bg-[#030712] border-t border-white/10 select-none overflow-hidden text-white"
     >
       {/* Living Ambient Lighting Field */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -57,7 +58,7 @@ export const HomeCarouselSection = ({ onNextClick }) => {
               }`}
             >
               <Layers className="w-3 h-3" />
-              <span>Showcase</span>
+              <span>Showcase Stage</span>
             </button>
             <button
               onClick={() => setViewMode('carousel3d')}
@@ -73,7 +74,7 @@ export const HomeCarouselSection = ({ onNextClick }) => {
           </div>
         </div>
 
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight-editorial uppercase leading-none">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight uppercase leading-none">
           Featured Surgical Services
         </h2>
 
@@ -83,7 +84,7 @@ export const HomeCarouselSection = ({ onNextClick }) => {
       </div>
 
       {/* Featured Services Showcase Stage / 3D Track */}
-      <div className="relative w-full max-w-6xl mx-auto my-auto px-2 sm:px-4 relative z-10">
+      <div className="relative w-full max-w-6xl mx-auto my-auto px-2 sm:px-4 z-10">
         {viewMode === 'showcase' ? (
           <FeaturedServicesShowcase />
         ) : (
@@ -92,7 +93,7 @@ export const HomeCarouselSection = ({ onNextClick }) => {
       </div>
 
       {/* Scroll Down Indicator */}
-      <div className="w-full flex justify-center pt-1 pb-1 shrink-0 relative z-10">
+      <div className="w-full flex justify-center pt-1 pb-1 shrink-0 z-10">
         <button
           onClick={scrollToNext}
           aria-label="Scroll to Hospital Introduction"

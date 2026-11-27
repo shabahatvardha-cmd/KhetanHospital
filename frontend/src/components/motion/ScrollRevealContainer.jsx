@@ -2,24 +2,23 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * 🌊 POLPHARMA SCROLL REVEAL CONTAINER
- * 
- * Staggers child elements with smooth cubic-bezier slide-up entrance
- * when scrolled into the viewport.
+ * 🌊 ScrollRevealContainer
+ * Staggers children entrance with cubic-bezier slide-up and opacity fade when scrolled into view.
  */
 export const ScrollRevealContainer = ({
   children,
-  stagger = 0.12,
-  delay = 0.1,
-  className = "",
-  once = true
+  className = '',
+  staggerDelay = 0.1,
+  initialY = 24,
+  ...props
 }) => {
   const containerVariants = {
-    hidden: {},
+    hidden: { opacity: 0 },
     visible: {
+      opacity: 1,
       transition: {
-        staggerChildren: stagger,
-        delayChildren: delay,
+        staggerChildren: staggerDelay,
+        delayChildren: 0.1,
       },
     },
   };
@@ -29,8 +28,9 @@ export const ScrollRevealContainer = ({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.2 }}
       className={className}
+      {...props}
     >
       {children}
     </motion.div>
@@ -39,24 +39,28 @@ export const ScrollRevealContainer = ({
 
 export const ScrollRevealItem = ({
   children,
-  yOffset = 30,
-  duration = 0.7,
-  className = ""
+  className = '',
+  initialY = 20,
+  ...props
 }) => {
   const itemVariants = {
-    hidden: { opacity: 0, y: yOffset },
+    hidden: { opacity: 0, y: initialY },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration,
+        duration: 0.6,
         ease: [0.16, 1, 0.3, 1],
       },
     },
   };
 
   return (
-    <motion.div variants={itemVariants} className={className}>
+    <motion.div
+      variants={itemVariants}
+      className={className}
+      {...props}
+    >
       {children}
     </motion.div>
   );

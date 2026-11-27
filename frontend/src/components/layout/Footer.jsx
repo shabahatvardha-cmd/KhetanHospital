@@ -14,7 +14,7 @@ export const Footer = forwardRef((props, ref) => {
     <footer
       id="hospital-footer"
       ref={ref}
-      className="w-full bg-slate-900 text-slate-300 border-t border-slate-800 text-xs select-none"
+      className="w-full bg-[#030712] text-slate-300 border-t border-slate-800/80 text-xs select-none relative z-10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         

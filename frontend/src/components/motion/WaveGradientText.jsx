@@ -8,6 +8,7 @@ export function WaveGradientText({
   const [hasAppeared, setHasAppeared] = useState(false);
 
   useEffect(() => {
+    // Switch to continuous wave oscillation after initial entrance completes
     const timer = setTimeout(() => {
       setHasAppeared(true);
     }, 900);
@@ -27,11 +28,11 @@ export function WaveGradientText({
                     opacity: 1,
                     transition: {
                       y: {
-                        duration: 2.4,
+                        duration: 2.2,
                         repeat: Infinity,
                         repeatType: "reverse",
                         ease: "easeInOut",
-                        delay: index * 0.22,
+                        delay: index * 0.25, // Staggered wave effect across words
                       },
                     },
                   }
@@ -45,7 +46,7 @@ export function WaveGradientText({
                     },
                   }
             }
-            className="inline-block will-change-transform bg-gradient-to-r from-white via-cyan-300 to-sky-400 bg-[length:200%_auto] bg-clip-text text-transparent font-black tracking-tight drop-shadow-[0_0_25px_rgba(56,189,248,0.35)]"
+            className="inline-block will-change-transform bg-gradient-to-r from-[#08284d] via-[#0284c7] to-[#0369a1] bg-[length:200%_auto] bg-clip-text text-transparent font-black tracking-tight drop-shadow-xs"
             style={{
               animation: 'shimmerGradient 6s ease infinite',
             }}
