@@ -35,63 +35,58 @@ export const HomeBlogsHighlight = () => {
           </Link>
         </div>
 
-        {/* 3-Column Editorial Grid with Dynamic Up-and-Down Staggering */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-          {featuredGuides.map((guide, idx) => {
-            // Dynamic wave offset: Card 1 sits at top, Card 2 dips down by 36px, Card 3 sits midway
-            const offsetClass = idx === 1 ? 'md:mt-8 lg:mt-10' : idx === 2 ? 'md:mt-3 lg:mt-4' : 'md:mt-0';
+        {/* 3-Column Editorial Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {featuredGuides.map((guide, idx) => (
+            <Link
+              key={guide.id || idx}
+              to="/blogs"
+              className="bg-white rounded-2xl border-2 border-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+            >
+              {/* Thumbnail with strict uniform dimensions */}
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-200">
+                <img
+                  src={guide.featuredImage || '/images/dr-vatsal-rehab.webp'}
+                  alt={guide.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/dr-vatsal-rehab.webp';
+                  }}
+                />
+                <div className="absolute top-2.5 left-2.5">
+                  <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9.5px] font-mono font-bold uppercase tracking-wider shadow-xs">
+                    {guide.category || 'Orthopaedics'}
+                  </span>
+                </div>
+              </div>
 
-            return (
-              <Link
-                key={guide.id || idx}
-                to="/blogs"
-                className={`bg-white rounded-2xl border border-slate-300/85 overflow-hidden shadow-2xs hover:shadow-xl hover:-translate-y-1.5 hover:border-sky-400 transition-all duration-300 flex flex-col justify-between group cursor-pointer ${offsetClass}`}
-              >
-                {/* Thumbnail with Fine Bottom Divider */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-200/85">
-                  <img
-                    src={guide.featuredImage || '/images/dr-vatsal-rehab.webp'}
-                    alt={guide.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/images/dr-vatsal-rehab.webp';
-                    }}
-                  />
-                  <div className="absolute top-2.5 left-2.5">
-                    <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9.5px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                      {guide.category || 'Orthopaedics'}
-                    </span>
-                  </div>
+              {/* Body */}
+              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div className="space-y-1.5">
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2">
+                    {guide.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 font-light leading-relaxed line-clamp-2">
+                    {guide.excerpt || guide.textContent?.slice(0, 120)}
+                  </p>
                 </div>
 
-                {/* Body */}
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
-                  <div className="space-y-1.5">
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2">
-                      {guide.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 font-light leading-relaxed line-clamp-2">
-                      {guide.excerpt || guide.textContent?.slice(0, 120)}
-                    </p>
-                  </div>
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+                  <span className="inline-flex items-center gap-1 text-slate-400">
+                    <Clock className="w-3 h-3 text-amber-500" />
+                    <span>{guide.readTime || '3 min read'}</span>
+                  </span>
 
-                  <div className="pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs font-mono">
-                    <span className="inline-flex items-center gap-1 text-slate-400">
-                      <Clock className="w-3 h-3 text-amber-500" />
-                      <span>{guide.readTime || '3 min read'}</span>
-                    </span>
-
-                    <span className="font-bold text-[#08284d] group-hover:text-sky-600 inline-flex items-center gap-1 transition-colors">
-                      <span>Read Article</span>
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
+                  <span className="font-bold text-[#08284d] group-hover:text-sky-600 inline-flex items-center gap-1 transition-colors">
+                    <span>Read Article</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </div>
-              </Link>
-            );
-          })}
+              </div>
+            </Link>
+          ))}
         </div>
 
       </div>

@@ -130,65 +130,57 @@ export const BlogsPage = ({ onBookClick }) => {
     }
   };
 
-  // Reusable card renderer (Minimal, compact, with dynamic aspect ratios and fine border)
-  const renderCard = (blog, key, indexInCol = 0, colIndex = 0) => {
-    // Dynamic aspect ratio variation ensures cards continuously undulate up & down throughout the entire scroll!
-    const pattern = (indexInCol * 2 + colIndex) % 3;
-    let aspectClass = 'aspect-[4/3]';
-    if (pattern === 1) aspectClass = 'aspect-[1/1]';
-    else if (pattern === 2) aspectClass = 'aspect-[5/4]';
+  // Reusable card renderer (Same uniform dimensions, dark border)
+  const renderCard = (blog, key) => (
+    <article
+      key={key}
+      onClick={() => setSelectedBlog(blog)}
+      className="bg-white rounded-2xl border-2 border-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+    >
+      {/* Featured Image with strict identical aspect ratio across all cards */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 border-b border-slate-200">
+        <img
+          src={blog.featuredImage || '/images/dr-vatsal-rehab.webp'}
+          alt={blog.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
+          loading="lazy"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/images/dr-vatsal-rehab.webp';
+          }}
+        />
 
-    return (
-      <article
-        key={key}
-        onClick={() => setSelectedBlog(blog)}
-        className="bg-white rounded-2xl border border-slate-300/85 overflow-hidden shadow-2xs hover:shadow-xl hover:-translate-y-1.5 hover:border-sky-400 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
-      >
-        {/* Featured Image with variable aspect ratio & fine bottom divider */}
-        <div className={`relative ${aspectClass} w-full overflow-hidden bg-slate-100 border-b border-slate-200/85`}>
-          <img
-            src={blog.featuredImage || '/images/dr-vatsal-rehab.webp'}
-            alt={blog.title}
-            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 select-none"
-            loading="lazy"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = '/images/dr-vatsal-rehab.webp';
-            }}
-          />
-
-          {/* Minimal Category Chip Overlay */}
-          {blog.category && (
-            <div className="absolute top-2 left-2">
-              <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                {blog.category}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Minimal Body (Title & Read Time Only) */}
-        <div className="p-3 sm:p-3.5 flex flex-col justify-between space-y-2.5">
-          <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-[#0284c7] transition-colors leading-snug line-clamp-2">
-            {blog.title}
-          </h3>
-
-          {/* Micro Meta Strip with Fine Top Border */}
-          <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-            <span className="inline-flex items-center gap-1">
-              <Clock className="w-3 h-3 text-[#f59e0b]" />
-              <span>{blog.readTime || '4 min'}</span>
-            </span>
-
-            <span className="inline-flex items-center gap-0.5 font-bold text-[#08284d] group-hover:text-[#0284c7] group-hover:translate-x-0.5 transition-all">
-              <span>Read</span>
-              <ArrowRight className="w-2.5 h-2.5" />
+        {/* Minimal Category Chip Overlay */}
+        {blog.category && (
+          <div className="absolute top-2 left-2">
+            <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9px] font-mono font-bold uppercase tracking-wider shadow-xs">
+              {blog.category}
             </span>
           </div>
+        )}
+      </div>
+
+      {/* Minimal Body (Title & Read Time Only) */}
+      <div className="p-3 sm:p-3.5 flex flex-col justify-between space-y-2.5">
+        <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2">
+          {blog.title}
+        </h3>
+
+        {/* Micro Meta Strip */}
+        <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-400">
+          <span className="inline-flex items-center gap-1">
+            <Clock className="w-3 h-3 text-[#f59e0b]" />
+            <span>{blog.readTime || '4 min'}</span>
+          </span>
+
+          <span className="inline-flex items-center gap-0.5 font-bold text-[#08284d] group-hover:text-sky-600 group-hover:translate-x-0.5 transition-all">
+            <span>Read</span>
+            <ArrowRight className="w-2.5 h-2.5" />
+          </span>
         </div>
-      </article>
-    );
-  };
+      </div>
+    </article>
+  );
 
   return (
     <div className="relative w-full bg-[#f1f5f9] text-slate-900 select-none overflow-hidden min-h-screen">
@@ -200,7 +192,7 @@ export const BlogsPage = ({ onBookClick }) => {
         <div className="max-w-7xl mx-auto space-y-6">
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-            
+
             {/* Left Column: Bold Dual-Box Lockup */}
             <div className="lg:col-span-7 space-y-3">
               <KineticDualTitle
@@ -279,11 +271,10 @@ export const BlogsPage = ({ onBookClick }) => {
               <button
                 key={cIdx}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold tracking-wide transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-[#08284d] text-white shadow-xs'
-                    : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
-                }`}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold tracking-wide transition-all cursor-pointer ${isActive
+                  ? 'bg-[#08284d] text-white shadow-xs'
+                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
+                  }`}
               >
                 {cat}
               </button>
@@ -305,7 +296,7 @@ export const BlogsPage = ({ onBookClick }) => {
           - Zero overlaps, clean 20px spacing between all cards
       ────────────────────────────────────────────────────────────── */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24">
-        
+
         {/* Giant Kinetic Wordmark Layered in Background */}
         <div className="relative mb-8">
           <div className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase text-slate-300/40 select-none tracking-tight">
@@ -327,50 +318,50 @@ export const BlogsPage = ({ onBookClick }) => {
             <div className="hidden lg:grid grid-cols-5 gap-5 items-start">
               {/* Column 0: Standard Top */}
               <div className="flex flex-col gap-5 pt-0">
-                {cols5[0].map((blog, idx) => renderCard(blog, `col0-${idx}`, idx, 0))}
+                {cols5[0].map((blog, idx) => renderCard(blog, `col0-${idx}`))}
               </div>
 
-              {/* Column 1: Shifted Down by 48px */}
-              <div className="flex flex-col gap-5 pt-12">
-                {cols5[1].map((blog, idx) => renderCard(blog, `col1-${idx}`, idx, 1))}
+              {/* Column 1: Shifted Down by 40px (Myntra Wave) */}
+              <div className="flex flex-col gap-5 pt-10">
+                {cols5[1].map((blog, idx) => renderCard(blog, `col1-${idx}`))}
               </div>
 
               {/* Column 2: Slightly Offset */}
-              <div className="flex flex-col gap-5 pt-3">
-                {cols5[2].map((blog, idx) => renderCard(blog, `col2-${idx}`, idx, 2))}
+              <div className="flex flex-col gap-5 pt-2">
+                {cols5[2].map((blog, idx) => renderCard(blog, `col2-${idx}`))}
               </div>
 
-              {/* Column 3: Shifted Down by 56px */}
-              <div className="flex flex-col gap-5 pt-14">
-                {cols5[3].map((blog, idx) => renderCard(blog, `col3-${idx}`, idx, 3))}
+              {/* Column 3: Shifted Down by 48px (Myntra Wave) */}
+              <div className="flex flex-col gap-5 pt-12">
+                {cols5[3].map((blog, idx) => renderCard(blog, `col3-${idx}`))}
               </div>
 
               {/* Column 4: Slightly Offset */}
-              <div className="flex flex-col gap-5 pt-6">
-                {cols5[4].map((blog, idx) => renderCard(blog, `col4-${idx}`, idx, 4))}
+              <div className="flex flex-col gap-5 pt-4">
+                {cols5[4].map((blog, idx) => renderCard(blog, `col4-${idx}`))}
               </div>
             </div>
 
             {/* ── Tablet: 3-Column Staggered Masonry (md to lg) ── */}
             <div className="hidden md:grid lg:hidden grid-cols-3 gap-4 items-start">
               <div className="flex flex-col gap-4 pt-0">
-                {cols3[0].map((blog, idx) => renderCard(blog, `tab0-${idx}`, idx, 0))}
+                {cols3[0].map((blog, idx) => renderCard(blog, `tab0-${idx}`))}
               </div>
-              <div className="flex flex-col gap-4 pt-10">
-                {cols3[1].map((blog, idx) => renderCard(blog, `tab1-${idx}`, idx, 1))}
+              <div className="flex flex-col gap-4 pt-8">
+                {cols3[1].map((blog, idx) => renderCard(blog, `tab1-${idx}`))}
               </div>
-              <div className="flex flex-col gap-4 pt-4">
-                {cols3[2].map((blog, idx) => renderCard(blog, `tab2-${idx}`, idx, 2))}
+              <div className="flex flex-col gap-4 pt-3">
+                {cols3[2].map((blog, idx) => renderCard(blog, `tab2-${idx}`))}
               </div>
             </div>
 
             {/* ── Mobile: 2-Column Staggered Masonry (sm & below) ── */}
             <div className="grid md:hidden grid-cols-2 gap-3.5 items-start">
               <div className="flex flex-col gap-3.5 pt-0">
-                {cols2[0].map((blog, idx) => renderCard(blog, `mob0-${idx}`, idx, 0))}
+                {cols2[0].map((blog, idx) => renderCard(blog, `mob0-${idx}`))}
               </div>
-              <div className="flex flex-col gap-3.5 pt-8">
-                {cols2[1].map((blog, idx) => renderCard(blog, `mob1-${idx}`, idx, 1))}
+              <div className="flex flex-col gap-3.5 pt-6">
+                {cols2[1].map((blog, idx) => renderCard(blog, `mob1-${idx}`))}
               </div>
             </div>
           </>
@@ -398,7 +389,7 @@ export const BlogsPage = ({ onBookClick }) => {
       ────────────────────────────────────────────────────────────── */}
       <section className="w-full bg-[#08284d] text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-t border-black/20">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-          
+
           {/* Left: Circular Hospital Seal & Headline */}
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             <div className="w-16 h-16 rounded-full border-2 border-white/30 flex items-center justify-center shrink-0 shadow-inner bg-white/5">
