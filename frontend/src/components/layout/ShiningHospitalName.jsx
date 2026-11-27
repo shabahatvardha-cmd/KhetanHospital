@@ -1,42 +1,61 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 /**
  * 🏥 SHINING HOSPITAL NAME
  * Features:
- * 1. Letter-by-letter continuous Red -> Blue -> Green spectral gradient.
+ * 1. Letter-by-letter continuous Red -> Indigo -> Cyan -> Emerald spectral gradient.
  * 2. Luminous left-to-right specular shine sweep clipped to text geometry.
  * 3. Staggered brightness glint wave rippling across letters.
  */
 
-const HOSPITAL_LETTERS = [
-  // "KHETAN" — Red to Indigo/Blue
-  { char: 'K', color: '#e11d48' }, // Crimson Red
-  { char: 'H', color: '#f43f5e' }, // Rose Coral
-  { char: 'E', color: '#d946ef' }, // Fuchsia Magenta
-  { char: 'T', color: '#a855f7' }, // Purple
-  { char: 'A', color: '#6366f1' }, // Royal Indigo
-  { char: 'N', color: '#2563eb' }, // Sapphire Blue
-  // Space separator
-  { char: ' ', color: 'transparent', isSpace: true },
-  // "HOSPITAL" — Blue to Emerald Green
-  { char: 'H', color: '#0284c7' }, // Azure Blue
-  { char: 'O', color: '#0ea5e9' }, // Sky Blue
-  { char: 'S', color: '#00bcd4' }, // Khetan Hospital Cyan
-  { char: 'P', color: '#0d9488' }, // Teal
-  { char: 'I', color: '#10b981' }, // Mint Emerald
-  { char: 'T', color: '#16a34a' }, // Fresh Green
-  { char: 'A', color: '#22c55e' }, // Bright Leaf Green
-  { char: 'L', color: '#15803d' }, // Deep Forest Green
+const SPECTRAL_COLORS = [
+  '#e11d48', // Crimson Red
+  '#f43f5e', // Rose Coral
+  '#d946ef', // Fuchsia Magenta
+  '#a855f7', // Purple
+  '#6366f1', // Royal Indigo
+  '#3b82f6', // Sapphire Blue
+  '#0284c7', // Azure Blue
+  '#0ea5e9', // Sky Blue
+  '#00bcd4', // Cyan
+  '#0d9488', // Teal
+  '#10b981', // Mint Emerald
+  '#16a34a', // Fresh Green
+  '#22c55e', // Bright Leaf Green
+  '#15803d', // Deep Forest Green
 ];
 
-export const ShiningHospitalName = ({ className = "" }) => {
+export const ShiningHospitalName = ({
+  text = "Khetan Multi Speciality",
+  className = ""
+}) => {
+  const letters = useMemo(() => {
+    const chars = Array.from(text);
+    const nonSpaces = chars.filter(c => c !== ' ').length;
+    let nonSpaceCount = 0;
+    return chars.map((char) => {
+      if (char === ' ') {
+        return { char, isSpace: true, color: 'transparent' };
+      }
+      const colorIdx = nonSpaces > 1
+        ? Math.round((nonSpaceCount / (nonSpaces - 1)) * (SPECTRAL_COLORS.length - 1))
+        : 0;
+      nonSpaceCount++;
+      return {
+        char,
+        isSpace: false,
+        color: SPECTRAL_COLORS[colorIdx] || SPECTRAL_COLORS[0]
+      };
+    });
+  }, [text]);
+
   return (
     <div className={`relative inline-flex items-baseline font-black tracking-tight select-none overflow-hidden py-0.5 ${className}`}>
       
-      {/* 1. Base Layer: Red -> Blue -> Green Letter-by-Letter Gradient */}
+      {/* 1. Base Layer: Letter-by-Letter Spectral Gradient */}
       <div className="inline-flex items-baseline">
-        {HOSPITAL_LETTERS.map((item, idx) => {
+        {letters.map((item, idx) => {
           if (item.isSpace) {
             return <span key={idx} className="inline-block w-1.5 sm:w-2" />;
           }
@@ -55,7 +74,7 @@ export const ShiningHospitalName = ({ className = "" }) => {
                 duration: 1.2,
                 repeat: Infinity,
                 repeatDelay: 5.3,
-                delay: idx * 0.16, // Slower, graceful wave traveling left to right
+                delay: idx * 0.1,
                 ease: 'easeInOut',
               }}
               style={{ color: item.color }}
@@ -80,7 +99,7 @@ export const ShiningHospitalName = ({ className = "" }) => {
           color: 'transparent',
         }}
       >
-        {HOSPITAL_LETTERS.map((item, idx) => {
+        {letters.map((item, idx) => {
           if (item.isSpace) {
             return <span key={idx} className="inline-block w-1.5 sm:w-2" />;
           }

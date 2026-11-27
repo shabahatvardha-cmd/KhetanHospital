@@ -31,13 +31,16 @@ export const MobileNavDrawer = ({ isOpen, onClose, onBookAppointment, onOpenAdmi
       >
         {/* Top Header */}
         <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
-          <div>
-            <h3 className="font-bold text-navy-900 text-sm">{clinicInfo.name}</h3>
-            <p className="text-[11px] text-brand-700 font-medium">{clinicInfo.clinicName}</p>
+          <div className="flex items-center gap-2.5">
+            <img src="/logo.webp" alt="Logo" className="w-9 h-9 object-contain shrink-0" />
+            <div>
+              <h3 className="font-bold text-navy-900 text-sm">{clinicInfo.clinicName}</h3>
+              <p className="text-[10px] text-brand-700 font-medium uppercase tracking-wider">{clinicInfo.subtitle}</p>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-500 hover:bg-slate-200 transition-colors"
+            className="p-2 rounded-xl text-slate-500 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>

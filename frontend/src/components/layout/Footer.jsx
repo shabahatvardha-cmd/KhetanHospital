@@ -292,13 +292,16 @@ export const Footer = forwardRef((props, ref) => {
         {/* Bottom Strip: Logo Mark, Copyright & Governance */}
         <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-white/50">
           <div className="flex items-center gap-3">
-            <span className="font-black text-white uppercase tracking-wider text-sm">
-              KHETAN HOSPITAL
-            </span>
-            <span>&bull;</span>
-            <span className="text-[11px]">
-              ROYAL COLLEGE OF SURGEONS (EDINBURGH) GOVERNANCE
-            </span>
+            <img src="/logo.webp" alt="Khetan Multi Speciality" className="w-8 h-8 object-contain rounded-full bg-white/10 p-0.5 shrink-0" />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+              <span className="font-black text-white uppercase tracking-wider text-sm">
+                KHETAN MULTI SPECIALITY
+              </span>
+              <span className="hidden sm:inline">&bull;</span>
+              <span className="text-[11px] text-sky-300 font-semibold uppercase tracking-wider">
+                AND MEDICAL RESEARCH CENTRE
+              </span>
+            </div>
           </div>
 
           <div className="text-[11px]">

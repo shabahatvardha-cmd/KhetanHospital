@@ -72,15 +72,17 @@ export const Navbar = ({ onBookClick }) => {
         <Link
           to="/"
           onClick={() => handleItemClick('home')}
-          className="flex items-center gap-2.5 group shrink-0 cursor-pointer"
+          className="flex items-center gap-2.5 sm:gap-3 group shrink-0 cursor-pointer"
         >
-          <div className="w-9 h-9 rounded-xl bg-[#00bcd4] text-white flex items-center justify-center font-black shadow-xs group-hover:scale-105 transition-transform">
-            <Plus className="w-5 h-5 stroke-[3]" />
-          </div>
+          <img
+            src="/logo.webp"
+            alt="Khetan Multi Speciality And Medical Research Centre"
+            className="w-10 h-10 sm:w-11 sm:h-11 object-contain group-hover:scale-105 transition-transform shrink-0"
+          />
           <div className="flex flex-col">
-            <ShiningHospitalName className="text-base sm:text-lg leading-none" />
+            <ShiningHospitalName text="Khetan Multi Speciality" className="text-sm sm:text-base md:text-lg leading-tight" />
             <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 tracking-wider uppercase leading-tight mt-0.5">
-              Orthopedic &amp; Robotic Joint Care
+              And Medical Research Centre
             </span>
           </div>
         </Link>

@@ -72,9 +72,12 @@ export const AppointmentModal = ({ isOpen, onClose, initialPhone = '' }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bg-[#0b2545] text-white p-5 flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-bold text-white">Book An Appointment</h3>
-            <p className="text-xs text-cyan-300">{clinicInfo.clinicName} &bull; Bargadawa, Gorakhpur</p>
+          <div className="flex items-center gap-3">
+            <img src="/logo.webp" alt="Logo" className="w-9 h-9 object-contain shrink-0" />
+            <div>
+              <h3 className="text-base font-bold text-white leading-tight">Book An Appointment</h3>
+              <p className="text-xs text-cyan-300">Khetan Multi Speciality &bull; And Medical Research Centre</p>
+            </div>
           </div>
           <button onClick={onClose} className="p-1 rounded-full text-slate-400 hover:text-white cursor-pointer">
             <X className="w-5 h-5" />

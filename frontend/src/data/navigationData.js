@@ -127,9 +127,9 @@ export const servicesNavigation = [
 export const clinicInfo = {
   name: "Dr. Vatsal Khetan",
   qualification: "MBBS, MS (Ortho), MRCS, FRCS (Edinburgh), M.Ch Knee (UK), IOC Dip Sports Med (Switzerland)",
-  clinicName: "Khetan Hospital",
-  hospitalName: "Khetan Hospital",
-  subtitle: "Advanced Orthopedic & Robotic Joint Replacement Centre",
+  clinicName: "Khetan Multi Speciality",
+  hospitalName: "Khetan Multi Speciality And Medical Research Centre",
+  subtitle: "And Medical Research Centre",
   location: "Vikas Nagar Bargadawa Gorakhpur, Gorakhpur, Uttar Pradesh, 273015",
   phone: "+91 96623 65917",
   emergencyPhone: "+91 96623 65917",
