@@ -2,20 +2,26 @@ import React, { useRef, useState } from 'react';
 import { HomeDoctorHero } from '../components/home/HomeDoctorHero';
 import { HomeCarouselSection } from '../components/home/HomeCarouselSection';
 import { HomeIntroSection } from '../components/home/HomeIntroSection';
+import { HomeCashlessTrustStrip } from '../components/home/HomeCashlessTrustStrip';
+import { HomeLocationsHighlight } from '../components/home/HomeLocationsHighlight';
+import { HomeBlogsHighlight } from '../components/home/HomeBlogsHighlight';
 import { DoctorVideoModal } from '../components/home/DoctorVideoModal';
 import { HorizontalMarquee } from '../components/motion/HorizontalMarquee';
 import { ScrollSplitTypography } from '../components/motion/ScrollSplitTypography';
 import { Footer } from '../components/layout/Footer';
 
 /**
- * 🏥 KHETAN HOSPITAL — MASTER HOMEPAGE FLOW (Polpharma Biologics Inspired Redesign)
+ * 🏥 KHETAN HOSPITAL — MASTER HOMEPAGE FLOW
  * 
- * 1. Screen 1: Doctor-Focused Hero (Dr. Vatsal Khetan, oversized typography, sequential word reveal)
+ * 1. Screen 1: Doctor-Focused Hero (Dr. Vatsal Khetan, FRCS Edinburgh, Doctor's Introduction)
  * 2. Precision Marquee Ticker: Continuous clinical excellence statements
- * 3. Screen 2: Interactive 3D Circular Surgical Carousel (6 destinations)
+ * 3. Screen 2: Interactive 3D Circular Surgical Carousel (6 surgical destinations)
  * 4. Kinetic Scroll-Linked Typography: Sub-millimeter robotic precision statement assembly
- * 5. Screen 3: Hospital Overview & Instagram Video Stories (Shutter Slide 1, animated headline, live Reels)
- * 6. Screen 4: Comprehensive Hospital Footer (Shutter Slide 2, sticky z-20)
+ * 5. Screen 3: Hospital Overview & Instagram Video Stories (Live compact Reels & 3 clinical pillars)
+ * 6. Section 4: 100% Cashless Hospitalization & TPA Network Trust Strip
+ * 7. Section 5: Hospital & Regional Outreach Centres (Gorakhpur, Deoria, Basti, Padrauna)
+ * 8. Section 6: Patient Recovery & Joint Health Guides (Top 3 curated articles from blogs)
+ * 9. Comprehensive Hospital Footer (Slate-900, calm, low noise)
  */
 export const HomePage = ({ onBookClick }) => {
   const footerRef = useRef(null);
@@ -77,10 +83,19 @@ export const HomePage = ({ onBookClick }) => {
         onExpandModal={(idx) => openVideoModal(idx)}
       />
 
-      {/* 6. COMPREHENSIVE HOSPITAL FOOTER (Screen 4) */}
+      {/* 6. 100% CASHLESS HEALTH INSURANCE & TPA TRUST STRIP */}
+      <HomeCashlessTrustStrip />
+
+      {/* 7. HOSPITAL & REGIONAL OUTREACH NETWORK (Gorakhpur, Deoria, Basti, Padrauna) */}
+      <HomeLocationsHighlight onBookClick={onBookClick} />
+
+      {/* 8. PATIENT RECOVERY & JOINT HEALTH GUIDES */}
+      <HomeBlogsHighlight />
+
+      {/* 9. COMPREHENSIVE HOSPITAL FOOTER */}
       <Footer ref={footerRef} onBookClick={onBookClick} />
 
-      {/* 7. FULLSCREEN HIGH-RES DOCTOR REEL MODAL */}
+      {/* 10. FULLSCREEN HIGH-RES DOCTOR REEL MODAL */}
       <DoctorVideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
