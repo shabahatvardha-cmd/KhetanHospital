@@ -43,7 +43,7 @@ export const HomeLocationsHighlight = ({ onBookClick }) => {
                 className={`rounded-2xl p-4 sm:p-5 flex flex-col justify-between border transition-all duration-300 ${
                   isMain
                     ? 'bg-white border-sky-400 shadow-md ring-2 ring-sky-400/20'
-                    : 'bg-white border-slate-200/90 shadow-2xs hover:shadow-md hover:border-slate-300'
+                    : 'bg-white border-slate-300/85 shadow-2xs hover:shadow-md hover:border-slate-400'
                 }`}
               >
                 <div className="space-y-3">
