@@ -1,8 +1,9 @@
 import React, { forwardRef, useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Award, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Award, Sparkles, CheckCircle2, Instagram } from 'lucide-react';
 import { AnimatedWordReveal } from '../motion/AnimatedWordReveal';
 import { doctorImages } from '../../data/imageConfig';
+import { DoctorReelsPlayer } from './DoctorReelsPlayer';
 
 /**
  * 🏥 Verified Clinical Pillars with Permanent Color Identities
@@ -163,7 +164,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
     <section
       id="hospital-intro"
       ref={sectionRef}
-      className="relative w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] bg-slate-50 border-t border-slate-200/90 select-none flex flex-col justify-center py-4 sm:py-6 lg:py-8 overflow-hidden"
+      className="relative w-full min-h-[calc(100vh-60px)] bg-slate-50 border-t border-slate-200/90 select-none flex flex-col justify-center py-6 sm:py-8 lg:py-10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
@@ -184,6 +185,20 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light max-w-xl">
               Founded by UK-trained specialist <strong className="text-slate-800 font-semibold">Dr. Vatsal Khetan</strong> (FRCS Edinburgh, M.Ch Knee UK), Khetan Hospital brings international joint replacement standards, sub-millimeter robotic precision, and dedicated arthroscopic sports rehabilitation directly to Gorakhpur and Eastern Uttar Pradesh.
             </p>
+
+            {/* Direct Video Story Badge Trigger */}
+            <div className="flex items-center gap-2 pt-0.5">
+              <button
+                type="button"
+                onClick={() => props.onExpandModal && props.onExpandModal(0)}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-purple-50 via-rose-50 to-amber-50 border border-rose-200/90 text-rose-800 text-[11px] font-bold hover:shadow-sm hover:scale-[1.01] transition-all cursor-pointer group"
+              >
+                <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center p-[1px]">
+                  <Instagram className="w-2.5 h-2.5 text-white" />
+                </div>
+                <span>Watch Dr. Vatsal explain his surgical mission (2 Video Stories) ▶</span>
+              </button>
+            </div>
 
             {/* ── DESKTOP CHOREOGRAPHY: Stationary -> Converge to Center -> Expand Out ── */}
             <div
@@ -364,40 +379,9 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
 
           </div>
 
-          {/* Right Column: Advanced Modular OT Photograph (5 Cols) */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-white group">
-              <div className="relative h-[220px] sm:h-[250px] lg:h-[280px] w-full overflow-hidden bg-slate-100">
-                <img
-                  src="/images/backgrounds/modular-ot.jpg"
-                  alt="Khetan Hospital Advanced Modular OT"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-
-                {/* Floating Doctor Spotlight Card */}
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2.5 rounded-xl bg-white/95 backdrop-blur-md border border-white/80 shadow-md flex items-center gap-2.5">
-                  <img
-                    src={doctorImages.hero}
-                    alt="Dr. Vatsal Khetan"
-                    className="w-9 h-9 rounded-lg object-contain bg-sky-50 border-2 border-sky-500 shadow-sm shrink-0"
-                  />
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-xs font-extrabold text-[#08284d] truncate">
-                      Dr. Vatsal Khetan
-                    </span>
-                    <span className="text-[10px] text-sky-700 font-bold truncate">
-                      MBBS, MS, MRCS, FRCS (Edinburgh), M.Ch Knee (UK)
-                    </span>
-                    <span className="text-[9px] text-slate-500 font-light flex items-center gap-1 mt-0.5">
-                      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" />
-                      <span>Purvanchal Surgical Director</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Right Column: Instagram Doctor Video Stories & Reels Player (5 Cols) */}
+          <div className="lg:col-span-5 relative flex justify-center py-2">
+            <DoctorReelsPlayer onExpandModal={props.onExpandModal} />
           </div>
 
         </div>

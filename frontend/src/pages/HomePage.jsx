@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { HomeDoctorHero } from '../components/home/HomeDoctorHero';
 import { HomeCarouselSection } from '../components/home/HomeCarouselSection';
 import { HomeIntroSection } from '../components/home/HomeIntroSection';
+import { DoctorVideoModal } from '../components/home/DoctorVideoModal';
 import { HorizontalMarquee } from '../components/motion/HorizontalMarquee';
 import { ScrollSplitTypography } from '../components/motion/ScrollSplitTypography';
 import { Footer } from '../components/layout/Footer';
@@ -13,11 +14,18 @@ import { Footer } from '../components/layout/Footer';
  * 2. Precision Marquee Ticker: Continuous clinical excellence statements
  * 3. Screen 2: Interactive 3D Circular Surgical Carousel (6 destinations)
  * 4. Kinetic Scroll-Linked Typography: Sub-millimeter robotic precision statement assembly
- * 5. Screen 3: Hospital Overview (Shutter Slide 1, animated headline, modular OT composition)
+ * 5. Screen 3: Hospital Overview & Instagram Video Stories (Shutter Slide 1, animated headline, live Reels)
  * 6. Screen 4: Comprehensive Hospital Footer (Shutter Slide 2, sticky z-20)
  */
 export const HomePage = ({ onBookClick }) => {
   const footerRef = useRef(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [activeReelIndex, setActiveReelIndex] = useState(0);
+
+  const openVideoModal = (index = 0) => {
+    setActiveReelIndex(index);
+    setIsVideoModalOpen(true);
+  };
 
   const scrollToFooter = () => {
     if (footerRef.current) {
@@ -32,7 +40,10 @@ export const HomePage = ({ onBookClick }) => {
   return (
     <div className="relative w-full bg-white text-slate-900 select-none">
       {/* 1. DOCTOR HERO (Screen 1 with animated editorial typography & credentials) */}
-      <HomeDoctorHero onBookClick={onBookClick} />
+      <HomeDoctorHero
+        onBookClick={onBookClick}
+        onWatchReelsClick={() => openVideoModal(0)}
+      />
 
       {/* 2. POLPHARMA-STYLE CONTINUOUS CLINICAL EXCELLENCE MARQUEE */}
       <HorizontalMarquee
@@ -60,11 +71,21 @@ export const HomePage = ({ onBookClick }) => {
         caption="Bringing world-class sub-millimeter joint reconstruction, arthroscopy, and sports medicine directly to Gorakhpur and Eastern Uttar Pradesh."
       />
 
-      {/* 5. HOSPITAL OVERVIEW (Shutter Slide 1 - sticky z-10) */}
-      <HomeIntroSection onNextClick={scrollToFooter} />
+      {/* 5. HOSPITAL OVERVIEW & LIVE DOCTOR INSTAGRAM REELS (Screen 3) */}
+      <HomeIntroSection
+        onNextClick={scrollToFooter}
+        onExpandModal={(idx) => openVideoModal(idx)}
+      />
 
-      {/* 6. COMPREHENSIVE HOSPITAL FOOTER (Shutter Slide 2 - sticky z-20) */}
+      {/* 6. COMPREHENSIVE HOSPITAL FOOTER (Screen 4) */}
       <Footer ref={footerRef} onBookClick={onBookClick} />
+
+      {/* 7. FULLSCREEN HIGH-RES DOCTOR REEL MODAL */}
+      <DoctorVideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        initialIndex={activeReelIndex}
+      />
     </div>
   );
 };
