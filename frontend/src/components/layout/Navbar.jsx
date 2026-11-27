@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   ChevronDown,
   Menu,
@@ -12,7 +12,7 @@ import { mainNavigation } from '../../data/navigationData';
 import { ShiningHospitalName } from './ShiningHospitalName';
 
 /**
- * 🏥 Khetan Hospital - Main Navigation Bar
+ * 🏥 Khetan Hospital - Main Navigation Bar (Polpharma Biotech Theme Aware)
  * 
  * Strict Specification:
  * 1. Contains exactly the same six main destinations:
@@ -21,8 +21,11 @@ import { ShiningHospitalName } from './ShiningHospitalName';
  * 3. Shows active highlight based on the current URL route.
  * 4. Dropdown submenus on hover allow fast navigation to specific surgical procedures.
  * 5. Compact height (~60px) to keep layout seamless.
+ * 6. Responsive dark frosted glass on homepage matching Polpharma Biologics aesthetic.
  */
 export const Navbar = ({ onBookClick }) => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   const { activeSectionId, goToSection } = useNavigation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -63,8 +66,14 @@ export const Navbar = ({ onBookClick }) => {
   };
 
   return (
-    <header ref={navRef} className="w-full sticky top-0 z-[100] bg-white border-b border-slate-200/90 shadow-2xs select-none shrink-0">
-
+    <header
+      ref={navRef}
+      className={`w-full sticky top-0 z-[100] transition-colors duration-300 select-none shrink-0 ${
+        isHome
+          ? 'bg-[#030712]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl text-white'
+          : 'bg-white border-b border-slate-200/90 shadow-2xs text-slate-900'
+      }`}
+    >
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-4">
 
@@ -81,7 +90,11 @@ export const Navbar = ({ onBookClick }) => {
           />
           <div className="flex flex-col">
             <ShiningHospitalName text="Khetan Multi Speciality" className="text-sm sm:text-base md:text-lg leading-tight" />
-            <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 tracking-wider uppercase leading-tight mt-0.5">
+            <span
+              className={`text-[9px] sm:text-[10px] font-semibold tracking-wider uppercase leading-tight mt-0.5 ${
+                isHome ? 'text-slate-400' : 'text-slate-500'
+              }`}
+            >
               And Medical Research Centre
             </span>
           </div>
@@ -103,27 +116,46 @@ export const Navbar = ({ onBookClick }) => {
               >
                 <button
                   onClick={() => handleItemClick(item.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${isActive
-                    ? 'text-sky-700 bg-sky-50 shadow-2xs font-extrabold border-b-2 border-sky-500'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                    }`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
+                    isHome
+                      ? isActive
+                        ? 'text-cyan-400 bg-cyan-950/60 shadow-md font-black border-b-2 border-cyan-400'
+                        : 'text-slate-300 hover:text-white hover:bg-white/10 font-bold'
+                      : isActive
+                        ? 'text-sky-700 bg-sky-50 shadow-2xs font-extrabold border-b-2 border-sky-500'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
                 >
                   <span>{item.label}</span>
                   {hasDropdown && (
-                    <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isHovered ? 'rotate-180 text-sky-600' : ''}`} />
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform ${
+                        isHovered ? 'rotate-180 text-cyan-400' : isHome ? 'text-slate-400' : 'text-slate-400'
+                      }`}
+                    />
                   )}
                 </button>
 
                 {/* Submenu (Hover) */}
                 {hasDropdown && isHovered && (
                   <div className="absolute top-full left-0 pt-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-                    <div className="w-64 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 px-1 ring-1 ring-black/5">
+                    <div
+                      className={`w-64 rounded-xl shadow-2xl py-1.5 px-1 border ${
+                        isHome
+                          ? 'bg-[#071326] border-white/10 ring-1 ring-white/10 text-white'
+                          : 'bg-white border-slate-200 ring-1 ring-black/5 text-slate-800'
+                      }`}
+                    >
                       {subDropdowns[item.id].map((sub, sIdx) => (
                         <Link
                           key={sIdx}
                           to={sub.href}
                           onClick={() => setActiveDropdown(null)}
-                          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors"
+                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                            isHome
+                              ? 'text-slate-300 hover:bg-white/10 hover:text-cyan-400'
+                              : 'text-slate-700 hover:bg-sky-50 hover:text-sky-700'
+                          }`}
                         >
                           <span className="truncate">{sub.title}</span>
                           <ArrowRight className="w-3 h-3 text-slate-400 shrink-0 ml-1" />
@@ -141,7 +173,11 @@ export const Navbar = ({ onBookClick }) => {
         <div className="flex items-center md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-700 hover:text-sky-600 hover:bg-slate-100 transition-colors cursor-pointer"
+            className={`p-2 rounded-lg transition-colors cursor-pointer ${
+              isHome
+                ? 'text-white hover:text-cyan-400 hover:bg-white/10'
+                : 'text-slate-700 hover:text-sky-600 hover:bg-slate-100'
+            }`}
             aria-label="Toggle navigation"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -152,33 +188,48 @@ export const Navbar = ({ onBookClick }) => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2 animate-in slide-in-from-top-2 duration-150 shadow-lg">
+        <div
+          className={`md:hidden border-t px-4 py-3 space-y-2 animate-in slide-in-from-top-2 duration-150 shadow-2xl ${
+            isHome
+              ? 'border-white/10 bg-[#030712] text-white'
+              : 'border-slate-200 bg-white text-slate-900'
+          }`}
+        >
           {mainNavigation.map((item) => {
             const isActive = activeSectionId === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleItemClick(item.id)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-colors flex items-center justify-between ${isActive
-                  ? 'text-sky-700 bg-sky-50 border-l-4 border-sky-500 font-extrabold'
-                  : 'text-slate-700 hover:bg-slate-50'
-                  }`}
+                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-colors flex items-center justify-between ${
+                  isHome
+                    ? isActive
+                      ? 'text-cyan-400 bg-cyan-950/60 border-l-4 border-cyan-400 font-black'
+                      : 'text-slate-300 hover:bg-white/10'
+                    : isActive
+                      ? 'text-sky-700 bg-sky-50 border-l-4 border-sky-500 font-extrabold'
+                      : 'text-slate-700 hover:bg-slate-50'
+                }`}
               >
                 <span>{item.label}</span>
-                {isActive && <span className="text-[10px] text-sky-600 font-normal">Active</span>}
+                {isActive && (
+                  <span className={`text-[10px] ${isHome ? 'text-cyan-400' : 'text-sky-600'} font-normal`}>
+                    Active
+                  </span>
+                )}
               </button>
             );
           })}
 
-          <div className="pt-2 border-t border-slate-100">
+          <div className={`pt-2 border-t ${isHome ? 'border-white/10' : 'border-slate-100'}`}>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onBookClick();
               }}
-              className="w-full py-2.5 rounded-full text-xs font-bold uppercase bg-[#00bcd4] text-white shadow-xs text-center cursor-pointer"
+              className="w-full py-2.5 rounded-full text-xs font-black uppercase bg-gradient-to-r from-cyan-500 to-sky-600 text-slate-950 shadow-md text-center cursor-pointer"
             >
-              Book Appointment
+              Book Priority Appointment
             </button>
           </div>
         </div>

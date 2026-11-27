@@ -1,13 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, ArrowUpRight, Award, Play } from 'lucide-react';
+import { ChevronDown, ArrowUpRight, Award, Play, Sparkles, ShieldCheck, Activity } from 'lucide-react';
 import { clinicInfo } from '../../data/clinicContent';
 import { doctorImages } from '../../data/imageConfig';
 import { WaveGradientText } from '../motion/WaveGradientText';
 
 /**
- * 🏥 SECTION 1 — DOCTOR-FOCUSED HERO (Screen View Size Calibrated)
- * Fits 100% inside calc(100vh - 60px) on all desktop & laptop screens.
+ * 🏥 SECTION 1 — DOCTOR-FOCUSED HERO (POLPHARMA BIOLOGICS BIOTECH THEME)
+ * 
+ * Deep midnight biotech atmosphere, laser telemetry orbit rings,
+ * Swiss statement typography: "Sub-millimeter precision isn't discovered. It's engineered."
+ * authentic hospital photography of Dr. Vatsal Khetan, and frosted glass benchmark tiles.
  */
 export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
   const scrollToCarousel = () => {
@@ -15,57 +18,71 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
   };
 
   return (
-    <section className="relative w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] bg-gradient-to-b from-[#fbfbfc] via-white to-slate-50 flex flex-col justify-between pt-2 sm:pt-4 pb-2 select-none overflow-hidden">
-      {/* Ambient Lighting & Micro-Grid Background */}
+    <section className="relative w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] bg-gradient-to-b from-[#030712] via-[#051329] to-[#030712] flex flex-col justify-between pt-2 sm:pt-4 pb-2 select-none overflow-hidden text-white">
+      {/* Ambient Radial Glowing Light Fields */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 right-1/4 w-[450px] h-[450px] rounded-full bg-sky-200/30 blur-3xl -z-10" />
-        <div className="absolute bottom-1/3 left-1/4 w-[350px] h-[350px] rounded-full bg-blue-100/40 blur-3xl -z-10" />
-        <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(#08284d_1px,transparent_1px)] [background-size:24px_24px]" />
+        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-cyan-500/15 blur-[140px] -z-10" />
+        <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] rounded-full bg-teal-500/10 blur-[130px] -z-10" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:28px_28px]" />
       </div>
 
       {/* Main Content Area */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
 
-          {/* Left Column: Doctor Identity & Expressive Typography (7 Cols) */}
+          {/* Left Column: Doctor Identity & Expressive Statement Typography (7 Cols) */}
           <div className="lg:col-span-7 space-y-3 sm:space-y-4">
 
-            {/* Oversized Name with Colourful Gradient & Continuous Wave Motion */}
+            {/* Biotech Technical Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10.5px] font-mono font-bold uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span>Purvanchal Robotic Standards &bull; UK Governed</span>
+            </div>
+
+            {/* Polpharma Statement Headline */}
             <div className="space-y-1">
-              <div className="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight-editorial uppercase leading-[0.95]">
+              <div className="text-3xl sm:text-5xl lg:text-5xl font-black tracking-tight-editorial uppercase leading-[0.95] text-white">
                 <WaveGradientText words={["Dr.", "Vatsal", "Khetan"]} />
               </div>
 
-              {/* Degrees and Fellowships - Perfectly Formatted Without Hanging Words */}
-              <p className="text-[10.5px] sm:text-xs font-mono font-medium text-slate-600 tracking-tight sm:tracking-normal leading-relaxed pt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-                <span className="text-slate-800 font-semibold">MBBS</span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="text-slate-800 font-semibold">MS (Ortho)</span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="text-slate-800 font-semibold">MRCS</span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="font-bold text-[#08284d] bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100">FRCS (Edinburgh)</span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="font-bold text-sky-800">M.Ch Knee (UK)</span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="whitespace-nowrap font-semibold text-emerald-800">IOC Dip Sports Med (Switzerland)</span>
+              {/* Degrees and Fellowships in Monospace Technical Chips */}
+              <p className="text-[10.5px] sm:text-xs font-mono font-medium text-slate-300 tracking-tight sm:tracking-normal leading-relaxed pt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="text-white font-semibold">MBBS</span>
+                <span className="text-slate-500">&bull;</span>
+                <span className="text-white font-semibold">MS (Ortho)</span>
+                <span className="text-slate-500">&bull;</span>
+                <span className="text-white font-semibold">MRCS</span>
+                <span className="text-slate-500">&bull;</span>
+                <span className="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/80">
+                  FRCS (Edinburgh)
+                </span>
+                <span className="text-slate-500">&bull;</span>
+                <span className="font-bold text-sky-300 bg-sky-950/60 px-2 py-0.5 rounded border border-sky-800/80">
+                  M.Ch Knee (UK)
+                </span>
+                <span className="text-slate-500">&bull;</span>
+                <span className="whitespace-nowrap font-semibold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/80">
+                  IOC Dip Sports Med (Switzerland)
+                </span>
               </p>
             </div>
 
-            {/* Concise Supporting Narrative */}
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light max-w-xl pt-1">
-              Bringing UK Royal College surgical governance, sub-millimeter robotic precision, and dedicated arthroscopic sports rehabilitation directly to Gorakhpur and Eastern Uttar Pradesh.
-            </p>
+            {/* Signature Polpharma Biotech Subtitle */}
+            <div className="p-3.5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 max-w-xl">
+              <p className="text-xs sm:text-sm text-cyan-100/90 leading-relaxed font-light">
+                <span className="font-semibold text-white">"Sub-millimeter precision isn't discovered. It's engineered."</span> Bringing UK Royal College surgical governance, sub-millimeter robotic precision, and dedicated arthroscopic sports rehabilitation directly to Gorakhpur and Eastern Uttar Pradesh.
+              </p>
+            </div>
 
-            {/* Action Triggers - Balanced & Sleek */}
+            {/* Action Triggers — High-Voltage Biotech Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               {onWatchReelsClick && (
                 <button
                   type="button"
                   onClick={onWatchReelsClick}
-                  className="px-6 py-3 rounded-full bg-[#08284d] text-white text-xs sm:text-sm font-bold tracking-wide hover:bg-sky-600 hover:shadow-xl hover:shadow-sky-600/20 transition-all duration-300 flex items-center gap-2 group cursor-pointer shadow-md"
+                  className="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 text-slate-950 text-xs sm:text-sm font-black tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/40 transition-all duration-300 flex items-center gap-2 group cursor-pointer"
                 >
-                  <Play className="w-4 h-4 text-sky-300 fill-current" />
+                  <Play className="w-4 h-4 text-slate-950 fill-current" />
                   <span>Doctor's Introduction</span>
                   <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
@@ -73,14 +90,15 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
 
               <button
                 onClick={scrollToCarousel}
-                className="px-6 py-3 rounded-full border border-slate-300/90 bg-white text-slate-700 text-xs sm:text-sm font-semibold hover:border-slate-400 hover:text-slate-900 hover:bg-slate-50 shadow-2xs transition-all cursor-pointer"
+                className="px-6 py-3 rounded-full border border-white/20 bg-white/[0.05] backdrop-blur-md text-white text-xs sm:text-sm font-semibold hover:border-cyan-400/60 hover:bg-white/[0.1] shadow-lg transition-all cursor-pointer flex items-center gap-1.5"
               >
-                Explore Specialties
+                <span>Explore Specialties</span>
+                <ChevronDown className="w-3.5 h-3.5 text-cyan-400" />
               </button>
             </div>
           </div>
 
-          {/* Right Column: Doctor Portrait Photo with Robotic Orbit Ring & Floating Motion (5 Cols) */}
+          {/* Right Column: Doctor Portrait Photo with Laser Telemetry Orbit Rings (5 Cols) */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end relative">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -91,7 +109,7 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
               {/* 1. Ambient Pulsing Medical Aura Halo */}
               <motion.div
                 animate={{
-                  scale: [1, 1.14, 1],
+                  scale: [1, 1.15, 1],
                   opacity: [0.35, 0.65, 0.35],
                 }}
                 transition={{
@@ -99,7 +117,7 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -inset-6 sm:-inset-8 bg-gradient-to-tr from-sky-400/25 via-cyan-300/35 to-blue-500/20 rounded-full blur-3xl -z-10 pointer-events-none"
+                className="absolute -inset-6 sm:-inset-8 bg-gradient-to-tr from-cyan-500/25 via-sky-400/30 to-blue-600/25 rounded-full blur-3xl -z-10 pointer-events-none"
               />
 
               {/* 2. Rotating Robotic Surgical Precision Orbit Ring (Clockwise) */}
@@ -110,9 +128,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute -inset-8 sm:-inset-10 -z-10 pointer-events-none flex items-center justify-center opacity-45 sm:opacity-55"
+                className="absolute -inset-8 sm:-inset-10 -z-10 pointer-events-none flex items-center justify-center opacity-60 sm:opacity-75"
               >
-                <svg viewBox="0 0 400 400" className="w-full h-full text-sky-600/40">
+                <svg viewBox="0 0 400 400" className="w-full h-full text-cyan-400/50">
                   <circle
                     cx="200"
                     cy="200"
@@ -131,10 +149,10 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                     strokeWidth="0.75"
                     strokeOpacity="0.5"
                   />
-                  <circle cx="200" cy="20" r="3" fill="#0284c7" />
-                  <circle cx="380" cy="200" r="3" fill="#0284c7" />
-                  <circle cx="200" cy="380" r="3" fill="#0284c7" />
-                  <circle cx="20" cy="200" r="3" fill="#0284c7" />
+                  <circle cx="200" cy="20" r="3.5" fill="#38bdf8" />
+                  <circle cx="380" cy="200" r="3.5" fill="#38bdf8" />
+                  <circle cx="200" cy="380" r="3.5" fill="#38bdf8" />
+                  <circle cx="20" cy="200" r="3.5" fill="#38bdf8" />
                 </svg>
               </motion.div>
 
@@ -146,9 +164,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute -inset-10 sm:-inset-12 -z-10 pointer-events-none flex items-center justify-center opacity-30"
+                className="absolute -inset-10 sm:-inset-12 -z-10 pointer-events-none flex items-center justify-center opacity-40"
               >
-                <svg viewBox="0 0 440 440" className="w-full h-full text-cyan-600/40">
+                <svg viewBox="0 0 440 440" className="w-full h-full text-teal-400/40">
                   <circle
                     cx="220"
                     cy="220"
@@ -178,12 +196,12 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                   <img
                     src={doctorImages.hero}
                     alt="Dr. Vatsal Khetan — Robotic Knee & Orthopaedic Surgeon"
-                    className="w-auto h-auto max-h-[260px] sm:max-h-[290px] lg:max-h-[310px] object-contain drop-shadow-[0_20px_35px_rgba(8,40,77,0.3)] select-none pointer-events-none"
+                    className="w-auto h-auto max-h-[260px] sm:max-h-[290px] lg:max-h-[310px] object-contain drop-shadow-[0_20px_35px_rgba(0,188,212,0.35)] select-none pointer-events-none"
                     loading="eager"
                   />
                 </motion.div>
 
-                {/* 5. Floating FRCS Accreditation Badge */}
+                {/* 5. Floating FRCS Accreditation Badge in Frosted Glass */}
                 <motion.div
                   animate={{
                     y: [0, -3, 0],
@@ -194,16 +212,16 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                     ease: "easeInOut",
                     delay: 0.5,
                   }}
-                  className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[92%] sm:w-[88%] p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl flex items-center gap-2.5 z-20"
+                  className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[94%] sm:w-[90%] p-2.5 rounded-2xl bg-[#051329]/90 backdrop-blur-xl border border-cyan-500/40 shadow-2xl flex items-center gap-2.5 z-20"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-500 to-[#00bcd4] flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-sky-600 flex items-center justify-center text-slate-950 font-black text-xs shadow-md shrink-0">
                     FRCS
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <span className="text-xs font-black text-slate-900 leading-tight truncate">
+                    <span className="text-xs font-black text-white leading-tight truncate">
                       Dr. Vatsal Khetan
                     </span>
-                    <span className="text-[10px] text-sky-700 font-bold leading-tight truncate">
+                    <span className="text-[10px] text-cyan-300 font-bold leading-tight truncate">
                       Royal College Fellow (Edinburgh) &bull; M.Ch (UK)
                     </span>
                   </div>
@@ -213,57 +231,57 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
           </div>
         </div>
 
-        {/* Polpharma-Style 4-Column Clinical Benchmark Metrics Strip */}
+        {/* Polpharma 4-Column Frosted Glass Benchmark Metrics Strip */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-200/80 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6"
+          className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4"
         >
-          <div className="space-y-0.5">
-            <div className="text-xl sm:text-2xl font-extrabold text-[#08284d] tracking-tight">
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 transition-colors space-y-0.5">
+            <div className="text-xl sm:text-2xl font-black text-white tracking-tight">
               {clinicInfo.stats.experienceYears}
             </div>
-            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+            <div className="text-[10.5px] font-bold text-cyan-300 uppercase tracking-wide">
               Clinical Experience
             </div>
-            <div className="text-[10px] text-slate-500 font-light">
+            <div className="text-[9.5px] text-slate-400 font-light">
               UK Fellowship &amp; NHS Trained
             </div>
           </div>
 
-          <div className="space-y-0.5">
-            <div className="text-xl sm:text-2xl font-extrabold text-sky-600 tracking-tight">
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 transition-colors space-y-0.5">
+            <div className="text-xl sm:text-2xl font-black text-cyan-400 tracking-tight">
               {clinicInfo.stats.kneeReplacements}
             </div>
-            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+            <div className="text-[10.5px] font-bold text-cyan-300 uppercase tracking-wide">
               Robotic Knee Surgeries
             </div>
-            <div className="text-[10px] text-slate-500 font-light">
+            <div className="text-[9.5px] text-slate-400 font-light">
               Sub-Millimeter Precision
             </div>
           </div>
 
-          <div className="space-y-0.5">
-            <div className="text-xl sm:text-2xl font-extrabold text-[#08284d] tracking-tight">
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 transition-colors space-y-0.5">
+            <div className="text-xl sm:text-2xl font-black text-white tracking-tight">
               {clinicInfo.stats.surgeries}
             </div>
-            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+            <div className="text-[10.5px] font-bold text-cyan-300 uppercase tracking-wide">
               Procedures Completed
             </div>
-            <div className="text-[10px] text-slate-500 font-light">
+            <div className="text-[9.5px] text-slate-400 font-light">
               Trauma &amp; Joint Care
             </div>
           </div>
 
-          <div className="space-y-0.5">
-            <div className="text-xl sm:text-2xl font-extrabold text-emerald-600 tracking-tight">
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-emerald-400/50 transition-colors space-y-0.5">
+            <div className="text-xl sm:text-2xl font-black text-emerald-400 tracking-tight">
               100%
             </div>
-            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+            <div className="text-[10.5px] font-bold text-emerald-300 uppercase tracking-wide">
               UK Governance
             </div>
-            <div className="text-[10px] text-slate-500 font-light">
+            <div className="text-[9.5px] text-slate-400 font-light">
               Sterility &amp; Rapid Mobility
             </div>
           </div>
@@ -275,9 +293,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
         <button
           onClick={scrollToCarousel}
           aria-label="Scroll to Navigation Carousel"
-          className="p-1 text-slate-400 hover:text-sky-600 transition-colors cursor-pointer group"
+          className="p-1 text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer group"
         >
-          <ChevronDown className="w-5 h-5 animate-bounce text-slate-400 group-hover:text-sky-600" />
+          <ChevronDown className="w-5 h-5 animate-bounce text-slate-400 group-hover:text-cyan-400" />
         </button>
       </div>
     </section>
