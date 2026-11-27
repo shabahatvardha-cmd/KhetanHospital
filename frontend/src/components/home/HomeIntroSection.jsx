@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, useEffect, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Award, Sparkles, CheckCircle2 } from 'lucide-react';
 import { AnimatedWordReveal } from '../motion/AnimatedWordReveal';
 import { doctorImages } from '../../data/imageConfig';
@@ -122,43 +122,40 @@ const COLOR_PATTERNS = [
 ];
 
 /**
- * ♾️ Continuous Figure-8 (Lemniscate) Motion:
- * Trajectory: Center -> UP -> LEFT -> DOWN -> Center -> UP -> RIGHT -> DOWN -> Center
- */
-const FIGURE_8_X = [0, -14, -22, -14, 0, 14, 22, 14, 0];
-const FIGURE_8_Y = [0, -18, -4, 18, 0, -18, -4, 18, 0];
-
-/**
  * 🏥 SECTION 3 — HOSPITAL INTRODUCTION & FACILITY
  */
 export const HomeIntroSection = forwardRef((props, forwardedRef) => {
   const localRef = useRef(null);
   const sectionRef = forwardedRef || localRef;
 
-  const [pillars, setPillars] = useState(INITIAL_PILLARS);
+  const [pillars] = useState(INITIAL_PILLARS);
   const [patternIndex, setPatternIndex] = useState(0);
+  const [isConverged, setIsConverged] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [mobileIndex, setMobileIndex] = useState(0);
 
   const isInView = useInView(sectionRef, { amount: 0.15 });
 
-  // Shuffle handler: cyclically rotate cards and advance pattern index
-  const triggerShuffle = () => {
-    setPatternIndex((prev) => (prev + 1) % 3);
-    setPillars((prev) => {
-      const [first, ...rest] = prev;
-      return [...rest, first];
-    });
-  };
-
+  // Timed cycle: Stationary (4.5s) -> Converge to Center (1.5s) -> Return to original position
   useEffect(() => {
     if (!isInView || isPaused) return;
 
-    // Slow and gentle shuffle cycle
-    const timer = setInterval(() => {
-      triggerShuffle();
+    const interval = setInterval(() => {
+      // 1. Glide together into the center
+      setIsConverged(true);
+
+      // Advance mobile active card
+      setMobileIndex((prev) => (prev + 1) % 3);
+
+      // 2. Hold at center for 1.4s, then expand back out
+      setTimeout(() => {
+        setIsConverged(false);
+        setPatternIndex((prev) => (prev + 1) % 3);
+      }, 1400);
+
     }, 5500);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, [isInView, isPaused]);
 
   return (
@@ -187,9 +184,9 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
               Founded by UK-trained specialist <strong className="text-slate-800 font-semibold">Dr. Vatsal Khetan</strong> (FRCS Edinburgh, M.Ch Knee UK), Khetan Hospital brings international joint replacement standards, sub-millimeter robotic precision, and dedicated arthroscopic sports rehabilitation directly to Gorakhpur and Eastern Uttar Pradesh.
             </p>
 
-            {/* 3 Clinical Pillars: Complete Cards Moving in Shape of 8 (Up -> Left -> Down) */}
+            {/* ── DESKTOP CHOREOGRAPHY: Stationary -> Converge to Center -> Expand Out ── */}
             <div
-              className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 relative"
+              className="hidden sm:grid grid-cols-3 gap-3 pt-1 relative"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
@@ -197,65 +194,146 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                 const Icon = pillar.icon;
                 const theme = COLOR_PATTERNS[patternIndex][pillar.colorIndex];
 
+                // Coordinate calculation for convergence:
+                // Index 0 (Left): moves right by (100% + gap)
+                // Index 1 (Center): stays at 0, lifts slightly
+                // Index 2 (Right): moves left by (100% + gap)
+                let targetX = 0;
+                let targetRotate = 0;
+                let targetZIndex = 1;
+                let targetScale = 1;
+
+                if (isConverged) {
+                  if (index === 0) {
+                    targetX = 'calc(100% + 12px)';
+                    targetRotate = -2.5;
+                    targetZIndex = 10;
+                    targetScale = 0.98;
+                  } else if (index === 1) {
+                    targetX = 0;
+                    targetRotate = 0;
+                    targetZIndex = 30;
+                    targetScale = 1.04;
+                  } else if (index === 2) {
+                    targetX = 'calc(-100% - 12px)';
+                    targetRotate = 2.5;
+                    targetZIndex = 15;
+                    targetScale = 0.98;
+                  }
+                }
+
                 return (
                   <motion.div
                     key={pillar.id}
-                    layout="position"
-                    transition={{
-                      layout: {
-                        type: "spring",
-                        stiffness: 75,
-                        damping: 15,
-                        mass: 1.4,
-                      },
+                    animate={{
+                      x: targetX,
+                      rotate: targetRotate,
+                      scale: targetScale,
+                      zIndex: targetZIndex,
                     }}
-                    className="relative cursor-default"
+                    transition={{
+                      type: "spring",
+                      stiffness: 70,
+                      damping: 14,
+                      mass: 1.1,
+                    }}
+                    whileHover={{ scale: 1.03, zIndex: 40 }}
+                    className={`relative p-3.5 sm:p-4 rounded-xl border-2 transition-colors duration-700 flex flex-col justify-between cursor-default min-h-[140px] ${theme.cardBg} ${theme.border} ${theme.shadow}`}
                   >
-                    {/* Inner Card executing continuous, slow Figure-8 motion (Up -> Left -> Down) */}
-                    <motion.div
-                      animate={{
-                        x: FIGURE_8_X,
-                        y: FIGURE_8_Y,
-                      }}
-                      transition={{
-                        duration: 10,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        delay: -(index * 3.33),
-                      }}
-                      whileHover={{ scale: 1.03 }}
-                      className={`p-3.5 sm:p-4 rounded-xl border-2 transition-colors duration-700 flex flex-col justify-between ${theme.cardBg} ${theme.border} ${theme.shadow} min-h-[135px]`}
-                    >
-                      <div>
-                        {/* Top icon and pulsing accent dot */}
-                        <div className="flex items-center justify-between mb-2">
-                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-700 ${theme.iconBg} shadow-sm shrink-0`}>
-                            <Icon className="w-3.5 h-3.5" />
-                          </div>
-                          <span className={`w-2 h-2 rounded-full transition-all duration-700 ${theme.accentDot} animate-pulse`} />
+                    <div>
+                      {/* Top icon and pulsing accent dot */}
+                      <div className="flex items-center justify-between mb-2">
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-700 ${theme.iconBg} shadow-sm shrink-0`}>
+                          <Icon className="w-3.5 h-3.5" />
                         </div>
-
-                        {/* Card Title */}
-                        <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#08284d]">
-                          {pillar.title}
-                        </h3>
-
-                        {/* Card Description */}
-                        <p className="text-[11px] text-slate-600 mt-1 leading-snug font-light">
-                          {pillar.desc}
-                        </p>
+                        <span className={`w-2 h-2 rounded-full transition-all duration-700 ${theme.accentDot} animate-pulse`} />
                       </div>
 
-                      {/* Bottom Micro-Badge */}
-                      <div className="mt-2 pt-2 border-t border-slate-200/60 flex items-center justify-between">
-                        <span className={`text-[9px] font-mono font-bold tracking-wider uppercase transition-colors duration-700 ${theme.tagText}`}>
-                          {pillar.badge}
-                        </span>
-                      </div>
-                    </motion.div>
+                      {/* Card Title */}
+                      <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#08284d]">
+                        {pillar.title}
+                      </h3>
+
+                      {/* Card Description */}
+                      <p className="text-[11px] text-slate-600 mt-1 leading-snug font-light">
+                        {pillar.desc}
+                      </p>
+                    </div>
+
+                    {/* Bottom Micro-Badge */}
+                    <div className="mt-2 pt-2 border-t border-slate-200/60 flex items-center justify-between">
+                      <span className={`text-[9px] font-mono font-bold tracking-wider uppercase transition-colors duration-700 ${theme.tagText}`}>
+                        {pillar.badge}
+                      </span>
+                    </div>
                   </motion.div>
                 );
               })}
+            </div>
+
+            {/* ── MOBILE CHOREOGRAPHY: Clean Swipeable Card + Tab Indicator ── */}
+            <div className="block sm:hidden pt-1 relative">
+              <div className="relative min-h-[145px]">
+                <AnimatePresence mode="wait">
+                  {(() => {
+                    const activePillar = pillars[mobileIndex];
+                    const Icon = activePillar.icon;
+                    const theme = COLOR_PATTERNS[patternIndex][activePillar.colorIndex];
+
+                    return (
+                      <motion.div
+                        key={activePillar.id}
+                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        className={`p-4 rounded-xl border-2 flex flex-col justify-between ${theme.cardBg} ${theme.border} ${theme.shadow} min-h-[140px]`}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${theme.iconBg} shadow-sm shrink-0`}>
+                              <Icon className="w-3.5 h-3.5" />
+                            </div>
+                            <span className="text-[10px] font-mono font-bold text-slate-500 uppercase">
+                              {mobileIndex + 1} of 3
+                            </span>
+                          </div>
+
+                          <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-[#08284d]">
+                            {activePillar.title}
+                          </h3>
+                          <p className="text-xs text-slate-600 mt-1 leading-snug font-light">
+                            {activePillar.desc}
+                          </p>
+                        </div>
+
+                        <div className="mt-2 pt-2 border-t border-slate-200/60 flex items-center justify-between">
+                          <span className={`text-[9px] font-mono font-bold tracking-wider uppercase ${theme.tagText}`}>
+                            {activePillar.badge}
+                          </span>
+                        </div>
+                      </motion.div>
+                    );
+                  })()}
+                </AnimatePresence>
+              </div>
+
+              {/* Mobile Indicator Pills */}
+              <div className="flex items-center justify-center gap-2 mt-2.5">
+                {pillars.map((p, idx) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setMobileIndex(idx)}
+                    className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wide transition-all cursor-pointer ${
+                      mobileIndex === idx
+                        ? 'bg-[#08284d] text-white shadow-xs'
+                        : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-800'
+                    }`}
+                  >
+                    {p.title.split(' ')[0]}
+                  </button>
+                ))}
+              </div>
             </div>
 
           </div>
