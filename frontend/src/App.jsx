@@ -73,14 +73,6 @@ class ErrorBoundary extends React.Component {
 
 // AppShell provides natural full-page vertical layout for all routes including homepage
 function AppShell({ onBookClick, isAppointmentModalOpen, setIsAppointmentModalOpen, prefilledPhone }) {
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  const isServicesRoute = location.pathname.startsWith('/services');
-  const isDoctorRoute = location.pathname.startsWith('/about') || location.pathname === '/memorable-moments' || location.pathname === '/published-papers' || location.pathname === '/timeline';
-  const isLocationsRoute = location.pathname === '/locations';
-  const isBlogsRoute = location.pathname.startsWith('/blogs');
-  const hasCustomShutterFooter = isHomePage || isServicesRoute || isDoctorRoute || isLocationsRoute || isBlogsRoute;
-
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-[#0b2847] selection:text-white">
       <Navbar onBookClick={onBookClick} />
@@ -105,8 +97,8 @@ function AppShell({ onBookClick, isAppointmentModalOpen, setIsAppointmentModalOp
         </Routes>
       </main>
 
-      {/* On inner pages that don't have custom shutter footer, render standard footer */}
-      {!hasCustomShutterFooter && <Footer onBookClick={onBookClick} />}
+      {/* Matching Shutter Footer rendered globally on every page */}
+      <Footer onBookClick={onBookClick} />
 
       {/* Floating Action Buttons (WhatsApp, Quick Dial, Priority Booking) */}
       <FloatingActions onBookClick={onBookClick} />

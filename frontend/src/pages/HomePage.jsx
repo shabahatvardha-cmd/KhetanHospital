@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { HomeDoctorHero } from '../components/home/HomeDoctorHero';
 import { HomeCarouselSection } from '../components/home/HomeCarouselSection';
 import { HomeIntroSection } from '../components/home/HomeIntroSection';
 import { HorizontalMarquee } from '../components/motion/HorizontalMarquee';
 import { ScrollSplitTypography } from '../components/motion/ScrollSplitTypography';
-import { Footer } from '../components/layout/Footer';
 
 /**
  * 🏥 KHETAN HOSPITAL — MASTER HOMEPAGE FLOW (Polpharma Biologics Inspired Redesign)
@@ -17,12 +16,9 @@ import { Footer } from '../components/layout/Footer';
  * 6. Screen 4: Comprehensive Hospital Footer (Shutter Slide 2, sticky z-20)
  */
 export const HomePage = ({ onBookClick }) => {
-  const footerRef = useRef(null);
-
   const scrollToFooter = () => {
-    if (footerRef.current) {
-      footerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    const el = document.getElementById('hospital-footer');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const scrollToIntro = () => {
@@ -60,11 +56,8 @@ export const HomePage = ({ onBookClick }) => {
         caption="Bringing world-class sub-millimeter joint reconstruction, arthroscopy, and sports medicine directly to Gorakhpur and Eastern Uttar Pradesh."
       />
 
-      {/* 5. HOSPITAL OVERVIEW (Shutter Slide 1 - sticky z-10) */}
+      {/* 5. HOSPITAL OVERVIEW */}
       <HomeIntroSection onNextClick={scrollToFooter} />
-
-      {/* 6. COMPREHENSIVE HOSPITAL FOOTER (Shutter Slide 2 - sticky z-20) */}
-      <Footer ref={footerRef} onBookClick={onBookClick} />
     </div>
   );
 };

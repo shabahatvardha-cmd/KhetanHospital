@@ -386,49 +386,6 @@ export const BlogsPage = ({ onBookClick }) => {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: MONOLITHIC SATURATED COBALT CLOSING BANNER
-      ────────────────────────────────────────────────────────────── */}
-      <section className="w-full bg-[#08284d] text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-t border-black/20">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-          
-          {/* Left: Circular Hospital Seal & Headline */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            <div className="w-16 h-16 rounded-full border-2 border-white/30 flex items-center justify-center shrink-0 shadow-inner bg-white/5">
-              <div className="w-11 h-11 rounded-full border border-white/60 flex items-center justify-center text-white font-black text-xs">
-                KH
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white leading-tight">
-                ORTHOPAEDIC PATIENT EDUCATION ONLY
-              </h2>
-              <p className="text-xs text-slate-300 font-light max-w-lg">
-                Evidence-based surgical knowledge empowering patients with clarity, safety, and rapid recovery across Purvanchal.
-              </p>
-            </div>
-          </div>
-
-          {/* Right: Golden Pill Call to Action Button */}
-          <div className="shrink-0">
-            <button
-              onClick={onBookClick}
-              className="px-8 py-3.5 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider bg-[#f59e0b] hover:bg-[#d97706] text-[#08284d] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
-            >
-              Book Priority Consultation &rarr;
-            </button>
-          </div>
-
-        </div>
-
-        {/* Minimal White Bottom Divider Line */}
-        <div className="max-w-5xl mx-auto mt-10 pt-4 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
-          <span>Khetan Hospital &bull; Vikas Nagar, Bargadawa, Gorakhpur</span>
-          <span>Centralized Helpline: +91 96623 65917</span>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
           SECTION 5: IN-DEPTH ARTICLE READER MODAL (On Card Click)
       ────────────────────────────────────────────────────────────── */}
       {selectedBlog && (

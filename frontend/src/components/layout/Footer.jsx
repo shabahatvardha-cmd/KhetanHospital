@@ -1,311 +1,217 @@
-import React, { forwardRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   MapPin,
   Phone,
   Mail,
-  ArrowRight,
+  Clock,
   ShieldCheck,
-  Award
+  Award,
+  Sparkles,
+  ExternalLink,
+  ChevronRight
 } from 'lucide-react';
-import { useNavigation } from '../../context/NavigationContext';
 import { clinicInfo } from '../../data/navigationData';
 
 /**
- * 🎨 SPECIALTY-SPECIFIC FOOTER THEMES
- * Matches each surgical service page's unique color palette, headline & clinical tagline.
- */
-const SERVICE_FOOTER_THEMES = {
-  'robotic-knee-surgery': {
-    accent: '#f59e0b',
-    accentHover: '#d97706',
-    headline: 'EXPERIENCE ADVANCED ROBOTIC PRECISION',
-    tagline: 'Sub-Millimeter Optical Guidance • Rapid 24-Hour Mobility Protocol'
-  },
-  'knee-replacement': {
-    accent: '#f59e0b',
-    accentHover: '#d97706',
-    headline: 'RESTORE NATURAL PAIN-FREE KNEE MOBILITY',
-    tagline: '20+ Year Survivorship Implants • Kinematic Tissue-Sparing Realignment'
-  },
-  'hip-replacement': {
-    accent: '#10b981',
-    accentHover: '#059669',
-    headline: 'EXPERIENCE LIFELONG CERAMIC HIP PRECISION',
-    tagline: 'Direct Anterior Muscle Sparing • Lifelong Low-Wear Ceramic Bearings'
-  },
-  'shoulder-replacement': {
-    accent: '#8b5cf6',
-    accentHover: '#7c3aed',
-    headline: 'RESTORE HIGH-PERFORMANCE SHOULDER POWER',
-    tagline: 'High-Definition Keyhole Optics • Advanced Deltoid Biomechanical Mastery'
-  },
-  'acl-surgery': {
-    accent: '#ef4444',
-    accentHover: '#dc2626',
-    headline: 'RETURN TO PEAK ATHLETIC PERFORMANCE',
-    tagline: 'IOC Olympic Sports Protocol • Biological Meniscus Preservation'
-  },
-  'spine-surgery': {
-    accent: '#0d9488',
-    accentHover: '#0f766e',
-    headline: 'MINIMALLY INVASIVE MICROSCOPIC SPINE RELIEF',
-    tagline: 'Targeted Nerve Decompression • Same-Day & 24-Hour Walking Protocol'
-  },
-  'trauma-surgery': {
-    accent: '#2563eb',
-    accentHover: '#1d4ed8',
-    headline: 'ADVANCED 3D ANATOMICAL FRACTURE RESTORATION',
-    tagline: 'UK Fellowship Trauma Mastery • 24/7 Emergency Pelvic & Polytrauma Care'
-  }
-};
-
-const DEFAULT_FOOTER_THEME = {
-  accent: '#f59e0b',
-  accentHover: '#d97706',
-  headline: 'EXPERIENCE ADVANCED ROBOTIC PRECISION',
-  tagline: 'Sub-Millimeter Joint Excellence • Rapid 24-Hour Mobility Protocol'
-};
-
-/**
- * 🏥 TUBIK-INSPIRED EDITORIAL HOSPITAL FOOTER
- * - Dynamically inherits active surgery page palette & headline
- * - Single-line consultation booking pill with Country Code (+91) & strict 10-digit validation
- * - High-contrast deep dark canvas with generous breathing space
- * - Screen-fitted shutter slide behavior on Homepage & Services
+ * 🏥 UNIFIED MATCHING HOSPITAL SHUTTER FOOTER
+ * - Architectural shutter slide covering the page on scroll (relative z-30, shadow-2xl, full-height)
+ * - Signature Hospital Cobalt palette (#08284d) matching Navbar, Modals and Brand
+ * - Clean 3-column layout (Brand & UK Governance | Quick Directory | Hospital Contact & OPD Hours)
+ * - Rendered consistently on EVERY page across the entire website
  */
 export const Footer = forwardRef((props, ref) => {
-  const { isHomePage } = useNavigation();
-  const location = useLocation();
-  const isServicesRoute = location.pathname.startsWith('/services');
-  const isShutter = props.isShutter !== undefined ? props.isShutter : (isHomePage || isServicesRoute);
-
-  // Extract route slug if on /services/:slug
-  const pathParts = location.pathname.split('/').filter(Boolean);
-  const routeSlug = (pathParts[0] === 'services' && pathParts[1]) ? pathParts[1] : null;
-  const routeTheme = routeSlug ? SERVICE_FOOTER_THEMES[routeSlug] : null;
-
-  // Resolve dynamic theme prioritizing props, then route, then fallback
-  const activeAccent = props.themeSpec?.accent || props.accentColor || routeTheme?.accent || DEFAULT_FOOTER_THEME.accent;
-  const activeAccentHover = props.themeSpec?.accentHover || props.accentHover || routeTheme?.accentHover || DEFAULT_FOOTER_THEME.accentHover;
-  const activeHeadline = props.themeSpec?.footerHeadline || props.headline || routeTheme?.headline || DEFAULT_FOOTER_THEME.headline;
-  const activeTagline = props.themeSpec?.footerTagline || props.tagline || routeTheme?.tagline || DEFAULT_FOOTER_THEME.tagline;
-
-  // Phone input state with country code and strict 10-digit constraint
-  const [phoneDigits, setPhoneDigits] = useState('');
-  const [phoneError, setPhoneError] = useState('');
-
-  const handlePhoneInput = (e) => {
-    // Only allow numeric digits, max 10
-    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
-    setPhoneDigits(digitsOnly);
-    if (phoneError) setPhoneError('');
-  };
-
-  const handleQuickBook = (e) => {
-    e.preventDefault();
-    if (phoneDigits.length !== 10) {
-      setPhoneError('Please enter a valid 10-digit mobile number');
-      return;
-    }
-    setPhoneError('');
-    if (props.onBookClick) {
-      props.onBookClick(phoneDigits);
-    }
-  };
-
   return (
     <footer
       id="hospital-footer"
       ref={ref}
-      className={`w-full bg-[#121110] text-white select-none shrink-0 ${
-        isShutter
-          ? 'relative z-30 min-h-[calc(100vh-58px)] sm:min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] shadow-[0_-25px_60px_rgba(0,0,0,0.6)] border-t border-white/10 flex flex-col justify-between overflow-hidden'
-          : 'relative z-20 border-t border-white/10'
-      } py-8 sm:py-12 lg:py-14 px-6 sm:px-10 lg:px-16`}
+      className="relative z-30 w-full min-h-[calc(100vh-60px)] bg-gradient-to-b from-[#08284d] to-[#04162c] text-white select-none shrink-0 shadow-[0_-30px_90px_rgba(4,22,46,0.7)] border-t-2 border-sky-400/40 flex flex-col justify-between py-10 sm:py-14 px-6 sm:px-10 lg:px-16 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto w-full my-auto space-y-10 sm:space-y-12">
 
-        {/* Main Grid: Left Giant Headline + Input, Right 2 Directory Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        {/* ══════════════════════════════════════════════════════════
+            TOP BAR: Brand Identity & Priority Consultation CTA
+        ══════════════════════════════════════════════════════════ */}
+        <div className="pb-8 border-b border-white/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           
-          {/* ══════════════════════════════════════════════════════════
-              LEFT COLUMN (7 Cols): GIANT TITLE & QUICK BOOKING PILL
-              Dynamic surgical headline, country code & 10-digit number
-          ══════════════════════════════════════════════════════════ */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-7">
-            
-            {/* Giant Condensed All-Caps Headline - Service-Themed */}
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-[0.92] transition-colors duration-300">
-              {activeHeadline}
-            </h2>
-
-            {/* Quick Consultation Booking Pill Input with Country Code */}
-            <div className="space-y-2 max-w-xl">
-              <form 
-                onSubmit={handleQuickBook}
-                style={{
-                  borderColor: phoneError ? '#ef4444' : undefined,
-                }}
-                className="flex items-center rounded-full border border-white/20 bg-white/5 p-1.5 focus-within:border-white/50 focus-within:bg-white/10 transition-all shadow-inner"
-              >
-                {/* Dedicated Country Code Badge */}
-                <div className="flex items-center gap-1.5 pl-3 sm:pl-4 pr-2.5 py-1 text-xs sm:text-sm font-mono font-bold text-white/90 border-r border-white/20 select-none shrink-0">
-                  <span className="text-sm sm:text-base leading-none">🇮🇳</span>
-                  <span>+91</span>
-                </div>
-
-                {/* Numeric-Only 10-Digit Input */}
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  maxLength={10}
-                  value={phoneDigits}
-                  onChange={handlePhoneInput}
-                  placeholder="98765 43210"
-                  className="bg-transparent px-3 sm:px-4 py-2 text-xs sm:text-sm font-mono text-white placeholder-white/35 outline-none flex-1 tracking-wider"
-                />
-
-                {/* Service-Themed Book Button */}
-                <button
-                  type="submit"
-                  style={{ backgroundColor: activeAccent }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = activeAccentHover; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = activeAccent; }}
-                  className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer shrink-0"
-                >
-                  BOOK
-                </button>
-              </form>
-
-              {phoneError && (
-                <p className="text-[11px] font-mono font-medium text-red-400 pl-4 animate-in fade-in duration-200">
-                  &bull; {phoneError}
-                </p>
-              )}
-            </div>
-
-            {/* Subtle Clinical Tagline - Service-Themed */}
-            <p className="text-xs font-mono text-white/50 tracking-wider uppercase transition-colors duration-300">
-              {activeTagline}
-            </p>
-
-          </div>
-
-          {/* ══════════════════════════════════════════════════════════
-              RIGHT COLUMN (5 Cols): TWO CLEAN DIRECTORY COLUMNS
-              Matches active service accent color
-          ══════════════════════════════════════════════════════════ */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs font-mono">
-            
-            {/* Column 1: YOU CAN FIND US */}
-            <div className="space-y-4">
-              <span 
-                className="text-[11px] font-mono font-bold tracking-widest uppercase block transition-colors duration-300"
-                style={{ color: activeAccent }}
-              >
-                YOU CAN FIND US
+          {/* Logo & Full Brand Name */}
+          <Link to="/" className="flex items-center gap-3.5 group cursor-pointer">
+            <img
+              src="/logo.webp"
+              alt="Khetan Multi Speciality And Medical Research Centre"
+              className="w-12 h-12 sm:w-14 sm:h-14 object-contain rounded-2xl bg-white/10 p-1 border border-white/20 shadow-md group-hover:scale-105 transition-transform shrink-0"
+            />
+            <div className="flex flex-col">
+              <span className="text-base sm:text-xl font-black text-white uppercase tracking-wider leading-tight">
+                KHETAN MULTI SPECIALITY
               </span>
-
-              <div className="space-y-2.5 text-white/80">
-                <div>
-                  <a
-                    href={`tel:${clinicInfo.phone.replace(/\s+/g, '')}`}
-                    className="hover:text-white transition-colors font-bold block"
-                  >
-                    +91 {clinicInfo.phone}
-                  </a>
-                </div>
-
-                <div>
-                  <a
-                    href="mailto:drvatsalkhetan@gmail.com"
-                    className="hover:text-white transition-colors uppercase block text-[11px]"
-                  >
-                    DRVATSALKHETAN@GMAIL.COM
-                  </a>
-                </div>
-
-                <div className="text-white/60 leading-relaxed text-[11px] pt-1">
-                  VIKAS NAGAR, BARGADAWA,<br />
-                  GORAKHPUR, UP 273015
-                </div>
-
-                <div className="pt-2">
-                  <a
-                    href="https://maps.google.com/?q=Khetan+Hospital+Gorakhpur"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: activeAccent }}
-                    className="inline-flex items-center gap-1.5 font-bold uppercase tracking-wider transition-opacity hover:opacity-80"
-                  >
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span>Get Directions</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 2: A FEW WORDS ABOUT US */}
-            <div className="space-y-4">
-              <span 
-                className="text-[11px] font-mono font-bold tracking-widest uppercase block transition-colors duration-300"
-                style={{ color: activeAccent }}
-              >
-                A FEW WORDS ABOUT US
+              <span className="text-xs sm:text-sm font-mono font-bold text-sky-300 uppercase tracking-widest mt-0.5">
+                AND MEDICAL RESEARCH CENTRE
               </span>
-
-              <ul className="space-y-2 text-white/80 font-bold uppercase tracking-wider text-[11px]">
-                <li>
-                  <Link to="/about" className="hover:text-white transition-colors block">
-                    WHO WE ARE
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/services" className="hover:text-white transition-colors block">
-                    SURGICAL PROCEDURES
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="hover:text-white transition-colors block">
-                    DR. VATSAL KHETAN
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/published-papers" className="hover:text-white transition-colors block">
-                    PUBLISHED RESEARCH
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="hover:text-white transition-colors block">
-                    CONTACT &amp; VISITS
-                  </Link>
-                </li>
-              </ul>
             </div>
+          </Link>
 
+          {/* Golden Priority Consultation Action Button */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => props.onBookClick && props.onBookClick()}
+              className="px-7 sm:px-9 py-3.5 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider bg-[#f59e0b] hover:bg-[#d97706] text-[#08284d] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer flex items-center gap-2"
+            >
+              <span>Book Priority Consultation</span>
+              <span>&rarr;</span>
+            </button>
           </div>
 
         </div>
 
-        {/* Bottom Strip: Logo Mark, Copyright & Governance */}
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-white/50">
-          <div className="flex items-center gap-3">
-            <img src="/logo.webp" alt="Khetan Multi Speciality" className="w-8 h-8 object-contain rounded-full bg-white/10 p-0.5 shrink-0" />
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-              <span className="font-black text-white uppercase tracking-wider text-sm">
-                KHETAN MULTI SPECIALITY
-              </span>
-              <span className="hidden sm:inline">&bull;</span>
-              <span className="text-[11px] text-sky-300 font-semibold uppercase tracking-wider">
-                AND MEDICAL RESEARCH CENTRE
-              </span>
+        {/* ══════════════════════════════════════════════════════════
+            MAIN 3-COLUMN DIRECTORY GRID
+        ══════════════════════════════════════════════════════════ */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 text-xs">
+
+          {/* Column 1: Clinical Governance & Surgical Excellence (4 Cols) */}
+          <div className="md:col-span-4 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-300 text-[10px] font-mono font-bold uppercase tracking-wider">
+              <Award className="w-3.5 h-3.5 text-sky-400" />
+              <span>International Surgical Rigor</span>
+            </div>
+
+            <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
+              Sub-Millimeter Robotic &amp; Sports Injury Centre in Purvanchal
+            </h3>
+
+            <p className="text-slate-300 leading-relaxed text-[11px] sm:text-xs font-light">
+              Founded and directed by <strong className="text-white font-semibold">Dr. Vatsal Khetan</strong> (FRCS Edinburgh, M.Ch Knee UK), delivering evidence-based joint replacements, kinematic realignments, and 24-hour rapid mobilization pathways.
+            </p>
+
+            <div className="space-y-2 pt-2 text-[11px] font-mono text-slate-300">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>UK Royal College (Edinburgh) Governance</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-sky-400 shrink-0" />
+                <span>Sub-Millimeter Optical Robotic Precision</span>
+              </div>
             </div>
           </div>
 
-          <div className="text-[11px]">
-            &copy; {new Date().getFullYear()} ALL RIGHTS RESERVED.
+          {/* Column 2: Quick Clinical & Patient Directory (4 Cols) */}
+          <div className="md:col-span-4 space-y-4">
+            <span className="text-[11px] font-mono font-bold tracking-widest text-sky-300 uppercase block">
+              PATIENT &amp; CLINICAL DIRECTORY
+            </span>
+
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 font-mono text-[11px] sm:text-xs">
+              <Link to="/" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Home</span>
+              </Link>
+              <Link to="/services" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Services</span>
+              </Link>
+              <Link to="/about" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Dr. Vatsal Khetan</span>
+              </Link>
+              <Link to="/memorable-moments" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Career Timeline</span>
+              </Link>
+              <Link to="/published-papers" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Research (10 Papers)</span>
+              </Link>
+              <Link to="/locations" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Regional Locations</span>
+              </Link>
+              <Link to="/blogs" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Patient Guides (61)</span>
+              </Link>
+              <Link to="/contact" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all flex items-center gap-1.5">
+                <ChevronRight className="w-3 h-3 text-sky-400" />
+                <span>Contact &amp; Visits</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Column 3: Hospital Reception, Timings & Directions (4 Cols) */}
+          <div className="md:col-span-4 space-y-4">
+            <span className="text-[11px] font-mono font-bold tracking-widest text-sky-300 uppercase block">
+              HOSPITAL RECEPTION &amp; VISITS
+            </span>
+
+            <div className="space-y-3 text-slate-300 font-mono text-[11px] sm:text-xs">
+              {/* Phone Helpline */}
+              <div className="flex items-start gap-2.5">
+                <Phone className="w-4 h-4 text-[#f59e0b] shrink-0 mt-0.5" />
+                <div>
+                  <span className="block text-[10px] text-slate-400 uppercase">Emergency &amp; Appointments:</span>
+                  <a href={`tel:${clinicInfo.phone.replace(/\s+/g, '')}`} className="text-sm font-bold text-white hover:text-sky-300 transition-colors">
+                    {clinicInfo.phone}
+                  </a>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-start gap-2.5">
+                <Mail className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                <div>
+                  <span className="block text-[10px] text-slate-400 uppercase">Official Email:</span>
+                  <a href="mailto:drvatsalkhetan@gmail.com" className="text-white hover:underline">
+                    drvatsalkhetan@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              {/* Physical Location */}
+              <div className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <div className="leading-snug">
+                  <span className="block text-[10px] text-slate-400 uppercase">Hospital Address:</span>
+                  <span className="text-white">Vikas Nagar, Bargadawa, Gorakhpur, UP 273015</span>
+                </div>
+              </div>
+
+              {/* OPD Consultation Timings */}
+              <div className="flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <span className="block text-[10px] text-slate-400 uppercase">OPD Consultation Hours:</span>
+                  <span className="text-white">Mon – Sat: 9:00 AM – 8:00 PM (Emergency 24/7)</span>
+                </div>
+              </div>
+
+              {/* Google Maps Direction Button */}
+              <div className="pt-1">
+                <a
+                  href="https://maps.google.com/?q=Khetan+Hospital+Gorakhpur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-300 hover:text-white transition-colors uppercase tracking-wider"
+                >
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>Get Directions on Google Maps</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            BOTTOM STRIP: Copyright & Governance Verification
+        ══════════════════════════════════════════════════════════ */}
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+          <div>
+            &copy; {new Date().getFullYear()} Khetan Multi Speciality And Medical Research Centre. All Rights Reserved.
+          </div>
+          <div className="text-[11px] text-sky-300/80">
+            FRCS (Edinburgh) Surgical Standards &bull; Modular Clean-Room OT
           </div>
         </div>
 

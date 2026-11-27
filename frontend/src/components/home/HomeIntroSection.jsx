@@ -167,10 +167,10 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-          
+
           {/* Left Column: Hospital Mission & 3 Dynamic Shuffling Pillars (7 Cols) */}
           <div className="lg:col-span-7 space-y-3 sm:space-y-4">
-            
+
             {/* Large Animated Heading */}
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#08284d] tracking-tight-editorial uppercase leading-[1.08]">
               <AnimatedWordReveal
@@ -351,11 +351,10 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                   <button
                     key={p.id}
                     onClick={() => setMobileIndex(idx)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wide transition-all cursor-pointer ${
-                      mobileIndex === idx
-                        ? 'bg-[#08284d] text-white shadow-xs'
-                        : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-800'
-                    }`}
+                    className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wide transition-all cursor-pointer ${mobileIndex === idx
+                      ? 'bg-[#08284d] text-white shadow-xs'
+                      : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-800'
+                      }`}
                   >
                     {p.title.split(' ')[0]}
                   </button>
@@ -376,7 +375,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                
+
                 {/* Floating Doctor Spotlight Card */}
                 <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2.5 rounded-xl bg-white/95 backdrop-blur-md border border-white/80 shadow-md flex items-center gap-2.5">
                   <img
