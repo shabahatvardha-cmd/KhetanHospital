@@ -82,9 +82,7 @@ function AppShell({ onBookClick, isAppointmentModalOpen, setIsAppointmentModalOp
   const hasCustomShutterFooter = isHomePage || isServicesRoute || isDoctorRoute || isLocationsRoute || isBlogsRoute;
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black ${
-      isHomePage ? 'bg-[#030712] text-white' : 'bg-slate-50 text-slate-900'
-    }`}>
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-[#0b2847] selection:text-white">
       <Navbar onBookClick={onBookClick} />
 
       <main className="flex-1">

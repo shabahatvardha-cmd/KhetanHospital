@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { HomeDoctorHero } from '../components/home/HomeDoctorHero';
 import { HomeCarouselSection } from '../components/home/HomeCarouselSection';
 import { HomeIntroSection } from '../components/home/HomeIntroSection';
@@ -13,8 +14,9 @@ import { Footer } from '../components/layout/Footer';
 /**
  * 🏥 KHETAN HOSPITAL — MASTER HOMEPAGE FLOW (POLPHARMA BIOLOGICS THEME)
  * 
- * Deep midnight biotech canvas, frosted glassmorphism, glowing cyan/teal auras,
- * high-contrast Swiss statement typography, and authentic hospital leadership.
+ * Deep midnight biotech canvas, living drifting ambient glow nodes,
+ * 3D perspective cards, animated counters, kinetic split typography,
+ * and authentic hospital leadership.
  */
 export const HomePage = ({ onBookClick }) => {
   const footerRef = useRef(null);
@@ -38,16 +40,43 @@ export const HomePage = ({ onBookClick }) => {
 
   return (
     <div className="relative w-full bg-[#030712] text-white select-none overflow-x-hidden min-h-screen selection:bg-cyan-500 selection:text-black">
-      {/* Polpharma-Style Fixed Ambient Atmospheric Glow Nodes */}
+      {/* Living Drifting Ambient Atmospheric Glow Nodes */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] rounded-full bg-cyan-500/10 blur-[160px]" />
-        <div className="absolute top-1/3 left-1/6 w-[500px] h-[500px] rounded-full bg-teal-500/10 blur-[140px]" />
-        <div className="absolute bottom-1/4 right-1/3 w-[650px] h-[650px] rounded-full bg-indigo-600/10 blur-[180px]" />
+        <motion.div
+          animate={{
+            x: [0, 45, -35, 0],
+            y: [0, -40, 30, 0],
+            scale: [1, 1.18, 0.92, 1],
+            opacity: [0.12, 0.22, 0.14, 0.12],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-0 right-1/4 w-[600px] h-[600px] rounded-full bg-cyan-500 blur-[160px]"
+        />
+        <motion.div
+          animate={{
+            x: [0, -35, 40, 0],
+            y: [0, 35, -25, 0],
+            scale: [1, 1.15, 0.95, 1],
+            opacity: [0.10, 0.18, 0.12, 0.10],
+          }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/3 left-1/6 w-[500px] h-[500px] rounded-full bg-teal-500 blur-[140px]"
+        />
+        <motion.div
+          animate={{
+            x: [0, 30, -45, 0],
+            y: [0, -25, 35, 0],
+            scale: [1, 1.2, 0.9, 1],
+            opacity: [0.08, 0.16, 0.10, 0.08],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-1/4 right-1/3 w-[650px] h-[650px] rounded-full bg-indigo-600 blur-[180px]"
+        />
         <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:32px_32px]" />
       </div>
 
       <div className="relative z-10">
-        {/* 1. DOCTOR HERO (Polpharma Biotech Hero with Laser Telemetry & Statement Typography) */}
+        {/* 1. DOCTOR HERO (Polpharma Biotech Hero with Laser Telemetry & Animated Counters) */}
         <HomeDoctorHero
           onBookClick={onBookClick}
           onWatchReelsClick={() => openVideoModal(0)}
@@ -80,20 +109,20 @@ export const HomePage = ({ onBookClick }) => {
           caption="Bringing world-class sub-millimeter joint reconstruction, arthroscopy, and sports medicine directly to Gorakhpur and Eastern Uttar Pradesh."
         />
 
-        {/* 5. 3-PART DOCTORS SECTION (Meet Doctors, Clinical Expertise, Monthly Free Knee Camp) */}
+        {/* 5. 3-PART DOCTORS SECTION (Tilt & Spotlight Cards, Living Doctor Portraits, Monthly Free Camp) */}
         <HomeIntroSection
           onBookClick={onBookClick}
           onNextClick={scrollToFooter}
           onExpandModal={(idx) => openVideoModal(idx)}
         />
 
-        {/* 6. 100% CASHLESS HEALTH INSURANCE & TPA TRUST STRIP */}
+        {/* 6. 100% CASHLESS HEALTH INSURANCE & TPA TRUST STRIP (Spotlight Cards) */}
         <HomeCashlessTrustStrip />
 
-        {/* 7. HOSPITAL & REGIONAL OUTREACH NETWORK */}
+        {/* 7. HOSPITAL & REGIONAL OUTREACH NETWORK (Tilt & Spotlight Cards) */}
         <HomeLocationsHighlight onBookClick={onBookClick} />
 
-        {/* 8. PATIENT RECOVERY & JOINT HEALTH GUIDES */}
+        {/* 8. PATIENT RECOVERY & JOINT HEALTH GUIDES (Tilt Cards with Myntra/Swiss Rhythm) */}
         <HomeBlogsHighlight />
 
         {/* 9. COMPREHENSIVE HOSPITAL FOOTER */}

@@ -4,13 +4,11 @@ import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 /**
- * 🏥 FEATURED SURGICAL SERVICES SHOWCASE (POLPHARMA BIOTECH THEME)
+ * 🏥 FEATURED SURGICAL SERVICES SHOWCASE (POLPHARMA BIOTECH FLUID MOTION)
  * 
  * - Frosted glassmorphism on deep midnight biotech backdrop
- * - Dynamic color theming per service with glowing SVG contour loops
- * - Outlined program tag + filled CTA button
- * - Editorial headline & clinical narrative
- * - Squircle image frame with multi-layered debossed bevels
+ * - Dynamic color theming per service with live animated SVG contour loops
+ * - Kinetic floating squircle frame with 3D depth and parallax zoom
  * - Floating capsule navigation with dots + circle buttons
  */
 export const FEATURED_SERVICES = [
@@ -208,7 +206,7 @@ export const FeaturedServicesShowcase = () => {
           }}
         />
 
-        {/* Dynamic Flowing Organic Vector Contour Lines in Neon Accent */}
+        {/* Dynamic Flowing Organic Vector Contour Lines with Continuous Floating Wave Animation */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
           <svg
             className="w-full h-full"
@@ -216,16 +214,30 @@ export const FeaturedServicesShowcase = () => {
             fill="none"
             preserveAspectRatio="none"
           >
-            <path
-              d="M -50 450 C 200 480 350 200 600 220 C 780 240 880 120 1050 180"
+            <motion.path
+              animate={{
+                d: [
+                  "M -50 450 C 200 480 350 200 600 220 C 780 240 880 120 1050 180",
+                  "M -50 430 C 220 460 370 220 580 200 C 760 220 900 140 1050 190",
+                  "M -50 450 C 200 480 350 200 600 220 C 780 240 880 120 1050 180",
+                ]
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               stroke={theme.accent}
               strokeWidth="1.75"
               strokeDasharray="8 6"
               strokeOpacity="0.5"
               className="transition-colors duration-700"
             />
-            <path
-              d="M 450 -50 C 580 80 820 40 850 250 C 880 440 680 550 500 580 C 380 600 220 540 120 400"
+            <motion.path
+              animate={{
+                d: [
+                  "M 450 -50 C 580 80 820 40 850 250 C 880 440 680 550 500 580 C 380 600 220 540 120 400",
+                  "M 430 -50 C 560 100 840 20 870 230 C 860 460 660 530 520 560 C 400 580 240 520 130 380",
+                  "M 450 -50 C 580 80 820 40 850 250 C 880 440 680 550 500 580 C 380 600 220 540 120 400",
+                ]
+              }}
+              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               stroke={theme.accent}
               strokeWidth="2"
               strokeOpacity="0.5"
@@ -253,17 +265,19 @@ export const FeaturedServicesShowcase = () => {
                 {currentService.code} &bull; {currentService.category}
               </span>
 
-              <Link
-                to={currentService.route}
-                className="px-4 py-1.5 rounded-full text-slate-950 text-[11px] font-black uppercase tracking-wider inline-flex items-center gap-1.5 transition-all duration-300 shadow-lg hover:scale-105 group cursor-pointer"
-                style={{
-                  backgroundColor: theme.accent,
-                  boxShadow: `0 4px 15px ${theme.accent}50`
-                }}
-              >
-                <span>View Details</span>
-                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to={currentService.route}
+                  className="px-4 py-1.5 rounded-full text-slate-950 text-[11px] font-black uppercase tracking-wider inline-flex items-center gap-1.5 transition-all duration-300 shadow-lg cursor-pointer"
+                  style={{
+                    backgroundColor: theme.accent,
+                    boxShadow: `0 4px 15px ${theme.accent}50`
+                  }}
+                >
+                  <span>View Details</span>
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
             </div>
 
             {/* Main Heading & Narrative with Animated Transition */}
@@ -271,10 +285,10 @@ export const FeaturedServicesShowcase = () => {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentService.id}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight-editorial uppercase leading-[1.08]">
                     {currentService.heading}
@@ -291,8 +305,10 @@ export const FeaturedServicesShowcase = () => {
             <div className="pt-1">
               <div className="inline-flex items-center gap-2.5 p-1 sm:p-1.5 rounded-full bg-white/[0.04] border border-white/10 shadow-lg backdrop-blur-md">
                 
-                {/* Previous Button */}
-                <button
+                {/* Previous Button with Spring */}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={handlePrev}
                   aria-label="Previous service"
                   className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 border border-white/10 shadow-sm flex items-center justify-center text-white hover:text-slate-950 transition-all duration-300 cursor-pointer"
@@ -308,7 +324,7 @@ export const FeaturedServicesShowcase = () => {
                   }}
                 >
                   <ChevronLeft className="w-3.5 h-3.5 stroke-[2.5]" />
-                </button>
+                </motion.button>
 
                 {/* Pagination Dots */}
                 <div className="flex items-center gap-1.5 px-1.5">
@@ -336,8 +352,10 @@ export const FeaturedServicesShowcase = () => {
                   })}
                 </div>
 
-                {/* Next Button */}
-                <button
+                {/* Next Button with Spring */}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={handleNext}
                   aria-label="Next service"
                   className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 border border-white/10 shadow-sm flex items-center justify-center text-white hover:text-slate-950 transition-all duration-300 cursor-pointer"
@@ -353,16 +371,26 @@ export const FeaturedServicesShowcase = () => {
                   }}
                 >
                   <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                </button>
+                </motion.button>
 
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Featured Squircle Image with Multi-Layered Debossed Bevel Frames */}
+          {/* Right Column: Featured Squircle Image with Multi-Layered Debossed Bevel Frames & Continuous Float */}
           <div className="lg:col-span-5 flex justify-center items-center relative">
-            <div className="relative w-full max-w-[250px] sm:max-w-[280px] lg:max-w-[300px] aspect-square">
+            <motion.div
+              animate={{
+                y: [0, -6, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="relative w-full max-w-[250px] sm:max-w-[280px] lg:max-w-[300px] aspect-square"
+            >
               
               {/* Layer 1: Debossed secondary background bevel frame */}
               <div 
@@ -387,16 +415,16 @@ export const FeaturedServicesShowcase = () => {
                     key={currentService.id}
                     src={currentService.image}
                     alt={currentService.heading}
-                    initial={{ opacity: 0, scale: 1.05 }}
+                    initial={{ opacity: 0, scale: 1.08 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.45, ease: "easeOut" }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </AnimatePresence>
               </div>
 
-            </div>
+            </motion.div>
           </div>
 
         </div>
