@@ -94,33 +94,6 @@ export const BlogsPage = ({ onBookClick }) => {
     });
   }, [searchQuery, selectedCategory]);
 
-  // Distribute into 5 columns for Desktop
-  const cols5 = useMemo(() => {
-    const cols = [[], [], [], [], []];
-    filteredBlogs.forEach((blog, idx) => {
-      cols[idx % 5].push(blog);
-    });
-    return cols;
-  }, [filteredBlogs]);
-
-  // Distribute into 3 columns for Tablet
-  const cols3 = useMemo(() => {
-    const cols = [[], [], []];
-    filteredBlogs.forEach((blog, idx) => {
-      cols[idx % 3].push(blog);
-    });
-    return cols;
-  }, [filteredBlogs]);
-
-  // Distribute into 2 columns for Mobile
-  const cols2 = useMemo(() => {
-    const cols = [[], []];
-    filteredBlogs.forEach((blog, idx) => {
-      cols[idx % 2].push(blog);
-    });
-    return cols;
-  }, [filteredBlogs]);
-
   const handleShare = () => {
     if (navigator.clipboard && selectedBlog) {
       const url = `${window.location.origin}/blogs/${selectedBlog.slug}`;
@@ -130,15 +103,15 @@ export const BlogsPage = ({ onBookClick }) => {
     }
   };
 
-  // Reusable card renderer (Same uniform dimensions, dark border)
+  // Reusable card renderer (Uniform dimensions, inside padding, dark border)
   const renderCard = (blog, key) => (
     <article
       key={key}
       onClick={() => setSelectedBlog(blog)}
-      className="bg-white rounded-2xl border-2 border-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+      className="bg-white rounded-2xl border-2 border-slate-900 shadow-xs hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer p-3.5 sm:p-4 h-full"
     >
-      {/* Featured Image with strict identical aspect ratio across all cards */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 border-b border-slate-200">
+      {/* Featured Image with strict identical aspect ratio and inner rounding */}
+      <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shrink-0">
         <img
           src={blog.featuredImage || '/images/dr-vatsal-rehab.webp'}
           alt={blog.title}
@@ -152,7 +125,7 @@ export const BlogsPage = ({ onBookClick }) => {
 
         {/* Minimal Category Chip Overlay */}
         {blog.category && (
-          <div className="absolute top-2 left-2">
+          <div className="absolute top-2.5 left-2.5">
             <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9px] font-mono font-bold uppercase tracking-wider shadow-xs">
               {blog.category}
             </span>
@@ -160,9 +133,9 @@ export const BlogsPage = ({ onBookClick }) => {
         )}
       </div>
 
-      {/* Minimal Body (Title & Read Time Only) */}
-      <div className="p-3 sm:p-3.5 flex flex-col justify-between space-y-2.5">
-        <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2">
+      {/* Body: Uniform fixed height so all cards line up 100% evenly */}
+      <div className="pt-3 flex-1 flex flex-col justify-between space-y-3">
+        <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2 h-10 sm:h-11 flex items-start">
           {blog.title}
         </h3>
 
@@ -312,59 +285,11 @@ export const BlogsPage = ({ onBookClick }) => {
           </div>
         </div>
 
-        {/* ── Desktop: True 5-Column Staggered Masonry (lg & up) ── */}
+        {/* Uniform Grid - Clean row alignment across all screen sizes */}
         {filteredBlogs.length > 0 ? (
-          <>
-            <div className="hidden lg:grid grid-cols-5 gap-5 items-start">
-              {/* Column 0: Standard Top */}
-              <div className="flex flex-col gap-5 pt-0">
-                {cols5[0].map((blog, idx) => renderCard(blog, `col0-${idx}`))}
-              </div>
-
-              {/* Column 1: Shifted Down by 40px (Myntra Wave) */}
-              <div className="flex flex-col gap-5 pt-10">
-                {cols5[1].map((blog, idx) => renderCard(blog, `col1-${idx}`))}
-              </div>
-
-              {/* Column 2: Slightly Offset */}
-              <div className="flex flex-col gap-5 pt-2">
-                {cols5[2].map((blog, idx) => renderCard(blog, `col2-${idx}`))}
-              </div>
-
-              {/* Column 3: Shifted Down by 48px (Myntra Wave) */}
-              <div className="flex flex-col gap-5 pt-12">
-                {cols5[3].map((blog, idx) => renderCard(blog, `col3-${idx}`))}
-              </div>
-
-              {/* Column 4: Slightly Offset */}
-              <div className="flex flex-col gap-5 pt-4">
-                {cols5[4].map((blog, idx) => renderCard(blog, `col4-${idx}`))}
-              </div>
-            </div>
-
-            {/* ── Tablet: 3-Column Staggered Masonry (md to lg) ── */}
-            <div className="hidden md:grid lg:hidden grid-cols-3 gap-4 items-start">
-              <div className="flex flex-col gap-4 pt-0">
-                {cols3[0].map((blog, idx) => renderCard(blog, `tab0-${idx}`))}
-              </div>
-              <div className="flex flex-col gap-4 pt-8">
-                {cols3[1].map((blog, idx) => renderCard(blog, `tab1-${idx}`))}
-              </div>
-              <div className="flex flex-col gap-4 pt-3">
-                {cols3[2].map((blog, idx) => renderCard(blog, `tab2-${idx}`))}
-              </div>
-            </div>
-
-            {/* ── Mobile: 2-Column Staggered Masonry (sm & below) ── */}
-            <div className="grid md:hidden grid-cols-2 gap-3.5 items-start">
-              <div className="flex flex-col gap-3.5 pt-0">
-                {cols2[0].map((blog, idx) => renderCard(blog, `mob0-${idx}`))}
-              </div>
-              <div className="flex flex-col gap-3.5 pt-6">
-                {cols2[1].map((blog, idx) => renderCard(blog, `mob1-${idx}`))}
-              </div>
-            </div>
-          </>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 items-stretch">
+            {filteredBlogs.map((blog, idx) => renderCard(blog, `blog-${blog.id || idx}`))}
+          </div>
         ) : (
           <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 shadow-xs">
             <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />

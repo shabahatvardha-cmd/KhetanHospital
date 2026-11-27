@@ -35,16 +35,16 @@ export const HomeBlogsHighlight = () => {
           </Link>
         </div>
 
-        {/* 3-Column Editorial Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 3-Column Editorial Grid - Equal dimensions, inside padding, dark border */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {featuredGuides.map((guide, idx) => (
             <Link
               key={guide.id || idx}
               to="/blogs"
-              className="bg-white rounded-2xl border-2 border-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+              className="bg-white rounded-2xl border-2 border-slate-900 shadow-xs hover:shadow-xl hover:-translate-y-1 hover:border-sky-600 transition-all duration-300 flex flex-col justify-between group cursor-pointer p-3.5 sm:p-4 h-full"
             >
-              {/* Thumbnail with strict uniform dimensions */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-200">
+              {/* Thumbnail with inside padding & rounded corners */}
+              <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shrink-0">
                 <img
                   src={guide.featuredImage || '/images/dr-vatsal-rehab.webp'}
                   alt={guide.title}
@@ -63,12 +63,12 @@ export const HomeBlogsHighlight = () => {
               </div>
 
               {/* Body */}
-              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="pt-3.5 sm:pt-4 flex-1 flex flex-col justify-between space-y-3">
                 <div className="space-y-1.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2">
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2 h-10 sm:h-11 flex items-start">
                     {guide.title}
                   </h3>
-                  <p className="text-xs text-slate-500 font-light leading-relaxed line-clamp-2">
+                  <p className="text-xs text-slate-500 font-light leading-relaxed line-clamp-2 h-8 sm:h-9">
                     {guide.excerpt || guide.textContent?.slice(0, 120)}
                   </p>
                 </div>
