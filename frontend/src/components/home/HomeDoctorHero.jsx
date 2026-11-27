@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Calendar, ArrowUpRight, Award, Play, Instagram } from 'lucide-react';
+import { ChevronDown, ArrowUpRight, Award, Play } from 'lucide-react';
 import { clinicInfo } from '../../data/clinicContent';
 import { doctorImages } from '../../data/imageConfig';
 import { WaveGradientText } from '../motion/WaveGradientText';
@@ -52,26 +52,24 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
               </p>
             </div>
 
-            {/* Editorial Headline Statement - Clean High-Impact Accent Without Web Underline */}
-            <h2 className="text-base sm:text-xl lg:text-[22px] font-extrabold text-slate-900 tracking-tight leading-snug">
-              Pioneering <span className="text-sky-600 font-black">Sub-Millimeter Robotic Joint Excellence</span> &amp; Advanced Orthopaedic Care in Gorakhpur
-            </h2>
-
             {/* Concise Supporting Narrative */}
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light max-w-xl pt-1">
               Bringing UK Royal College surgical governance, sub-millimeter robotic precision, and dedicated arthroscopic sports rehabilitation directly to Gorakhpur and Eastern Uttar Pradesh.
             </p>
 
             {/* Action Triggers - Balanced & Sleek */}
-            <div className="flex flex-wrap items-center gap-3 pt-1.5">
-              <button
-                onClick={onBookClick}
-                className="px-6 py-3 rounded-full bg-[#08284d] text-white text-xs sm:text-sm font-bold tracking-wide hover:bg-sky-600 hover:shadow-xl hover:shadow-sky-600/20 transition-all duration-300 flex items-center gap-2 group cursor-pointer shadow-md"
-              >
-                <Calendar className="w-4 h-4 text-sky-300" />
-                <span>Book Priority Consultation</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {onWatchReelsClick && (
+                <button
+                  type="button"
+                  onClick={onWatchReelsClick}
+                  className="px-6 py-3 rounded-full bg-[#08284d] text-white text-xs sm:text-sm font-bold tracking-wide hover:bg-sky-600 hover:shadow-xl hover:shadow-sky-600/20 transition-all duration-300 flex items-center gap-2 group cursor-pointer shadow-md"
+                >
+                  <Play className="w-4 h-4 text-sky-300 fill-current" />
+                  <span>Doctor's Introduction</span>
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </button>
+              )}
 
               <button
                 onClick={scrollToCarousel}
@@ -79,17 +77,6 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
               >
                 Explore Specialties
               </button>
-
-              {onWatchReelsClick && (
-                <button
-                  type="button"
-                  onClick={onWatchReelsClick}
-                  className="px-5 py-3 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-purple-600 text-white text-xs sm:text-sm font-bold tracking-wide hover:shadow-lg hover:shadow-rose-500/25 hover:scale-[1.02] transition-all duration-300 flex items-center gap-2 group cursor-pointer shadow-sm"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Watch Doctor Reels</span>
-                </button>
-              )}
             </div>
           </div>
 
@@ -198,7 +185,6 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
 
                 {/* 5. Floating FRCS Accreditation Badge */}
                 <motion.div
-                  onClick={onWatchReelsClick}
                   animate={{
                     y: [0, -3, 0],
                   }}
@@ -208,30 +194,19 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
                     ease: "easeInOut",
                     delay: 0.5,
                   }}
-                  className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-[92%] sm:w-[88%] p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl flex items-center justify-between gap-2 z-20 transition-all ${
-                    onWatchReelsClick ? 'cursor-pointer hover:border-rose-300 hover:shadow-rose-500/10' : ''
-                  }`}
+                  className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[92%] sm:w-[88%] p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl flex items-center gap-2.5 z-20"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-500 to-[#00bcd4] flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
-                      FRCS
-                    </div>
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-xs font-black text-slate-900 leading-tight truncate">
-                        Dr. Vatsal Khetan
-                      </span>
-                      <span className="text-[10px] text-sky-700 font-bold leading-tight truncate">
-                        Royal College Fellow (Edinburgh) &bull; M.Ch (UK)
-                      </span>
-                    </div>
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-500 to-[#00bcd4] flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
+                    FRCS
                   </div>
-
-                  {onWatchReelsClick && (
-                    <span className="px-2 py-1 rounded-full bg-rose-50 text-rose-600 hover:bg-rose-100 text-[10px] font-bold flex items-center gap-1 transition-colors shrink-0">
-                      <Play className="w-2.5 h-2.5 fill-current" />
-                      <span>Reels</span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs font-black text-slate-900 leading-tight truncate">
+                      Dr. Vatsal Khetan
                     </span>
-                  )}
+                    <span className="text-[10px] text-sky-700 font-bold leading-tight truncate">
+                      Royal College Fellow (Edinburgh) &bull; M.Ch (UK)
+                    </span>
+                  </div>
                 </motion.div>
               </div>
             </motion.div>
