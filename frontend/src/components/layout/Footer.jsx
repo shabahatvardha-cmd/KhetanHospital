@@ -1,26 +1,62 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ShieldCheck, ChevronUp } from 'lucide-react';
 import { clinicInfo } from '../../data/navigationData';
 
 /**
- * 🏥 NORMAL, CALM & UNCLUTTERED HOSPITAL FOOTER
- * - Standard, natural document flow (no full-screen shutter trap, no navbar cut-off)
- * - Normal, elegant dark slate palette (bg-slate-900) that looks natural across all pages
- * - Normal, clean details: Brand, Quick Links, Hospital Contact & OPD Hours
+ * 🏥 KHETAN HOSPITAL FOOTER
+ * - Supports both standard document flow and full-screen Shutter Overlay mode
+ * - In Shutter mode (isShutter={true}):
+ *   Rises smoothly like a physical shutter over preceding sections,
+ *   covering the entire viewport with an authoritative hospital close.
  */
-export const Footer = forwardRef((props, ref) => {
+export const Footer = forwardRef(({ onBookClick, isShutter = false, ...props }, ref) => {
   return (
     <footer
       id="hospital-footer"
       ref={ref}
-      className="w-full bg-[#030712] text-slate-300 border-t border-slate-800/80 text-xs select-none relative z-10"
+      className={`w-full bg-slate-900 text-slate-300 text-xs select-none ${isShutter
+        ? 'min-h-screen flex flex-col justify-between shadow-[0_-35px_80px_rgba(0,0,0,0.9)] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-sky-500/40 pt-5 pb-6 sm:pb-8'
+        : 'border-t border-slate-800 py-10 sm:py-12'
+        }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-        
-        {/* 3 Normal Clean Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
-          
+      {/* Shutter Pull Handle & Hospital Header (Shutter Mode Only) */}
+      {isShutter && (
+        <div className="w-full pt-1 pb-3 flex flex-col items-center select-none">
+          <div className="w-20 h-1.5 rounded-full bg-slate-700/90 shadow-inner" />
+          <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mt-2.5 font-bold">
+            KHETAN MULTI SPECIALITY HOSPITAL &bull; CLINICAL GOVERNANCE
+          </span>
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6 sm:space-y-8 my-auto">
+
+        {/* 24/7 Clinical Excellence Banner (Shutter Mode) */}
+        {isShutter && (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 px-4 rounded-xl bg-slate-800/70 border border-slate-700/60 text-[11px] font-mono text-slate-300">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>24/7 Emergency Trauma</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-sky-400" />
+              <span>Sub-0.5mm Robotic Nav</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              <span>100% Cashless TPA Desk</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-400" />
+              <span>Royal College FRCS Gov</span>
+            </div>
+          </div>
+        )}
+
+        {/* 3 Main Hospital Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
+
           {/* Column 1: Hospital Name & Profile (5 Cols) */}
           <div className="md:col-span-5 space-y-3">
             <Link to="/" className="flex items-center gap-2.5 group">
@@ -85,7 +121,8 @@ export const Footer = forwardRef((props, ref) => {
 
             <div className="pt-2">
               <button
-                onClick={() => props.onBookClick && props.onBookClick()}
+                type="button"
+                onClick={() => onBookClick && onBookClick()}
                 className="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs transition-colors cursor-pointer"
               >
                 Book Priority Appointment
@@ -95,8 +132,8 @@ export const Footer = forwardRef((props, ref) => {
 
         </div>
 
-        {/* Normal Bottom Copyright */}
-        <div className="mt-8 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500 font-mono">
+        {/* Bottom Copyright & Accreditation */}
+        <div className="pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500 font-mono">
           <span>&copy; {new Date().getFullYear()} Khetan Multi Speciality And Medical Research Centre. All Rights Reserved.</span>
           <span>Gorakhpur, Uttar Pradesh</span>
         </div>

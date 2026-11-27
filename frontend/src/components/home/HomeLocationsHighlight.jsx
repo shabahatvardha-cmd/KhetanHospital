@@ -1,198 +1,223 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Clock, ArrowRight, Phone, Navigation, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Clock, ArrowRight, MapPin } from 'lucide-react';
 import { allLocations } from '../../data/clinicContent';
 
-/**
- * 🏥 SCENE 7 — PURVANCHAL REGIONAL CONSULTATION NETWORK
- * 
- * Interactive geographic network experience connecting Gorakhpur Central Hospital
- * with regional specialist outreach clinics across Eastern UP and Western Bihar.
- */
+const LOCATION_CARD_THEMES = [
+  {
+    // 0: Gorakhpur (Main Surgical Hospital) - Sapphire & Royal Sky
+    cardBg: 'bg-gradient-to-br from-blue-50/95 via-sky-50/50 to-white',
+    border: 'border-sky-300/90 hover:border-sky-500',
+    shadow: 'shadow-md shadow-sky-500/10 hover:shadow-xl hover:shadow-sky-500/20',
+    badge: 'bg-[#08284d] text-white',
+    cityTitle: 'text-[#08284d]',
+    title: 'text-slate-900 group-hover:text-sky-800',
+    clockIcon: 'text-sky-600',
+    linkText: 'text-sky-700 hover:text-sky-900',
+    distanceText: 'text-sky-700 font-bold',
+    divider: 'border-sky-200/70',
+    ring: 'ring-2 ring-sky-400/25',
+    topBar: 'bg-gradient-to-r from-sky-400 to-blue-600',
+  },
+  {
+    // 1: Deoria (Outreach Centre) - Emerald & Jade Green
+    cardBg: 'bg-gradient-to-br from-emerald-50/95 via-teal-50/50 to-white',
+    border: 'border-emerald-300/90 hover:border-emerald-500',
+    shadow: 'shadow-md shadow-emerald-500/10 hover:shadow-xl hover:shadow-emerald-500/20',
+    badge: 'bg-emerald-700 text-white',
+    cityTitle: 'text-emerald-950',
+    title: 'text-slate-900 group-hover:text-emerald-800',
+    clockIcon: 'text-emerald-600',
+    linkText: 'text-emerald-700 hover:text-emerald-900',
+    distanceText: 'text-emerald-700 font-bold',
+    divider: 'border-emerald-200/70',
+    ring: 'ring-1 ring-emerald-400/20',
+    topBar: 'bg-gradient-to-r from-emerald-400 to-teal-600',
+  },
+  {
+    // 2: Basti (Outreach Centre) - Warm Amber & Golden Honey
+    cardBg: 'bg-gradient-to-br from-amber-50/95 via-yellow-50/50 to-white',
+    border: 'border-amber-300/90 hover:border-amber-500',
+    shadow: 'shadow-md shadow-amber-500/10 hover:shadow-xl hover:shadow-amber-500/20',
+    badge: 'bg-amber-700 text-white',
+    cityTitle: 'text-amber-950',
+    title: 'text-slate-900 group-hover:text-amber-900',
+    clockIcon: 'text-amber-600',
+    linkText: 'text-amber-800 hover:text-amber-950',
+    distanceText: 'text-amber-800 font-bold',
+    divider: 'border-amber-200/70',
+    ring: 'ring-1 ring-amber-400/20',
+    topBar: 'bg-gradient-to-r from-amber-400 to-orange-500',
+  },
+  {
+    // 3: Padrauna / Kushinagar (Outreach Centre) - Royal Indigo & Purple
+    cardBg: 'bg-gradient-to-br from-indigo-50/95 via-purple-50/50 to-white',
+    border: 'border-indigo-300/90 hover:border-indigo-500',
+    shadow: 'shadow-md shadow-indigo-500/10 hover:shadow-xl hover:shadow-indigo-500/20',
+    badge: 'bg-indigo-700 text-white',
+    cityTitle: 'text-indigo-950',
+    title: 'text-slate-900 group-hover:text-indigo-800',
+    clockIcon: 'text-indigo-600',
+    linkText: 'text-indigo-700 hover:text-indigo-900',
+    distanceText: 'text-indigo-700 font-bold',
+    divider: 'border-indigo-200/70',
+    ring: 'ring-1 ring-indigo-400/20',
+    topBar: 'bg-gradient-to-r from-indigo-400 to-purple-600',
+  },
+];
+
 export const HomeLocationsHighlight = ({ onBookClick }) => {
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  const activeLoc = allLocations[selectedIdx] || allLocations[0];
+  const sectionRef = useRef(null);
+
+  // Track section scroll progression bidirectionally
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Section Header: Slides from left of screen and appears on scroll
+  const textX = useTransform(scrollYProgress, [0.06, 0.28, 0.72, 0.94], [-120, 0, 0, -80]);
+  const textOpacity = useTransform(scrollYProgress, [0.06, 0.24, 0.76, 0.94], [0, 1, 1, 0]);
+
+  // CTA Button: Smooth entrance and exit
+  const buttonX = useTransform(scrollYProgress, [0.09, 0.31, 0.72, 0.94], [80, 0, 0, 60]);
+  const buttonOpacity = useTransform(scrollYProgress, [0.09, 0.26, 0.76, 0.94], [0, 1, 1, 0]);
+
+  // Staggered pop up for each card on its position, then move downwards and disappear on scroll down (vice-versa on scroll up)
+  // Card 1
+  const card1Y = useTransform(scrollYProgress, [0.10, 0.28, 0.68, 0.88], [75, 0, 0, 85]);
+  const card1Scale = useTransform(scrollYProgress, [0.10, 0.28, 0.68, 0.88], [0.88, 1, 1, 0.92]);
+  const card1Opacity = useTransform(scrollYProgress, [0.10, 0.24, 0.72, 0.88], [0, 1, 1, 0]);
+
+  // Card 2
+  const card2Y = useTransform(scrollYProgress, [0.14, 0.32, 0.70, 0.90], [75, 0, 0, 90]);
+  const card2Scale = useTransform(scrollYProgress, [0.14, 0.32, 0.70, 0.90], [0.88, 1, 1, 0.92]);
+  const card2Opacity = useTransform(scrollYProgress, [0.14, 0.28, 0.74, 0.90], [0, 1, 1, 0]);
+
+  // Card 3
+  const card3Y = useTransform(scrollYProgress, [0.18, 0.36, 0.72, 0.92], [75, 0, 0, 95]);
+  const card3Scale = useTransform(scrollYProgress, [0.18, 0.36, 0.72, 0.92], [0.88, 1, 1, 0.92]);
+  const card3Opacity = useTransform(scrollYProgress, [0.18, 0.32, 0.76, 0.92], [0, 1, 1, 0]);
+
+  // Card 4
+  const card4Y = useTransform(scrollYProgress, [0.22, 0.40, 0.74, 0.94], [75, 0, 0, 100]);
+  const card4Scale = useTransform(scrollYProgress, [0.22, 0.40, 0.74, 0.94], [0.88, 1, 1, 0.92]);
+  const card4Opacity = useTransform(scrollYProgress, [0.22, 0.36, 0.78, 0.94], [0, 1, 1, 0]);
+
+  const cardTransforms = [
+    { y: card1Y, scale: card1Scale, opacity: card1Opacity },
+    { y: card2Y, scale: card2Scale, opacity: card2Opacity },
+    { y: card3Y, scale: card3Scale, opacity: card3Opacity },
+    { y: card4Y, scale: card4Scale, opacity: card4Opacity },
+  ];
 
   return (
-    <section className="relative w-full bg-[#030712] border-b border-white/10 py-14 sm:py-20 select-none text-[#F8FAFC] overflow-hidden">
-      {/* Living Ambient Lighting Glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.25, 1],
-            opacity: [0.08, 0.16, 0.08],
-          }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-cyan-500 blur-[160px] -z-10"
-        />
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-slate-50 border-b border-slate-200/90 pt-4 sm:pt-6 pb-10 sm:pb-14 select-none overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
-
-        {/* Section Header */}
+        {/* Section Header: Slides from left of screen */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-1.5 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[10px] font-mono font-bold uppercase tracking-wider">
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Purvanchal Outreach Network &bull; Scene 7</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+          <motion.div
+            style={{ x: textX, opacity: textOpacity }}
+            className="space-y-1.5 max-w-2xl will-change-transform"
+          >
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#08284d] tracking-tight">
               Hospital &amp; Regional Outreach Centres
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
-              Serving patients across Eastern Uttar Pradesh and Western Bihar with regular specialist consultation clinics and advanced robotic surgery at our main Gorakhpur hospital.
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+              Serving patients across Eastern Uttar Pradesh and Western Bihar with regular specialist OPDs and advanced surgical care at our main Gorakhpur hospital.
             </p>
-          </div>
+          </motion.div>
 
-          <Link
-            to="/locations"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.05] text-white text-xs font-bold hover:bg-white/[0.1] hover:border-cyan-400 transition-all duration-300 shadow-md group self-start sm:self-auto cursor-pointer"
+          <motion.div
+            style={{ x: buttonX, opacity: buttonOpacity }}
+            className="self-start sm:self-auto will-change-transform"
           >
-            <span>View All Clinic Details &amp; Maps</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-          </Link>
+            <Link
+              to="/locations"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 bg-white text-slate-800 text-xs font-bold hover:bg-[#08284d] hover:text-white hover:border-[#08284d] transition-all duration-300 shadow-2xs group cursor-pointer"
+            >
+              <span>View All Clinic Details &amp; Maps</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
         </div>
 
-        {/* Interactive Network Stage: Visual Connectivity Diagram + Active Hub Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* 4-Card Locations Grid: Spacious gap & compact heading-styled cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 lg:gap-8 [perspective:1000px]">
+          {allLocations.slice(0, 4).map((loc, idx) => {
+            const isMain = loc.isMain || idx === 0;
+            const theme = LOCATION_CARD_THEMES[idx % LOCATION_CARD_THEMES.length];
+            const transform = cardTransforms[idx];
 
-          {/* Left: Interactive Regional Route Selector (5 Cols) */}
-          <div className="lg:col-span-5 bg-white/[0.03] backdrop-blur-2xl rounded-3xl p-6 border border-white/10 shadow-xl flex flex-col justify-between space-y-4">
-            <div className="space-y-2">
-              <span className="text-[10px] font-mono font-bold uppercase text-slate-400 tracking-wider">
-                Select Regional Consultation Hub
-              </span>
+            // Simplified punchy title for small card format
+            const cleanTitle = isMain
+              ? 'Main Surgical Centre'
+              : loc.title.replace(' Patient Care & Consultation Centre', ' Consultation Centre').replace(' Patient Consultation Centre', ' Outreach Centre');
 
-              {/* Location Selector Tabs */}
-              <div className="space-y-2 pt-1">
-                {allLocations.slice(0, 4).map((loc, idx) => {
-                  const isSelected = idx === selectedIdx;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedIdx(idx)}
-                      className={`w-full text-left p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
-                        isSelected
-                          ? 'bg-cyan-500/15 border-cyan-400 text-white shadow-md'
-                          : 'bg-white/[0.02] border-white/10 text-slate-300 hover:bg-white/[0.05] hover:border-white/20'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div
-                          className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 font-mono font-bold text-xs ${
-                            isSelected ? 'bg-cyan-400 text-slate-950 font-black' : 'bg-white/10 text-slate-400'
-                          }`}
-                        >
-                          {idx === 0 ? 'HUB' : `0${idx}`}
-                        </div>
-                        <div className="min-w-0">
-                          <div className="text-xs font-bold text-white truncate">{loc.city}</div>
-                          <div className="text-[10px] text-slate-400 font-light truncate">{loc.title}</div>
-                        </div>
-                      </div>
-                      <span className={`text-[10px] font-mono shrink-0 ml-2 ${isSelected ? 'text-cyan-300 font-bold' : 'text-slate-500'}`}>
-                        {idx === 0 ? 'Main Hospital' : 'Outreach'}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            const timingText = isMain
+              ? 'Mon - Sat: 9 AM – 8 PM'
+              : loc.timings.replace(' (Prior booking mandatory)', '');
 
-            {/* Hub Quick Hotline */}
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-              <span className="text-slate-400">Gorakhpur Surgical Hub:</span>
-              <a href="tel:9662365917" className="text-cyan-300 font-bold hover:underline">
-                +91 96623 65917
-              </a>
-            </div>
-          </div>
-
-          {/* Right: Active Hub Telemetry & Full Clinical Address (7 Cols) */}
-          <div className="lg:col-span-7 bg-[#071326]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl flex flex-col justify-between space-y-6">
-            <AnimatePresence mode="wait">
+            return (
               <motion.div
-                key={activeLoc.city}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-4"
+                key={idx}
+                style={{
+                  y: transform.y,
+                  scale: transform.scale,
+                  opacity: transform.opacity,
+                  transformOrigin: 'bottom center',
+                }}
+                className={`rounded-2xl p-4 sm:p-4.5 flex flex-col justify-between border transition-all duration-300 relative group overflow-hidden ${theme.cardBg} ${theme.border} ${theme.shadow} ${isMain ? theme.ring : ''} will-change-transform min-h-[148px] sm:min-h-[158px]`}
               >
-                {/* Header Lockup */}
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="px-3 py-1 rounded-full bg-cyan-950/60 text-cyan-300 border border-cyan-800 text-[10px] font-mono font-bold uppercase tracking-wider">
-                    {selectedIdx === 0 ? 'Main Surgical Hospital Hub' : 'Regional Outreach Centre'}
+                {/* Subtle colorful top accent bar */}
+                <div className={`absolute top-0 inset-x-0 h-1 ${theme.topBar}`} />
+
+                <div className="space-y-2 pt-0.5">
+                  {/* Top: City & Badge (Heading style) */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`text-base sm:text-lg font-black tracking-tight ${theme.cityTitle}`}>
+                      {loc.city}
+                    </span>
+                    <span
+                      className={`text-[9.5px] font-mono font-bold uppercase px-2 py-0.5 rounded-md shrink-0 shadow-2xs ${theme.badge}`}
+                    >
+                      {isMain ? 'Main Hospital' : 'Outreach Centre'}
+                    </span>
+                  </div>
+
+                  {/* Centre Heading Title (Heading style only) */}
+                  <div>
+                    <h3 className={`text-sm sm:text-[15px] font-extrabold tracking-tight leading-snug transition-colors ${theme.title}`}>
+                      {cleanTitle}
+                    </h3>
+                    <div className="mt-1 flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
+                      <Clock className={`w-3.5 h-3.5 shrink-0 ${theme.clockIcon}`} />
+                      <span className="truncate">{timingText}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Trigger: Distance Hub & Details Link */}
+                <div className={`pt-2.5 mt-2 border-t flex items-center justify-between text-xs ${theme.divider}`}>
+                  <span className={`text-[10.5px] font-mono ${theme.distanceText}`}>
+                    {loc.distance ? loc.distance.split('(')[0].trim() : 'Central Hub'}
                   </span>
-                  <span className="text-xs font-mono text-slate-400">
-                    {activeLoc.distance || 'Central Surgical Hub'}
-                  </span>
+                  <Link
+                    to="/locations"
+                    className={`font-extrabold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-all ${theme.linkText}`}
+                  >
+                    <span>Details</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
                 </div>
-
-                <div className="space-y-1.5">
-                  <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                    {activeLoc.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 font-light flex items-start gap-2 pt-1">
-                    <MapPin className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                    <span>{activeLoc.address}</span>
-                  </p>
-                </div>
-
-                {/* Timings & Contact Badges */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                    <div className="text-[10.5px] font-mono font-bold text-cyan-400 uppercase flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>Clinic Timings</span>
-                    </div>
-                    <div className="text-xs text-slate-200 font-medium">
-                      {activeLoc.timings || 'Mon - Sat: 9:00 AM – 8:00 PM'}
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                    <div className="text-[10.5px] font-mono font-bold text-emerald-400 uppercase flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5" />
-                      <span>Helpline Contact</span>
-                    </div>
-                    <div className="text-xs text-slate-200 font-medium">
-                      {activeLoc.phone || '+91 96623 65917'}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Catchment & Services Available */}
-                {activeLoc.servicesAvailable && (
-                  <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/10 text-xs text-slate-300 font-light space-y-1">
-                    <span className="font-bold text-white font-mono uppercase text-[10px]">Specialist Services:</span>
-                    <p>{activeLoc.servicesAvailable}</p>
-                  </div>
-                )}
               </motion.div>
-            </AnimatePresence>
-
-            {/* Action Buttons */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-              <Link
-                to="/locations"
-                className="px-6 py-2.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-black uppercase tracking-wider inline-flex items-center gap-2 transition-all shadow-lg shadow-cyan-500/25 cursor-pointer"
-              >
-                <span>View Centre Schedule &amp; Maps</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => onBookClick && onBookClick()}
-                className="px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.05] hover:bg-white/10 text-white text-xs font-bold transition-all cursor-pointer"
-              >
-                Book Consultation
-              </button>
-            </div>
-          </div>
-
+            );
+          })}
         </div>
 
       </div>

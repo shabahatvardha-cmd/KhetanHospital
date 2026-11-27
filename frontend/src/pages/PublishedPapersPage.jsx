@@ -206,10 +206,10 @@ export const PublishedPapersPage = ({ onBookClick }) => {
 
                 {/* Title & Institutional Authors */}
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#0284c7] transition-colors">
+                  <h3 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug group-hover:text-[#0284c7] transition-colors tracking-tight">
                     {paper.title}
                   </h3>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 text-xs text-slate-500 font-mono">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 text-xs text-slate-600 font-extrabold tracking-tight">
                     <span><strong>Journal:</strong> {paper.journal} ({paper.year})</span>
                     {paper.volume && <span>&bull; {paper.volume}</span>}
                     <span>&bull; <strong>Authors:</strong> {paper.authors}</span>
@@ -217,7 +217,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                 </div>
 
                 {/* Abstract Text Container */}
-                <p className="text-xs text-slate-600 leading-relaxed font-light bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                <p className="text-xs font-extrabold tracking-tight text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   {paper.summary}
                 </p>
 

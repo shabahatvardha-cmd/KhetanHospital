@@ -30,10 +30,10 @@ import { PosterLightboxModal } from '../components/home/PosterLightboxModal';
 /**
  * 🏥 DR. VATSAL KHETAN & DR. HELI KHETAN — DOCTORS & CLINICAL TEAM PAGE
  * 
- * Part 1: Meet the Doctors (Editorial portraits of Dr. Vatsal & Dr. Heli Khetan)
- * Part 2: Clinical Expertise (Asymmetric 4-card surgical & joint preservation layout)
- * Part 3: Monthly Free Knee Check-up Campaign (Official poster display + clickable modal)
- * Part 4: Clinical Governance FAQ & Direct Booking
+ * - Meet the Doctors (Editorial portraits of Dr. Vatsal & Dr. Heli Khetan)
+ * - Clinical Expertise (Asymmetric 4-card surgical & joint preservation layout)
+ * - Monthly Free Knee Check-up Campaign (Official poster display + clickable modal)
+ * - Clinical Governance FAQ & Direct Booking
  */
 export const AboutPage = ({ onBookClick }) => {
   const navigate = useNavigate();
@@ -168,18 +168,14 @@ export const AboutPage = ({ onBookClick }) => {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          PART 1: MEET THE DOCTORS (Editorial-Style Dual Doctor Layout)
+          MEET THE DOCTORS (Editorial-Style Dual Doctor Layout)
       ────────────────────────────────────────────────────────────── */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 space-y-10">
         <div className="space-y-2 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-[10.5px] font-mono font-bold uppercase tracking-wider">
-            <Award className="w-3.5 h-3.5 text-sky-600" />
-            <span>Part 1 &bull; Verified Doctor Profiles</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#08284d] tracking-tight">
             Our Specialist Physicians &amp; Surgeons
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 font-light">
+          <p className="text-xs sm:text-sm font-extrabold text-slate-700 tracking-tight">
             Meet the experienced doctors leading robotic surgical joint reconstruction and medical arthritis care at Khetan Hospital.
           </p>
         </div>
@@ -196,46 +192,37 @@ export const AboutPage = ({ onBookClick }) => {
                     alt="Dr. Vatsal Khetan — Robotic Knee Surgeon"
                     className="w-full h-full object-cover object-top select-none group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-1.5 left-1.5">
-                    <span className="px-2 py-0.5 rounded bg-[#08284d] text-white text-[9px] font-mono font-bold uppercase shadow-xs">
-                      FRCS
-                    </span>
-                  </div>
                 </div>
 
                 <div className="space-y-1.5 min-w-0">
-                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-sky-50 text-sky-800 border border-sky-100 text-[10px] font-mono font-bold uppercase">
-                    <Award className="w-3 h-3 text-sky-600" />
-                    <span>Royal College Fellow (Edinburgh)</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-slate-900 tracking-tight">
+                  <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                     Dr. Vatsal Khetan
                   </h3>
-                  <p className="text-sm font-bold text-sky-700">
+                  <p className="text-sm font-extrabold text-sky-800 tracking-tight">
                     Senior Knee Specialist &bull; घुटने के वरिष्ठ विशेषज्ञ
                   </p>
-                  <p className="text-xs font-mono text-slate-500 leading-snug">
+                  <p className="text-xs font-extrabold text-slate-700 tracking-tight leading-snug">
                     MBBS &bull; MS (Ortho) &bull; FRCS (Edinburgh) &bull; M.Ch Knee (UK)
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
                 Specializing in sub-millimeter robotic knee replacements and sports arthroscopy. Trained at Wrightington Hospital and Newcastle upon Tyne NHS Trust (UK).
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
-                  <div className="text-[10px] font-mono font-bold text-sky-700 uppercase">Precision</div>
-                  <div className="text-xs font-bold text-slate-800">Sub-Millimeter Robotic Surgery</div>
+                  <div className="text-[11px] font-extrabold text-sky-800 uppercase tracking-tight">Precision</div>
+                  <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight">Sub-Millimeter Robotic Surgery</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
-                  <div className="text-[10px] font-mono font-bold text-sky-700 uppercase">Tissue Care</div>
-                  <div className="text-xs font-bold text-slate-800">Keyhole Ligament Preservation</div>
+                  <div className="text-[11px] font-extrabold text-sky-800 uppercase tracking-tight">Tissue Care</div>
+                  <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight">Keyhole Ligament Preservation</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
-                  <div className="text-[10px] font-mono font-bold text-sky-700 uppercase">Recovery</div>
-                  <div className="text-xs font-bold text-slate-800">Assisted Walking in 24 Hours</div>
+                  <div className="text-[11px] font-extrabold text-sky-800 uppercase tracking-tight">Recovery</div>
+                  <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight">Assisted Walking in 24 Hours</div>
                 </div>
               </div>
             </div>
@@ -244,7 +231,7 @@ export const AboutPage = ({ onBookClick }) => {
               <button
                 type="button"
                 onClick={onBookClick}
-                className="px-6 py-2.5 rounded-full bg-[#08284d] text-white text-xs font-bold hover:bg-sky-600 transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 rounded-full bg-[#08284d] text-white text-xs font-extrabold tracking-tight hover:bg-sky-600 transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
               >
                 <span>Consult Dr. Vatsal Khetan</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -262,31 +249,22 @@ export const AboutPage = ({ onBookClick }) => {
                     alt="Dr. Heli Khetan — Arthritis & Pain Specialist"
                     className="w-full h-full object-cover object-top select-none group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-1.5 left-1.5">
-                    <span className="px-2 py-0.5 rounded bg-emerald-800 text-white text-[9px] font-mono font-bold uppercase shadow-xs">
-                      Care
-                    </span>
-                  </div>
                 </div>
 
                 <div className="space-y-1.5 min-w-0">
-                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100 text-[10px] font-mono font-bold uppercase">
-                    <HeartHandshake className="w-3 h-3 text-emerald-600" />
-                    <span>Specialist Care</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-slate-900 tracking-tight">
+                  <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                     Dr. Heli Khetan
                   </h3>
-                  <p className="text-sm font-bold text-emerald-700">
+                  <p className="text-sm font-extrabold text-emerald-800 tracking-tight">
                     Arthritis &amp; Pain Specialist &bull; गठिया और दर्द विशेषज्ञ
                   </p>
-                  <p className="text-xs font-mono text-slate-500 leading-snug">
+                  <p className="text-xs font-extrabold text-slate-700 tracking-tight leading-snug">
                     Rheumatology &bull; Chronic Joint Pain &bull; Bone Health Optimization
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
                 Dedicated to non-surgical arthritis management, early diagnosis of joint degeneration, bone density screening, and targeted local pain therapy.
               </p>
 
@@ -294,15 +272,15 @@ export const AboutPage = ({ onBookClick }) => {
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div>
-                    <div className="text-xs font-bold text-slate-900">Targeted Joint Injections &amp; Therapy</div>
-                    <div className="text-[11px] text-slate-500 font-light">घुटने का इंजेक्शन एवं सटीक दवाई से दर्द निवारण</div>
+                    <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight">Targeted Joint Injections &amp; Therapy</div>
+                    <div className="text-[11px] font-extrabold text-slate-700 tracking-tight">घुटने का इंजेक्शन एवं सटीक दवाई से दर्द निवारण</div>
                   </div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div>
-                    <div className="text-xs font-bold text-slate-900">Nerve &amp; Bone Health Protocol</div>
-                    <div className="text-[11px] text-slate-500 font-light">नस एवं हड्डी की जांच और संपूर्ण सुरक्षा</div>
+                    <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight">Nerve &amp; Bone Health Protocol</div>
+                    <div className="text-[11px] font-extrabold text-slate-700 tracking-tight">नस एवं हड्डी की जांच और संपूर्ण सुरक्षा</div>
                   </div>
                 </div>
               </div>
@@ -312,7 +290,7 @@ export const AboutPage = ({ onBookClick }) => {
               <button
                 type="button"
                 onClick={onBookClick}
-                className="px-6 py-2.5 rounded-full bg-emerald-800 text-white text-xs font-bold hover:bg-emerald-900 transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 rounded-full bg-emerald-800 text-white text-xs font-extrabold tracking-tight hover:bg-emerald-900 transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
               >
                 <span>Consult Dr. Heli Khetan</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -320,7 +298,7 @@ export const AboutPage = ({ onBookClick }) => {
 
               <a
                 href="tel:9161995550"
-                className="text-xs font-bold text-emerald-700 hover:text-emerald-900 inline-flex items-center gap-1"
+                className="text-xs font-extrabold text-emerald-800 hover:text-emerald-950 inline-flex items-center gap-1 tracking-tight"
               >
                 <Phone className="w-3.5 h-3.5" />
                 <span>9161995550</span>
@@ -332,18 +310,14 @@ export const AboutPage = ({ onBookClick }) => {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          PART 2: CLINICAL EXPERTISE (Asymmetric 4-Card Surgical Layout)
+          CLINICAL EXPERTISE (Asymmetric 4-Card Surgical Layout)
       ────────────────────────────────────────────────────────────── */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 space-y-8 bg-slate-50/50 rounded-3xl my-6 border-y border-slate-200/80">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-[10.5px] font-mono font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Part 2 &bull; Clinical Expertise</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#08284d] tracking-tight">
             Specialized Surgical &amp; Joint Reconstruction
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 font-light">
+          <p className="text-xs sm:text-sm font-extrabold text-slate-700 tracking-tight">
             Every procedure adheres to strict UK Royal College governance, sub-millimeter computer planning, and rapid patient recovery.
           </p>
         </div>
@@ -360,26 +334,21 @@ export const AboutPage = ({ onBookClick }) => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
                   loading="lazy"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[10px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                    Sub-Millimeter Tech
-                  </span>
-                </div>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-sky-700 transition-colors tracking-tight">
                   Robotic Knee Replacement &amp; 3D CT Planning
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
                   High-resolution CT navigation calculates bone cuts with &plusmn;0.5 mm boundary accuracy, completely sparing soft tissues and collateral ligaments.
                 </p>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold tracking-tight text-slate-700">
               <span>0.5mm Tolerance &bull; Bone Sparing</span>
-              <span className="font-bold text-sky-700">Robotic Standard</span>
+              <span className="font-extrabold text-sky-800">Robotic Standard</span>
             </div>
           </div>
 
@@ -393,26 +362,21 @@ export const AboutPage = ({ onBookClick }) => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
                   loading="lazy"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[10px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                    Joint Preservation
-                  </span>
-                </div>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-sky-700 transition-colors tracking-tight">
                   Total &amp; Partial Joint Replacement
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
                   Partial unicompartmental resurfacing preserving 70% of healthy bone, and direct anterior muscle-sparing hip surgery.
                 </p>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold tracking-tight text-slate-700">
               <span>Cementless Ingrowth &bull; High Flexion</span>
-              <span className="font-bold text-sky-700">30+ Year Longevity</span>
+              <span className="font-extrabold text-sky-800">30+ Year Longevity</span>
             </div>
           </div>
 
@@ -426,26 +390,21 @@ export const AboutPage = ({ onBookClick }) => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
                   loading="lazy"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[10px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                    Keyhole Surgery
-                  </span>
-                </div>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-sky-700 transition-colors tracking-tight">
                   Sports Medicine &amp; Arthroscopy
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
                   Remnant-preserving ACL reconstruction using the anatomical "J Arch" landmark, inside-out meniscus repair, and shoulder cuff restoration.
                 </p>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold tracking-tight text-slate-700">
               <span>IOC Switzerland Diploma &bull; Athletes</span>
-              <span className="font-bold text-sky-700">Keyhole Repair</span>
+              <span className="font-extrabold text-sky-800">Keyhole Repair</span>
             </div>
           </div>
 
@@ -459,26 +418,21 @@ export const AboutPage = ({ onBookClick }) => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
                   loading="lazy"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-md bg-emerald-900/90 backdrop-blur-xs text-white text-[10px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                    Rapid Recovery
-                  </span>
-                </div>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-sky-700 transition-colors tracking-tight">
                   Assisted Walking in 24 Hours &amp; Early Discharge
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
                   Multimodal local infiltration analgesia (LIA) and soft-tissue preservation enable over 90% of patients to walk to the washroom with support on the same evening of surgery.
                 </p>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-extrabold tracking-tight text-slate-700">
               <span>Same-Day Mobilization &bull; 48-72h Discharge</span>
-              <span className="font-bold text-emerald-700">Zero Pain Protocol</span>
+              <span className="font-extrabold text-emerald-800">Zero Pain Protocol</span>
             </div>
           </div>
 
@@ -486,7 +440,7 @@ export const AboutPage = ({ onBookClick }) => {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          PART 3: MONTHLY FREE KNEE CHECK-UP CAMPAIGN
+          MONTHLY FREE KNEE CHECK-UP CAMPAIGN
       ────────────────────────────────────────────────────────────── */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="bg-gradient-to-br from-amber-50/90 via-white to-sky-50/90 rounded-3xl border-2 border-slate-900 p-6 sm:p-10 shadow-md relative overflow-hidden">
@@ -506,72 +460,61 @@ export const AboutPage = ({ onBookClick }) => {
                 />
 
                 <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                  <span className="px-4 py-2 rounded-full bg-[#08284d] text-white text-xs font-bold shadow-xl flex items-center gap-2">
+                  <span className="px-4 py-2 rounded-full bg-[#08284d] text-white text-xs font-extrabold tracking-tight shadow-xl flex items-center gap-2">
                     <Maximize2 className="w-4 h-4 text-amber-400" />
                     <span>Click to View Full Poster</span>
                   </span>
                 </div>
-
-                <div className="absolute top-2.5 left-2.5">
-                  <span className="px-2.5 py-1 rounded-md bg-amber-500 text-slate-950 text-[10px] font-mono font-black uppercase tracking-wider shadow-xs">
-                    ★ Official Notice
-                  </span>
-                </div>
               </div>
 
-              <div className="w-full max-w-sm mt-3.5 p-3 rounded-xl bg-white border-2 border-slate-900 flex items-center justify-between text-xs font-mono font-bold text-slate-800 shadow-2xs">
-                <span className="inline-flex items-center gap-1.5 text-amber-700">
+              <div className="w-full max-w-sm mt-3.5 p-3 rounded-xl bg-white border-2 border-slate-900 flex items-center justify-between text-xs font-extrabold tracking-tight text-slate-800 shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 text-amber-800">
                   <Calendar className="w-4 h-4 text-amber-600" />
                   <span>Every Month (हर महीने)</span>
                 </span>
-                <span className="text-slate-600">10:00 AM – 1:00 PM</span>
+                <span className="text-slate-700">10:00 AM – 1:00 PM</span>
               </div>
             </div>
 
             {/* Right: Editorial Breakdown & Transparent Registration Notice */}
             <div className="lg:col-span-7 space-y-5">
               <div className="space-y-1.5">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-900 text-[10.5px] font-mono font-bold uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5 text-rose-600" />
-                  <span>Part 3 &bull; Monthly Community Health Mission</span>
-                </div>
-
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
                   Free Monthly Knee Check-up
-                  <span className="block text-xl sm:text-2xl text-sky-800 font-extrabold mt-1">
+                  <span className="block text-xl sm:text-2xl text-sky-800 font-extrabold mt-1 tracking-tight">
                     नि:शुल्क घुटना शिविर &bull; नि:शुल्क हड्डी और नस की जांच!
                   </span>
                 </h2>
 
-                <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-                  Conducted by <strong className="text-slate-800 font-semibold">Dr. Vatsal Khetan</strong> &amp; <strong className="text-slate-800 font-semibold">Dr. Heli Khetan</strong> at <strong className="text-slate-800 font-semibold">Khetan Knee N Shoulder Clinic</strong>, S.K. Pandey Complex, Betiahata, Gorakhpur.
+                <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight">
+                  Conducted by <strong className="text-slate-900 font-extrabold">Dr. Vatsal Khetan</strong> &amp; <strong className="text-slate-900 font-extrabold">Dr. Heli Khetan</strong> at <strong className="text-slate-900 font-extrabold">Khetan Knee N Shoulder Clinic</strong>, S.K. Pandey Complex, Betiahata, Gorakhpur.
                 </p>
               </div>
 
               {/* 6 100% Free Diagnostics Included */}
               <div className="space-y-2">
-                <div className="text-xs font-mono font-bold uppercase tracking-wide text-slate-900 flex items-center gap-1.5">
+                <div className="text-xs font-extrabold tracking-tight uppercase text-slate-900 flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   <span>Included Free Examinations (नि:शुल्क जांच):</span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-extrabold tracking-tight text-slate-900 shadow-2xs">
                     &bull; Free OPD Consultation
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-extrabold tracking-tight text-slate-900 shadow-2xs">
                     &bull; Bone Health (हड्डी जांच)
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-extrabold tracking-tight text-slate-900 shadow-2xs">
                     &bull; Nerve Check (नस जांच)
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-extrabold tracking-tight text-slate-900 shadow-2xs">
                     &bull; Blood Sugar Screening
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-extrabold tracking-tight text-slate-900 shadow-2xs">
                     &bull; Blood Pressure Check
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-800 shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-extrabold tracking-tight text-slate-900 shadow-2xs">
                     &bull; Uric Acid Evaluation
                   </div>
                 </div>
@@ -579,10 +522,10 @@ export const AboutPage = ({ onBookClick }) => {
 
               {/* Concessions from Poster */}
               <div className="space-y-1.5">
-                <div className="text-[11px] font-mono font-bold uppercase tracking-wide text-slate-700">
+                <div className="text-[11px] font-extrabold tracking-tight uppercase text-slate-800">
                   Special Concessions Available at Camp:
                 </div>
-                <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-bold">
+                <div className="flex flex-wrap items-center gap-2 text-xs font-extrabold tracking-tight">
                   <span className="px-3 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200">
                     50% Discount on X-Rays
                   </span>
@@ -599,10 +542,10 @@ export const AboutPage = ({ onBookClick }) => {
               </div>
 
               {/* ⚠️ Explicit & Transparent Registration Fee Notice */}
-              <div className="p-3.5 rounded-2xl bg-amber-100/70 border border-amber-300 text-amber-950 text-xs leading-relaxed flex items-start gap-2.5">
+              <div className="p-3.5 rounded-2xl bg-amber-100/70 border border-amber-300 text-amber-950 text-xs leading-relaxed flex items-start gap-2.5 font-extrabold tracking-tight">
                 <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="font-bold">Transparent Registration Fee Notice:</strong> All consultations and bone/nerve checks above are provided without doctor consultation charges. A nominal hospital registration fee of <strong className="font-black text-slate-900">₹50</strong> applies at reception. Wheelchair assistance is available.
+                  <strong className="font-extrabold">Transparent Registration Fee Notice:</strong> All consultations and bone/nerve checks above are provided without doctor consultation charges. A nominal hospital registration fee of <strong className="font-black text-slate-900">₹50</strong> applies at reception. Wheelchair assistance is available.
                 </div>
               </div>
 
@@ -610,7 +553,7 @@ export const AboutPage = ({ onBookClick }) => {
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <a
                   href="tel:9161995550"
-                  className="px-6 py-3 rounded-full bg-[#08284d] text-white text-xs font-bold hover:bg-sky-600 transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-3 rounded-full bg-[#08284d] text-white text-xs font-extrabold tracking-tight hover:bg-sky-600 transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
                 >
                   <Phone className="w-3.5 h-3.5 text-amber-400" />
                   <span>Call to Register: 9161995550</span>
@@ -619,7 +562,7 @@ export const AboutPage = ({ onBookClick }) => {
                 <button
                   type="button"
                   onClick={() => setIsPosterModalOpen(true)}
-                  className="px-5 py-3 rounded-full border-2 border-slate-900 bg-white text-slate-800 text-xs font-bold hover:bg-slate-100 transition-colors cursor-pointer flex items-center gap-1.5"
+                  className="px-5 py-3 rounded-full border-2 border-slate-900 bg-white text-slate-800 text-xs font-extrabold tracking-tight hover:bg-slate-100 transition-colors cursor-pointer flex items-center gap-1.5"
                 >
                   <ZoomIn className="w-3.5 h-3.5 text-slate-600" />
                   <span>View Original Poster</span>

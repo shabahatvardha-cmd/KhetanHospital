@@ -203,16 +203,16 @@ export const MemorableMomentsPage = ({ onBookClick }) => {
 
                   {/* Year Tag & Title */}
                   <div>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200/80 inline-block mb-1.5">
+                    <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200/80 inline-block mb-1.5 tracking-tight">
                       {item.year}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-[#0284c7] transition-colors">
+                    <h3 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug group-hover:text-[#0284c7] transition-colors tracking-tight">
                       {item.title}
                     </h3>
                   </div>
 
                   {/* Descriptive Body */}
-                  <p className="text-xs text-slate-600 leading-relaxed font-light bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <p className="text-xs font-extrabold tracking-tight text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
                     {item.desc}
                   </p>
                 </div>

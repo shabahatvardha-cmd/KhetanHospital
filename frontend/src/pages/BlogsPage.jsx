@@ -60,37 +60,44 @@ export const BlogsPage = ({ onBookClick }) => {
     }
   }, [searchParams]);
 
-  // Extract unique categories for quick-filter pills
-  const categories = useMemo(() => {
-    const set = new Set();
-    allBlogs.forEach(b => {
-      if (b.category) set.add(b.category);
-      if (b.allCategories && Array.isArray(b.allCategories)) {
-        b.allCategories.forEach(c => set.add(c));
-      }
-    });
-    return ['All', ...Array.from(set).slice(0, 7)];
-  }, []);
+  // Extract popular and surgical search topics for instant 1-click search
+  const popularSearchTopics = useMemo(() => [
+    'Robotic Knee',
+    'ACL',
+    'Joint Preservation',
+    'Hip Replacement',
+    'Shoulder',
+    'Meniscus',
+    'Physiotherapy',
+    'Pain Management'
+  ], []);
 
-  // Filtered blogs based on search query & selected category
+  // Filtered blogs based on comprehensive search across EVERYTHING (title, excerpt, content, tags)
   const filteredBlogs = useMemo(() => {
     return allBlogs.filter(b => {
-      // Category filter
-      if (selectedCategory !== 'All') {
+      // Category filter (if set from URL parameter)
+      if (selectedCategory && selectedCategory !== 'All') {
         const matchesCategory =
           (b.category && b.category.toLowerCase() === selectedCategory.toLowerCase()) ||
           (b.allCategories && b.allCategories.some(c => c.toLowerCase() === selectedCategory.toLowerCase()));
         if (!matchesCategory) return false;
       }
 
-      // Search query filter
-      if (!searchQuery) return true;
-      const q = searchQuery.toLowerCase();
-      return (
-        b.title.toLowerCase().includes(q) ||
-        (b.excerpt && b.excerpt.toLowerCase().includes(q)) ||
-        (b.category && b.category.toLowerCase().includes(q))
-      );
+      // If no search query, show all
+      if (!searchQuery || !searchQuery.trim()) return true;
+
+      // Multi-word intelligent search: every word in the query must match in the comprehensive article corpus
+      const queryWords = searchQuery.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      const articleCorpus = [
+        b.title || '',
+        b.excerpt || '',
+        b.category || '',
+        ...(Array.isArray(b.allCategories) ? b.allCategories : []),
+        b.textContent || '',
+        b.slug || ''
+      ].join(' ').toLowerCase();
+
+      return queryWords.every(word => articleCorpus.includes(word));
     });
   }, [searchQuery, selectedCategory]);
 
@@ -149,31 +156,22 @@ export const BlogsPage = ({ onBookClick }) => {
             e.target.src = '/images/dr-vatsal-rehab.webp';
           }}
         />
-
-        {/* Minimal Category Chip Overlay */}
-        {blog.category && (
-          <div className="absolute top-2.5 left-2.5">
-            <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9px] font-mono font-bold uppercase tracking-wider shadow-xs">
-              {blog.category}
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Body: Uniform fixed height so all cards line up 100% evenly */}
-      <div className="pt-3 flex-1 flex flex-col justify-between space-y-3">
-        <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2 h-10 sm:h-11 flex items-start">
+      <div className="pt-3 flex-1 flex flex-col justify-between space-y-2.5">
+        <h3 className="text-xs sm:text-[13px] font-extrabold tracking-tight text-slate-900 group-hover:text-sky-700 transition-colors leading-snug line-clamp-2 h-10 sm:h-11 flex items-start">
           {blog.title}
         </h3>
 
         {/* Micro Meta Strip */}
-        <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-400">
-          <span className="inline-flex items-center gap-1">
+        <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-extrabold tracking-tight text-slate-500">
+          <span className="inline-flex items-center gap-1 text-slate-500">
             <Clock className="w-3 h-3 text-[#f59e0b]" />
             <span>{blog.readTime || '4 min'}</span>
           </span>
 
-          <span className="inline-flex items-center gap-0.5 font-bold text-[#08284d] group-hover:text-sky-600 group-hover:translate-x-0.5 transition-all">
+          <span className="inline-flex items-center gap-0.5 font-extrabold text-[#08284d] group-hover:text-sky-700 group-hover:translate-x-0.5 transition-all">
             <span>Read</span>
             <ArrowRight className="w-2.5 h-2.5" />
           </span>
@@ -188,8 +186,8 @@ export const BlogsPage = ({ onBookClick }) => {
       {/* ─────────────────────────────────────────────────────────────
           SECTION 1: EDITORIAL HEADER & QUICK SEARCH
       ────────────────────────────────────────────────────────────── */}
-      <section className="relative w-full border-b border-slate-200/90 pt-8 pb-10 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <section className="relative w-full border-b border-slate-200/90 pt-6 sm:pt-8 pb-6 sm:pb-7 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto space-y-5">
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
 
@@ -204,54 +202,97 @@ export const BlogsPage = ({ onBookClick }) => {
                 Orthopedic Recovery Guides &amp; Surgical Checklists
               </h1>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light max-w-xl">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-700 leading-relaxed tracking-tight max-w-xl">
                 Written and curated directly by Dr. Vatsal Khetan (M.Ch Knee UK, FRCS Edinburgh). Clear, patient-first clinical guidance on robotic joint replacement, rapid 24-hour ambulation, keyhole sports recovery, and arthritis prevention.
               </p>
 
-              {/* Instant Search Bar */}
-              <div className="w-full max-w-md relative pt-2">
-                <input
-                  type="text"
-                  placeholder="Search articles e.g. 'Robotic Knee', 'ACL', 'Hip AVN'..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-9 py-3 rounded-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-800 placeholder-slate-400 border border-slate-200 focus:outline-hidden focus:border-[#08284d] text-xs shadow-2xs transition-all font-mono"
-                />
-                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-5 -translate-y-1/2 pointer-events-none" />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-3.5 top-5 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
+              {/* Instant Search Bar with Vertically Centered Lens & Popular Topic Tags */}
+              <div className="w-full max-w-xl space-y-2.5 pt-1">
+                <div className="relative flex items-center">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
+                  <input
+                    type="text"
+                    placeholder="Search all guides: Robotic Knee, ACL, Hip, Joint Preservation, Shoulder..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-9 py-2.5 rounded-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-900 placeholder-slate-400 border border-slate-300 focus:outline-hidden focus:border-[#08284d] text-xs font-extrabold tracking-tight shadow-2xs transition-all"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-0.5"
+                      aria-label="Clear search"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Popular Search Suggestions / Quick Tags */}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[11px] font-extrabold text-slate-400 tracking-tight mr-0.5">
+                    Search Topics:
+                  </span>
+                  {popularSearchTopics.map((term) => {
+                    const isActive = searchQuery.toLowerCase().trim() === term.toLowerCase().trim();
+                    return (
+                      <button
+                        key={term}
+                        type="button"
+                        onClick={() => {
+                          if (isActive) {
+                            setSearchQuery('');
+                          } else {
+                            setSearchQuery(term);
+                          }
+                        }}
+                        className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border transition-all cursor-pointer tracking-tight ${
+                          isActive
+                            ? 'bg-[#08284d] text-white border-[#08284d] shadow-xs'
+                            : 'bg-white text-slate-700 border-slate-200/90 hover:border-[#08284d] hover:text-[#08284d]'
+                        }`}
+                      >
+                        {term}
+                      </button>
+                    );
+                  })}
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="text-[11px] font-extrabold text-[#f59e0b] hover:text-amber-700 underline cursor-pointer ml-1 tracking-tight"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Right Column: Specification Standard Card */}
-            <div className="lg:col-span-5 space-y-4">
+            {/* Right Column: Specification Standard Card (Matched to Authentic Surgical Excellence Font Style) */}
+            <div className="lg:col-span-5 space-y-3.5">
               <div className="p-4 sm:p-5 rounded-2xl bg-amber-50/60 border-l-4 border-l-[#f59e0b] border border-amber-200/80 shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-black text-[#08284d] tracking-wider uppercase">
+                  <span className="text-xs font-extrabold text-[#08284d] tracking-tight uppercase">
                     KNOWLEDGE SPECIFICATION : 2024
                   </span>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#f59e0b] text-[#08284d]">
+                  <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded bg-[#f59e0b] text-[#08284d] tracking-tight">
                     EVIDENCE BACKED
                   </span>
                 </div>
-                <h2 className="text-sm font-extrabold text-slate-900 leading-tight">
+                <h2 className="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight leading-snug">
                   Khetan Hospital Patient Education Repository
                 </h2>
-                <p className="text-[11px] text-slate-600 font-mono leading-relaxed">
+                <p className="text-xs font-extrabold text-slate-700 leading-relaxed tracking-tight">
                   Every guide bridges complex surgical knowledge into simple, actionable steps. No jargon, no ambiguity—empowering patients and families with transparent clinical clarity.
                 </p>
               </div>
 
               {/* Quick Counter */}
-              <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 border border-slate-200/80 text-xs font-mono text-slate-600">
+              <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs font-extrabold text-slate-700 tracking-tight">
                 <span>Showing <strong>{filteredBlogs.length}</strong> of <strong>{allBlogs.length}</strong> guides</span>
-                <span className="text-[#0284c7] font-bold">100% Free Access</span>
+                <span className="text-sky-800 font-extrabold">100% Free Access</span>
               </div>
             </div>
 
@@ -261,55 +302,20 @@ export const BlogsPage = ({ onBookClick }) => {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 2: CATEGORY FILTER PILLS
+          SECTION 2: TRUE MYNTRA 5-COLUMN STAGGERED MASONRY
+          - Shifted directly up (removed category buttons & huge dead gap)
+          - 5 columns on desktop, 3 on tablet, 2 on mobile
       ────────────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-3">
-        <div className="flex flex-wrap items-center gap-2 border-b border-slate-200/80 pb-4">
-          {categories.map((cat, cIdx) => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cIdx}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold tracking-wide transition-all cursor-pointer ${isActive
-                  ? 'bg-[#08284d] text-white shadow-xs'
-                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
-                  }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-20">
 
-      {/* ─────────────────────────────────────────────────────────────
-          SECTION 3: TRUE MYNTRA 5-COLUMN STAGGERED MASONRY
-          - Contrasting canvas (bg-[#f1f5f9])
-          - 5 columns on desktop (gap-5) with alternating vertical top offsets:
-            Col 0: pt-0
-            Col 1: pt-10 (offset down)
-            Col 2: pt-2
-            Col 3: pt-12 (offset down)
-            Col 4: pt-4
-          - 3 columns on tablet, 2 columns on mobile
-          - Zero overlaps, clean 20px spacing between all cards
-      ────────────────────────────────────────────────────────────── */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24">
-
-        {/* Giant Kinetic Wordmark Layered in Background */}
-        <div className="relative mb-8">
-          <div className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase text-slate-300/40 select-none tracking-tight">
-            PUBLICATIONS
-          </div>
-          <div className="relative -mt-6 sm:-mt-8 flex items-baseline justify-between">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              {selectedCategory === 'All' ? 'All Clinical Guides' : `${selectedCategory} Articles`}
-            </h2>
-            <span className="font-mono text-xs text-slate-500 font-bold">
-              {filteredBlogs.length} Guides Available
-            </span>
-          </div>
+        {/* Clean, tight feed header */}
+        <div className="flex items-baseline justify-between pb-3 sm:pb-4">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            {searchQuery ? `Guides Matching "${searchQuery}"` : 'All Clinical Patient Guides'}
+          </h2>
+          <span className="text-xs font-extrabold text-slate-500 tracking-tight">
+            {filteredBlogs.length} Guides Available
+          </span>
         </div>
 
         {/* ── Myntra Up-and-Down Alternating Staggered Feed ── */}
@@ -375,18 +381,19 @@ export const BlogsPage = ({ onBookClick }) => {
             </div>
           </>
         ) : (
-          <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 shadow-xs">
-            <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-            <h3 className="text-base font-bold text-slate-800">No articles found matching "{searchQuery}"</h3>
-            <p className="text-xs text-slate-500 mt-1">Try another keyword or reset to "All" categories.</p>
+          <div className="bg-white rounded-2xl p-12 text-center border-2 border-slate-900 shadow-xs max-w-lg mx-auto">
+            <BookOpen className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+            <h3 className="text-base font-extrabold text-slate-900 tracking-tight">No articles found matching "{searchQuery}"</h3>
+            <p className="text-xs font-extrabold text-slate-500 tracking-tight mt-1.5">Try another surgical keyword or tap any of the popular topics above.</p>
             <button
+              type="button"
               onClick={() => {
                 setSearchQuery('');
                 setSelectedCategory('All');
               }}
-              className="mt-4 px-5 py-2 rounded-full text-xs font-bold bg-[#08284d] text-white hover:bg-[#0284c7]"
+              className="mt-5 px-6 py-2.5 rounded-full text-xs font-extrabold tracking-tight bg-[#08284d] text-white hover:bg-sky-700 transition-colors cursor-pointer shadow-xs"
             >
-              Reset Filters
+              Clear Search &amp; Show All
             </button>
           </div>
         )}
