@@ -40,10 +40,10 @@ export const HomeLocationsHighlight = ({ onBookClick }) => {
             return (
               <div
                 key={idx}
-                className={`rounded-2xl p-4 sm:p-5 flex flex-col justify-between border-2 transition-all duration-300 ${
+                className={`rounded-2xl p-4 sm:p-5 flex flex-col justify-between border transition-all duration-300 ${
                   isMain
-                    ? 'bg-white border-[#08284d] shadow-md ring-2 ring-[#08284d]/10'
-                    : 'bg-white border-slate-900 shadow-sm hover:shadow-md hover:border-sky-600'
+                    ? 'bg-white border-sky-400 shadow-md ring-2 ring-sky-400/20'
+                    : 'bg-white border-slate-200/90 shadow-2xs hover:shadow-md hover:border-slate-300'
                 }`}
               >
                 <div className="space-y-3">
