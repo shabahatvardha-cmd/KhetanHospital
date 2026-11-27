@@ -28,7 +28,7 @@ export const HomeBlogsHighlight = () => {
 
           <Link
             to="/blogs"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 bg-white text-slate-800 text-xs font-bold hover:bg-[#08284d] hover:text-white hover:border-[#08284d] transition-all duration-300 shadow-2xs group self-start sm:self-auto cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-slate-900 bg-white text-slate-900 text-xs font-bold hover:bg-[#08284d] hover:text-white transition-all duration-300 shadow-2xs group self-start sm:self-auto cursor-pointer"
           >
             <span>Explore All Patient Guides</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
