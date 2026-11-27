@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { allServices } from '../data/clinicContent';
 import { surgeryImages } from '../data/imageConfig';
+import { Footer } from '../components/layout/Footer';
 
 /**
  * 🏥 SURGICAL SERVICES FLOW ORDER (For Continuous Previous/Next Navigation)
@@ -739,6 +740,12 @@ export const ServiceDetailPage = ({ onBookClick }) => {
 
         </section>
       )}
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 5: COMPREHENSIVE HOSPITAL SHUTTER FOOTER
+      ────────────────────────────────────────────────────────────── */}
+      <Footer isShutter={true} onBookClick={onBookClick} themeSpec={spec} serviceTitle={service.title} />
+
     </div>
   );
 };

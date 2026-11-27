@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
+import { Footer } from '../components/layout/Footer';
 
 /**
  * 🏥 Khetan Hospital - Services Page
@@ -89,6 +90,7 @@ const slide2Services = [
 
 export const ServicesPage = ({ onBookClick }) => {
   const slide2Ref = useRef(null);
+  const footerRef = useRef(null);
 
   const scrollToSlide2 = () => {
     if (slide2Ref.current) {
@@ -97,8 +99,9 @@ export const ServicesPage = ({ onBookClick }) => {
   };
 
   const scrollToFooter = () => {
-    const el = document.getElementById('hospital-footer');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (footerRef.current) {
+      footerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -207,6 +210,10 @@ export const ServicesPage = ({ onBookClick }) => {
           </button>
         </div>
       </section>
+
+      {/* SLIDE 3: COMPREHENSIVE HOSPITAL FOOTER (Shutter Slide 3, sticky z-30 - covers Slide 2 like a shutter) */}
+      <Footer ref={footerRef} isShutter={true} onBookClick={onBookClick} />
+
     </div>
   );
 };
