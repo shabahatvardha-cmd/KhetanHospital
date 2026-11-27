@@ -194,31 +194,37 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                 const Icon = pillar.icon;
                 const theme = COLOR_PATTERNS[patternIndex][pillar.colorIndex];
 
-                // Coordinate calculation for convergence:
-                // Index 0 (Left): moves right by (100% + gap)
-                // Index 1 (Center): stays at 0, lifts slightly
-                // Index 2 (Right): moves left by (100% + gap)
+                // Coordinate calculation for Option 3 (3D Forward Pop):
+                // Index 0 (Left): moves right by (100% + gap), tucks slightly underneath with -4° tilt
+                // Index 1 (Center): zooms forward (scale: 1.15, y: -14px) hovering above both side cards
+                // Index 2 (Right): moves left by (100% + gap), tucks slightly underneath with +4° tilt
                 let targetX = 0;
+                let targetY = 0;
                 let targetRotate = 0;
                 let targetZIndex = 1;
                 let targetScale = 1;
+                let extraShadow = '';
 
                 if (isConverged) {
                   if (index === 0) {
                     targetX = 'calc(100% + 12px)';
-                    targetRotate = -2.5;
+                    targetY = 6;
+                    targetRotate = -4;
                     targetZIndex = 10;
-                    targetScale = 0.98;
+                    targetScale = 0.95;
                   } else if (index === 1) {
                     targetX = 0;
+                    targetY = -14;
                     targetRotate = 0;
-                    targetZIndex = 30;
-                    targetScale = 1.04;
+                    targetZIndex = 35;
+                    targetScale = 1.15;
+                    extraShadow = 'ring-2 ring-sky-400/80 shadow-[0_20px_50px_rgba(8,40,77,0.3)]';
                   } else if (index === 2) {
                     targetX = 'calc(-100% - 12px)';
-                    targetRotate = 2.5;
+                    targetY = 6;
+                    targetRotate = 4;
                     targetZIndex = 15;
-                    targetScale = 0.98;
+                    targetScale = 0.95;
                   }
                 }
 
@@ -227,18 +233,19 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                     key={pillar.id}
                     animate={{
                       x: targetX,
+                      y: targetY,
                       rotate: targetRotate,
                       scale: targetScale,
                       zIndex: targetZIndex,
                     }}
                     transition={{
                       type: "spring",
-                      stiffness: 70,
+                      stiffness: 75,
                       damping: 14,
                       mass: 1.1,
                     }}
-                    whileHover={{ scale: 1.03, zIndex: 40 }}
-                    className={`relative p-3.5 sm:p-4 rounded-xl border-2 transition-colors duration-700 flex flex-col justify-between cursor-default min-h-[140px] ${theme.cardBg} ${theme.border} ${theme.shadow}`}
+                    whileHover={{ scale: 1.04, zIndex: 40 }}
+                    className={`relative p-3.5 sm:p-4 rounded-xl border-2 transition-all duration-700 flex flex-col justify-between cursor-default min-h-[140px] ${theme.cardBg} ${theme.border} ${extraShadow || theme.shadow}`}
                   >
                     <div>
                       {/* Top icon and pulsing accent dot */}
