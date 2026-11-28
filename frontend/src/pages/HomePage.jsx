@@ -100,7 +100,7 @@ export const HomePage = ({ onBookClick }) => {
       {/* 8. PATIENT GUIDES COVERED BY SHUTTER FOOTER */}
       <div ref={shutterContainerRef} className="relative w-full">
         {/* Sticky Blogs Stage: Stays in viewport as shutter footer rises over it */}
-        <div className="sticky top-0 z-10 w-full min-h-screen flex flex-col justify-center bg-white overflow-hidden">
+        <div className="sticky top-0 z-10 w-full py-8 sm:py-12 bg-white overflow-hidden">
           <motion.div
             style={{
               scale: blogsScale,

@@ -296,25 +296,25 @@ export const PublishedPapersPage = ({ onBookClick }) => {
   });
 
   // Slide 1 Points: Glide in sequentially from RIGHT (slideDistance -> 0) on scroll and dock on LEFT
-  // Paper 01: 0.00 -> 0.08
-  const p1X = useTransform(slide1Progress, [0.00, 0.02, 0.05, 0.08], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
-  const p1Opacity = useTransform(slide1Progress, [0.00, 0.02, 0.06], [0, 0.8, 1]);
+  // Paper 01: 0.00 -> 0.10
+  const p1X = useTransform(slide1Progress, [0.00, 0.03, 0.07, 0.10], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
+  const p1Opacity = useTransform(slide1Progress, [0.00, 0.03, 0.08], [0, 0.8, 1]);
 
-  // Paper 02: 0.08 -> 0.16
-  const p2X = useTransform(slide1Progress, [0.08, 0.10, 0.13, 0.16], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
-  const p2Opacity = useTransform(slide1Progress, [0.08, 0.10, 0.14], [0, 0.8, 1]);
+  // Paper 02: 0.10 -> 0.20
+  const p2X = useTransform(slide1Progress, [0.10, 0.13, 0.17, 0.20], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
+  const p2Opacity = useTransform(slide1Progress, [0.10, 0.13, 0.18], [0, 0.8, 1]);
 
-  // Paper 03: 0.16 -> 0.24
-  const p3X = useTransform(slide1Progress, [0.16, 0.18, 0.21, 0.24], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
-  const p3Opacity = useTransform(slide1Progress, [0.16, 0.18, 0.22], [0, 0.8, 1]);
+  // Paper 03: 0.20 -> 0.30
+  const p3X = useTransform(slide1Progress, [0.20, 0.23, 0.27, 0.30], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
+  const p3Opacity = useTransform(slide1Progress, [0.20, 0.23, 0.28], [0, 0.8, 1]);
 
-  // Paper 04: 0.24 -> 0.32
-  const p4X = useTransform(slide1Progress, [0.24, 0.26, 0.29, 0.32], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
-  const p4Opacity = useTransform(slide1Progress, [0.24, 0.26, 0.30], [0, 0.8, 1]);
+  // Paper 04: 0.30 -> 0.40
+  const p4X = useTransform(slide1Progress, [0.30, 0.33, 0.37, 0.40], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
+  const p4Opacity = useTransform(slide1Progress, [0.30, 0.33, 0.38], [0, 0.8, 1]);
 
-  // Paper 05: 0.32 -> 0.40
-  const p5X = useTransform(slide1Progress, [0.32, 0.34, 0.37, 0.40], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
-  const p5Opacity = useTransform(slide1Progress, [0.32, 0.34, 0.38], [0, 0.8, 1]);
+  // Paper 05: 0.40 -> 0.50
+  const p5X = useTransform(slide1Progress, [0.40, 0.43, 0.47, 0.50], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
+  const p5Opacity = useTransform(slide1Progress, [0.40, 0.43, 0.48], [0, 0.8, 1]);
 
   // Papers 01-05 transforms array
   const slide1PaperTransforms = [
@@ -332,25 +332,25 @@ export const PublishedPapersPage = ({ onBookClick }) => {
   });
 
   // Slide 2 Points: Glide in sequentially from LEFT (-slideDistance -> 0) on scroll and dock on RIGHT
-  // Paper 06: 0.00 -> 0.08
-  const p6X = useTransform(slide2Progress, [0.00, 0.02, 0.05, 0.08], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
-  const p6Opacity = useTransform(slide2Progress, [0.00, 0.02, 0.06], [0, 0.8, 1]);
+  // Paper 06: 0.00 -> 0.10
+  const p6X = useTransform(slide2Progress, [0.00, 0.03, 0.07, 0.10], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
+  const p6Opacity = useTransform(slide2Progress, [0.00, 0.03, 0.08], [0, 0.8, 1]);
 
-  // Paper 07: 0.08 -> 0.16
-  const p7X = useTransform(slide2Progress, [0.08, 0.10, 0.13, 0.16], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
-  const p7Opacity = useTransform(slide2Progress, [0.08, 0.10, 0.14], [0, 0.8, 1]);
+  // Paper 07: 0.10 -> 0.20
+  const p7X = useTransform(slide2Progress, [0.10, 0.13, 0.17, 0.20], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
+  const p7Opacity = useTransform(slide2Progress, [0.10, 0.13, 0.18], [0, 0.8, 1]);
 
-  // Paper 08: 0.16 -> 0.24
-  const p8X = useTransform(slide2Progress, [0.16, 0.18, 0.21, 0.24], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
-  const p8Opacity = useTransform(slide2Progress, [0.16, 0.18, 0.22], [0, 0.8, 1]);
+  // Paper 08: 0.20 -> 0.30
+  const p8X = useTransform(slide2Progress, [0.20, 0.23, 0.27, 0.30], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
+  const p8Opacity = useTransform(slide2Progress, [0.20, 0.23, 0.28], [0, 0.8, 1]);
 
-  // Paper 09: 0.24 -> 0.32
-  const p9X = useTransform(slide2Progress, [0.24, 0.26, 0.29, 0.32], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
-  const p9Opacity = useTransform(slide2Progress, [0.24, 0.26, 0.30], [0, 0.8, 1]);
+  // Paper 09: 0.30 -> 0.40
+  const p9X = useTransform(slide2Progress, [0.30, 0.33, 0.37, 0.40], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
+  const p9Opacity = useTransform(slide2Progress, [0.30, 0.33, 0.38], [0, 0.8, 1]);
 
-  // Paper 10: 0.32 -> 0.40
-  const p10X = useTransform(slide2Progress, [0.32, 0.34, 0.37, 0.40], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
-  const p10Opacity = useTransform(slide2Progress, [0.32, 0.34, 0.38], [0, 0.8, 1]);
+  // Paper 10: 0.40 -> 0.50
+  const p10X = useTransform(slide2Progress, [0.40, 0.43, 0.47, 0.50], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
+  const p10Opacity = useTransform(slide2Progress, [0.40, 0.43, 0.48], [0, 0.8, 1]);
 
   // Papers 06-10 transforms array
   const slide2PaperTransforms = [
@@ -504,7 +504,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
       <div
         id="slide-1-papers"
         ref={slide1Ref}
-        className="relative z-10 w-full h-[380vh]"
+        className="relative z-10 w-full h-[220vh]"
       >
         {/* Sticky Slide 1 Shutter Viewport: Rises from bottom and covers Stage 0 */}
         <div className="sticky top-[58px] sm:top-[60px] z-10 w-full h-[calc(100dvh-58px)] sm:h-[calc(100vh-60px)] rounded-t-[32px] sm:rounded-t-[48px] border-t-2 border-cyan-500/40 shadow-[0_-35px_80px_rgba(0,0,0,0.9)] bg-[#030712] overflow-hidden flex flex-col justify-between py-2 sm:py-5 px-3.5 sm:px-8 lg:px-14">
@@ -620,7 +620,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
       <div
         id="slide-2-papers"
         ref={slide2Ref}
-        className="relative z-20 w-full h-[380vh] -mt-[100vh]"
+        className="relative z-20 w-full h-[220vh] -mt-[100vh]"
       >
         {/* Sticky Slide 2 Shutter Viewport: Rises from bottom and covers Slide 1 */}
         <div className="sticky top-[58px] sm:top-[60px] z-20 w-full h-[calc(100dvh-58px)] sm:h-[calc(100vh-60px)] rounded-t-[32px] sm:rounded-t-[48px] border-t-2 border-slate-300 shadow-[0_-35px_80px_rgba(0,0,0,0.25)] bg-white overflow-hidden flex flex-col justify-between py-2 sm:py-5 px-3.5 sm:px-8 lg:px-14">

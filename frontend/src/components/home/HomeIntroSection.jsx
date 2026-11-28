@@ -37,53 +37,53 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
     offset: ['start end', 'center 50%'],
   });
 
-  // Header: appears dropping from above
-  const headerY = useTransform(doctorsScroll, [0, 1], [-80, 0]);
-  const headerOpacity = useTransform(doctorsScroll, [0, 0.75], [0, 1]);
+  // Header: appears smoothly
+  const headerY = useTransform(doctorsScroll, [0, 1], [-30, 0]);
+  const headerOpacity = useTransform(doctorsScroll, [0, 0.6], [0.3, 1]);
 
-  // Dr. Vatsal's card: pinned from top right (transformOrigin: 'top right'), lifted up and swings/comes down on scroll
-  const vatsalRotate = useTransform(doctorsScroll, [0, 1], [10, 0]);
-  const vatsalY = useTransform(doctorsScroll, [0, 1], [-70, 0]);
-  const vatsalOpacity = useTransform(doctorsScroll, [0, 0.75], [0.2, 1]);
+  // Dr. Vatsal's card: smooth, stable arrival into position
+  const vatsalRotate = useTransform(doctorsScroll, [0, 1], [2, 0]);
+  const vatsalY = useTransform(doctorsScroll, [0, 1], [30, 0]);
+  const vatsalOpacity = useTransform(doctorsScroll, [0, 0.6], [0.4, 1]);
 
-  // Dr. Heli's card: pinned from top left (transformOrigin: 'top left'), lifted up and swings/comes down on scroll
-  const heliRotate = useTransform(doctorsScroll, [0, 1], [-10, 0]);
-  const heliY = useTransform(doctorsScroll, [0, 1], [-70, 0]);
-  const heliOpacity = useTransform(doctorsScroll, [0, 0.75], [0.2, 1]);
+  // Dr. Heli's card: smooth, stable arrival into position
+  const heliRotate = useTransform(doctorsScroll, [0, 1], [-2, 0]);
+  const heliY = useTransform(doctorsScroll, [0, 1], [30, 0]);
+  const heliOpacity = useTransform(doctorsScroll, [0, 0.6], [0.4, 1]);
 
-  // Scroll tracking for Clinical Expertise (Option 3: Center Expand / Magnetic Clasp)
+  // Scroll tracking for Clinical Expertise
   const expertiseRef = useRef(null);
   const { scrollYProgress: expertiseScroll } = useScroll({
     target: expertiseRef,
     offset: ['start 85%', 'center 50%'],
   });
 
-  const expertiseHeaderY = useTransform(expertiseScroll, [0, 1], [-40, 0]);
-  const expertiseHeaderOpacity = useTransform(expertiseScroll, [0, 0.7], [0, 1]);
+  const expertiseHeaderY = useTransform(expertiseScroll, [0, 1], [-20, 0]);
+  const expertiseHeaderOpacity = useTransform(expertiseScroll, [0, 0.6], [0.3, 1]);
 
-  // Card 1 (Top-Left: Robotic Knee) expands outward from center
-  const card1X = useTransform(expertiseScroll, [0, 1], [40, 0]);
-  const card1Y = useTransform(expertiseScroll, [0, 1], [30, 0]);
-  const card1Scale = useTransform(expertiseScroll, [0, 1], [0.86, 1]);
-  const card1Opacity = useTransform(expertiseScroll, [0, 0.75], [0.2, 1]);
+  // Card 1 (Top-Left: Robotic Knee)
+  const card1X = useTransform(expertiseScroll, [0, 1], [15, 0]);
+  const card1Y = useTransform(expertiseScroll, [0, 1], [20, 0]);
+  const card1Scale = useTransform(expertiseScroll, [0, 1], [0.95, 1]);
+  const card1Opacity = useTransform(expertiseScroll, [0, 0.6], [0.4, 1]);
 
-  // Card 2 (Top-Right: Total & Partial) expands outward from center
-  const card2X = useTransform(expertiseScroll, [0, 1], [-40, 0]);
-  const card2Y = useTransform(expertiseScroll, [0, 1], [30, 0]);
-  const card2Scale = useTransform(expertiseScroll, [0, 1], [0.86, 1]);
-  const card2Opacity = useTransform(expertiseScroll, [0, 0.75], [0.2, 1]);
+  // Card 2 (Top-Right: Total & Partial)
+  const card2X = useTransform(expertiseScroll, [0, 1], [-15, 0]);
+  const card2Y = useTransform(expertiseScroll, [0, 1], [20, 0]);
+  const card2Scale = useTransform(expertiseScroll, [0, 1], [0.95, 1]);
+  const card2Opacity = useTransform(expertiseScroll, [0, 0.6], [0.4, 1]);
 
-  // Card 3 (Bottom-Left: Sports Medicine) expands outward from center
-  const card3X = useTransform(expertiseScroll, [0, 1], [40, 0]);
-  const card3Y = useTransform(expertiseScroll, [0, 1], [-30, 0]);
-  const card3Scale = useTransform(expertiseScroll, [0, 1], [0.86, 1]);
-  const card3Opacity = useTransform(expertiseScroll, [0, 0.75], [0.2, 1]);
+  // Card 3 (Bottom-Left: Sports Medicine)
+  const card3X = useTransform(expertiseScroll, [0, 1], [15, 0]);
+  const card3Y = useTransform(expertiseScroll, [0, 1], [20, 0]);
+  const card3Scale = useTransform(expertiseScroll, [0, 1], [0.95, 1]);
+  const card3Opacity = useTransform(expertiseScroll, [0, 0.6], [0.4, 1]);
 
-  // Card 4 (Bottom-Right: Rapid Recovery) expands outward from center
-  const card4X = useTransform(expertiseScroll, [0, 1], [-40, 0]);
-  const card4Y = useTransform(expertiseScroll, [0, 1], [-30, 0]);
-  const card4Scale = useTransform(expertiseScroll, [0, 1], [0.86, 1]);
-  const card4Opacity = useTransform(expertiseScroll, [0, 0.75], [0.2, 1]);
+  // Card 4 (Bottom-Right: Rapid Recovery)
+  const card4X = useTransform(expertiseScroll, [0, 1], [-15, 0]);
+  const card4Y = useTransform(expertiseScroll, [0, 1], [20, 0]);
+  const card4Scale = useTransform(expertiseScroll, [0, 1], [0.95, 1]);
+  const card4Opacity = useTransform(expertiseScroll, [0, 0.6], [0.4, 1]);
 
   // Scroll tracking for Knee Camp Section (Idea A: Poster reveal + details slide in)
   const campRef = useRef(null);

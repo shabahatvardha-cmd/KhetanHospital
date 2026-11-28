@@ -55,7 +55,7 @@ export function ScrollSplitTypography({
     <section
       id="split-typography"
       ref={containerRef}
-      className="relative w-full min-h-[calc(100vh-60px)] lg:h-[calc(100vh-60px)] flex flex-col justify-center bg-[#030712] text-white overflow-hidden border-y border-white/10 select-none py-8 sm:py-14"
+      className="relative w-full py-14 sm:py-20 lg:py-24 flex flex-col justify-center bg-[#030712] text-white overflow-hidden border-y border-white/10 select-none"
     >
       {/* Ambient Glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">

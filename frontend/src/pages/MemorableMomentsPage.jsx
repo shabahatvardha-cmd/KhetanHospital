@@ -699,9 +699,9 @@ export const MemorableMomentsPage = ({ onBookClick }) => {
           • Full-Screen Hospital Shutter Footer rises from bottom like a physical curtain,
             covering everything as on Home Page & Doctor Profile
       ═══════════════════════════════════════════════════════════════════ */}
-      <div ref={shutterContainerRef} className="relative w-full -mt-4 sm:-mt-6">
-        {/* Sticky FAQ Stage - Shifted close to upper section */}
-        <div className="sticky top-0 z-10 w-full min-h-screen flex flex-col justify-start pt-3 sm:pt-5 pb-8 bg-[#f8fafc] overflow-hidden">
+      <div ref={shutterContainerRef} className="relative w-full">
+        {/* FAQ Stage */}
+        <div className="sticky top-0 z-10 w-full py-10 sm:py-16 bg-[#f8fafc] overflow-hidden">
           <motion.div
             style={{
               scale: faqScale,

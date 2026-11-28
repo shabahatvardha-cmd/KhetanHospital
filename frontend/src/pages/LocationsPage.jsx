@@ -788,9 +788,9 @@ export const LocationsPage = ({ onBookClick }) => {
           • Full-Screen Hospital Shutter Footer rises from bottom like a physical curtain,
             covering everything as on Home Page, Services, Doctor Profile & Research
       ────────────────────────────────────────────────────────────── */}
-      <div ref={shutterContainerRef} className="relative w-full -mt-4 sm:-mt-6">
-        {/* Sticky FAQ Stage - Shifted close to upper section and cleanly below sticky navbar */}
-        <div className="sticky top-[58px] sm:top-[60px] z-10 w-full min-h-[calc(100vh-58px)] sm:min-h-[calc(100vh-60px)] flex flex-col justify-start pt-4 sm:pt-6 pb-8 bg-[#f8fafc] overflow-hidden">
+      <div ref={shutterContainerRef} className="relative w-full">
+        {/* FAQ Stage */}
+        <div className="sticky top-[58px] sm:top-[60px] z-10 w-full py-10 sm:py-16 bg-[#f8fafc] overflow-hidden">
           <motion.div
             style={prefersReducedMotion ? {} : {
               scale: faqScale,

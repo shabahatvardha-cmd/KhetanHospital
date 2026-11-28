@@ -76,34 +76,34 @@ export const HomeLocationsHighlight = ({ onBookClick }) => {
     offset: ['start end', 'end start'],
   });
 
-  // Section Header: Slides from left of screen and appears on scroll
-  const textX = useTransform(scrollYProgress, [0.06, 0.28, 0.72, 0.94], [-120, 0, 0, -80]);
-  const textOpacity = useTransform(scrollYProgress, [0.06, 0.24, 0.76, 0.94], [0, 1, 1, 0]);
+  // Section Header: Slides from left of screen and stays visible
+  const textX = useTransform(scrollYProgress, [0.04, 0.22], [-40, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0.04, 0.18], [0.3, 1]);
 
-  // CTA Button: Smooth entrance and exit
-  const buttonX = useTransform(scrollYProgress, [0.09, 0.31, 0.72, 0.94], [80, 0, 0, 60]);
-  const buttonOpacity = useTransform(scrollYProgress, [0.09, 0.26, 0.76, 0.94], [0, 1, 1, 0]);
+  // CTA Button: Smooth entrance and stays visible
+  const buttonX = useTransform(scrollYProgress, [0.06, 0.24], [40, 0]);
+  const buttonOpacity = useTransform(scrollYProgress, [0.06, 0.20], [0.3, 1]);
 
-  // Staggered pop up for each card on its position, then move downwards and disappear on scroll down (vice-versa on scroll up)
+  // Staggered pop up for each card: pops into view and STAYS solid and interactive
   // Card 1
-  const card1Y = useTransform(scrollYProgress, [0.10, 0.28, 0.68, 0.88], [75, 0, 0, 85]);
-  const card1Scale = useTransform(scrollYProgress, [0.10, 0.28, 0.68, 0.88], [0.88, 1, 1, 0.92]);
-  const card1Opacity = useTransform(scrollYProgress, [0.10, 0.24, 0.72, 0.88], [0, 1, 1, 0]);
+  const card1Y = useTransform(scrollYProgress, [0.06, 0.22], [40, 0]);
+  const card1Scale = useTransform(scrollYProgress, [0.06, 0.22], [0.94, 1]);
+  const card1Opacity = useTransform(scrollYProgress, [0.06, 0.18], [0.3, 1]);
 
   // Card 2
-  const card2Y = useTransform(scrollYProgress, [0.14, 0.32, 0.70, 0.90], [75, 0, 0, 90]);
-  const card2Scale = useTransform(scrollYProgress, [0.14, 0.32, 0.70, 0.90], [0.88, 1, 1, 0.92]);
-  const card2Opacity = useTransform(scrollYProgress, [0.14, 0.28, 0.74, 0.90], [0, 1, 1, 0]);
+  const card2Y = useTransform(scrollYProgress, [0.09, 0.25], [40, 0]);
+  const card2Scale = useTransform(scrollYProgress, [0.09, 0.25], [0.94, 1]);
+  const card2Opacity = useTransform(scrollYProgress, [0.09, 0.21], [0.3, 1]);
 
   // Card 3
-  const card3Y = useTransform(scrollYProgress, [0.18, 0.36, 0.72, 0.92], [75, 0, 0, 95]);
-  const card3Scale = useTransform(scrollYProgress, [0.18, 0.36, 0.72, 0.92], [0.88, 1, 1, 0.92]);
-  const card3Opacity = useTransform(scrollYProgress, [0.18, 0.32, 0.76, 0.92], [0, 1, 1, 0]);
+  const card3Y = useTransform(scrollYProgress, [0.12, 0.28], [40, 0]);
+  const card3Scale = useTransform(scrollYProgress, [0.12, 0.28], [0.94, 1]);
+  const card3Opacity = useTransform(scrollYProgress, [0.12, 0.24], [0.3, 1]);
 
   // Card 4
-  const card4Y = useTransform(scrollYProgress, [0.22, 0.40, 0.74, 0.94], [75, 0, 0, 100]);
-  const card4Scale = useTransform(scrollYProgress, [0.22, 0.40, 0.74, 0.94], [0.88, 1, 1, 0.92]);
-  const card4Opacity = useTransform(scrollYProgress, [0.22, 0.36, 0.78, 0.94], [0, 1, 1, 0]);
+  const card4Y = useTransform(scrollYProgress, [0.15, 0.31], [40, 0]);
+  const card4Scale = useTransform(scrollYProgress, [0.15, 0.31], [0.94, 1]);
+  const card4Opacity = useTransform(scrollYProgress, [0.15, 0.27], [0.3, 1]);
 
   const cardTransforms = [
     { y: card1Y, scale: card1Scale, opacity: card1Opacity },

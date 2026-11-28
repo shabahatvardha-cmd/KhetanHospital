@@ -27,15 +27,15 @@ export const HomeCarouselSection = ({ onNextClick }) => {
     offset: ['start end', 'end start']
   });
 
-  // ── Heading Flip Transformations (Flipped in reverse manner -> flips upright -> flips away) ──
-  const headingRotateX = useTransform(scrollYProgress, [0.05, 0.38, 0.65, 0.95], [-85, 0, 0, 85]);
-  const headingOpacity = useTransform(scrollYProgress, [0.05, 0.28, 0.72, 0.95], [0, 1, 1, 0]);
-  const headingY = useTransform(scrollYProgress, [0.05, 0.38, 0.65, 0.95], [45, 0, 0, -45]);
+  // ── Heading Smooth Entrance & Presence (Flips upright and stays stable) ──
+  const headingRotateX = useTransform(scrollYProgress, [0.05, 0.25, 0.85, 0.98], [-40, 0, 0, 20]);
+  const headingOpacity = useTransform(scrollYProgress, [0.05, 0.20, 0.85, 0.98], [0.2, 1, 1, 0.3]);
+  const headingY = useTransform(scrollYProgress, [0.05, 0.25, 0.85, 0.98], [30, 0, 0, -20]);
 
-  // ── Card Scale Transformations (Starts very small -> scales bigger to 1.0 -> shrinks on exit) ──
-  const cardScale = useTransform(scrollYProgress, [0.05, 0.40, 0.65, 0.95], [0.32, 1, 1, 0.35]);
-  const cardOpacity = useTransform(scrollYProgress, [0.05, 0.28, 0.72, 0.95], [0.15, 1, 1, 0]);
-  const cardY = useTransform(scrollYProgress, [0.05, 0.40, 0.65, 0.95], [80, 0, 0, -80]);
+  // ── Card Scale & Visibility (Scales gracefully to 1.0 and STAYS on screen) ──
+  const cardScale = useTransform(scrollYProgress, [0.05, 0.25, 0.88, 0.98], [0.92, 1, 1, 0.94]);
+  const cardOpacity = useTransform(scrollYProgress, [0.05, 0.20, 0.88, 0.98], [0.3, 1, 1, 0.3]);
+  const cardY = useTransform(scrollYProgress, [0.05, 0.25, 0.88, 0.98], [40, 0, 0, -30]);
 
   const scrollToNext = () => {
     if (onNextClick) {
@@ -49,7 +49,7 @@ export const HomeCarouselSection = ({ onNextClick }) => {
     <section
       id="explore-carousel"
       ref={sectionRef}
-      className="relative w-full min-h-screen lg:h-screen flex flex-col justify-between items-center py-4 sm:py-6 bg-[#030712] text-[#F8FAFC] border-t border-white/10 select-none overflow-hidden"
+      className="relative w-full py-8 sm:py-12 lg:py-16 flex flex-col justify-between items-center bg-[#030712] text-[#F8FAFC] border-t border-white/10 select-none overflow-hidden"
     >
       {/* Ambient Background Lighting */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">

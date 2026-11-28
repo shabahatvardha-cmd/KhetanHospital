@@ -40,18 +40,18 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
     offset: ['start start', 'end start']
   });
 
-  // ── Scroll Exit Transforms (moves items back to their sides as user scrolls down) ──
-  const leftScrollX = useTransform(scrollYProgress, [0, 0.75], [0, -600]);
-  const leftScrollOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  // ── Gentle Scroll Drift (keeps items stable and readable until section scrolls past) ──
+  const leftScrollX = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const leftScrollOpacity = useTransform(scrollYProgress, [0.75, 1], [1, 0.15]);
 
-  const ringsScrollX = useTransform(scrollYProgress, [0, 0.75], [0, 650]);
-  const ringsScrollOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const ringsScrollX = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const ringsScrollOpacity = useTransform(scrollYProgress, [0.75, 1], [1, 0.15]);
 
-  const photoScrollX = useTransform(scrollYProgress, [0, 0.75], [0, 700]);
-  const photoScrollOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const photoScrollX = useTransform(scrollYProgress, [0, 1], [0, 30]);
+  const photoScrollOpacity = useTransform(scrollYProgress, [0.75, 1], [1, 0.15]);
 
-  const bottomScrollY = useTransform(scrollYProgress, [0, 0.75], [0, 320]);
-  const bottomScrollOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const bottomScrollY = useTransform(scrollYProgress, [0, 1], [0, 30]);
+  const bottomScrollOpacity = useTransform(scrollYProgress, [0.75, 1], [1, 0.15]);
 
   const scrollToNext = () => {
     document.getElementById('hospital-marquee-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -84,9 +84,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
             className="lg:col-span-7 space-y-3 sm:space-y-4"
           >
             <motion.div
-              initial={{ x: '-100vw', opacity: 0 }}
+              initial={{ x: -60, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
               className="space-y-3 sm:space-y-4"
             >
               {/* UK Royal College Specialty Ribbon */}
@@ -167,9 +167,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
             >
               <motion.div
-                initial={{ x: '100vw', opacity: 0 }}
+                initial={{ x: 60, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
                 className="relative w-[300px] sm:w-[380px] lg:w-[410px] h-[300px] sm:h-[380px] lg:h-[410px] flex items-center justify-center"
               >
                 {/* Outer Rotating Calibration Ring */}
@@ -212,9 +212,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
               className="relative z-10 flex flex-col items-center justify-end"
             >
               <motion.div
-                initial={{ x: '100vw', opacity: 0 }}
+                initial={{ x: 60, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
                 className="relative flex flex-col items-center"
               >
                 {/* Doctor Portrait Image (EXACT ORIGINAL: doctorImages.hero) with Soft Organic Breathing */}
@@ -254,9 +254,9 @@ export const HomeDoctorHero = ({ onBookClick, onWatchReelsClick }) => {
           className="mt-3 sm:mt-5 pt-2.5 sm:pt-3.5 border-t border-white/10"
         >
           <motion.div
-            initial={{ y: '100%', opacity: 0 }}
+            initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4"
           >
             {/* Metric 1: 12+ Experience */}
