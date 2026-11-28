@@ -23,13 +23,15 @@ import { RevolvingHospitalLogo } from '../components/common/RevolvingHospitalLog
  *    - Stays pinned as Slide 1 rises and covers it completely.
  * 2. Slide 1 (Stage 1 - Dark Obsidian Shutter):
  *    - Pinned in viewport at top: 58px (z-10).
- *    - ON SCROLL: Points 01 to 05 slide in sequentially from RIGHT (x: 900 -> 0) and SET on LEFT side.
+ *    - ON SCROLL: Points 01 to 05 slide in sequentially from RIGHT (slideDistance -> 0) and SET on LEFT side.
+ *    - Dynamically responsive ingress distance (window.innerWidth + 30 on mobile, 850px on desktop)
+ *      for buttery smooth mobile touch scrolling with zero wasted offscreen travel.
  *    - DWELL WINDOW: All 5 points rest together on screen, completely still and fully interactive.
  *    - ONLY AFTER all 5 points have set and dwelled does Slide 2 rise up from bottom like a shutter curtain!
  *    - Revolving Hospital Logo in the background (theme="dark", position="right").
  * 3. Slide 2 (Stage 2 - Crisp White Shutter):
  *    - Pinned in viewport at top: 58px (z-20).
- *    - ON SCROLL: Points 06 to 10 slide in sequentially from LEFT (x: -900 -> 0) and SET on RIGHT side.
+ *    - ON SCROLL: Points 06 to 10 slide in sequentially from LEFT (-slideDistance -> 0) and SET on RIGHT side.
  *    - DWELL WINDOW: All 5 points rest together on screen, completely still and fully interactive.
  *    - ONLY AFTER all 5 points have set and dwelled does the Footer rise up from bottom like a shutter curtain!
  *    - Revolving Hospital Logo in the background (theme="light", position="left").
@@ -38,7 +40,10 @@ import { RevolvingHospitalLogo } from '../components/common/RevolvingHospitalLog
  * 5. Interactive Clinical Abstract Modal:
  *    - Clicking any paper point opens a detailed reading modal with methodology,
  *      Gorakhpur clinical advantage, and direct Google Scholar citation link.
- * 6. Global Scrollbar: Fully hidden (no scrollbar visible anywhere).
+ * 6. Mobile Dynamic Viewports:
+ *    - 100dvh support prevents mobile address bar shifts from causing layout jumps.
+ *    - Compact card ergonomics ensure all 5 research points fit comfortably on phone screens.
+ * 7. Global Scrollbar: Fully hidden (no scrollbar visible anywhere).
  */
 
 const slide1Papers = [
@@ -244,9 +249,24 @@ export const PublishedPapersPage = ({ onBookClick }) => {
   // Active reading modal state
   const [selectedPaper, setSelectedPaper] = useState(null);
 
-  // Guarantee page loads at very top
+  // Dynamic responsive ingress distance (starts just offscreen on mobile vs expansive on desktop)
+  const [slideDistance, setSlideDistance] = useState(850);
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    const updateDistance = () => {
+      const w = window.innerWidth;
+      if (w < 768) {
+        setSlideDistance(w + 30);
+      } else {
+        setSlideDistance(850);
+      }
+    };
+
+    updateDistance();
+    window.addEventListener('resize', updateDistance);
+    return () => window.removeEventListener('resize', updateDistance);
   }, []);
 
   // Close modal on Escape key
@@ -275,25 +295,25 @@ export const PublishedPapersPage = ({ onBookClick }) => {
     offset: ['start start', 'end end']
   });
 
-  // Slide 1 Points: Glide in sequentially from RIGHT (900 -> 0) on scroll and dock on LEFT
+  // Slide 1 Points: Glide in sequentially from RIGHT (slideDistance -> 0) on scroll and dock on LEFT
   // Paper 01: 0.00 -> 0.08
-  const p1X = useTransform(slide1Progress, [0.00, 0.02, 0.05, 0.08], [900, 380, 80, 0]);
+  const p1X = useTransform(slide1Progress, [0.00, 0.02, 0.05, 0.08], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
   const p1Opacity = useTransform(slide1Progress, [0.00, 0.02, 0.06], [0, 0.8, 1]);
 
   // Paper 02: 0.08 -> 0.16
-  const p2X = useTransform(slide1Progress, [0.08, 0.10, 0.13, 0.16], [900, 380, 80, 0]);
+  const p2X = useTransform(slide1Progress, [0.08, 0.10, 0.13, 0.16], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
   const p2Opacity = useTransform(slide1Progress, [0.08, 0.10, 0.14], [0, 0.8, 1]);
 
   // Paper 03: 0.16 -> 0.24
-  const p3X = useTransform(slide1Progress, [0.16, 0.18, 0.21, 0.24], [900, 380, 80, 0]);
+  const p3X = useTransform(slide1Progress, [0.16, 0.18, 0.21, 0.24], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
   const p3Opacity = useTransform(slide1Progress, [0.16, 0.18, 0.22], [0, 0.8, 1]);
 
   // Paper 04: 0.24 -> 0.32
-  const p4X = useTransform(slide1Progress, [0.24, 0.26, 0.29, 0.32], [900, 380, 80, 0]);
+  const p4X = useTransform(slide1Progress, [0.24, 0.26, 0.29, 0.32], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
   const p4Opacity = useTransform(slide1Progress, [0.24, 0.26, 0.30], [0, 0.8, 1]);
 
   // Paper 05: 0.32 -> 0.40
-  const p5X = useTransform(slide1Progress, [0.32, 0.34, 0.37, 0.40], [900, 380, 80, 0]);
+  const p5X = useTransform(slide1Progress, [0.32, 0.34, 0.37, 0.40], [slideDistance, slideDistance * 0.42, slideDistance * 0.09, 0]);
   const p5Opacity = useTransform(slide1Progress, [0.32, 0.34, 0.38], [0, 0.8, 1]);
 
   // Papers 01-05 transforms array
@@ -311,25 +331,25 @@ export const PublishedPapersPage = ({ onBookClick }) => {
     offset: ['start start', 'end end']
   });
 
-  // Slide 2 Points: Glide in sequentially from LEFT (-900 -> 0) on scroll and dock on RIGHT
+  // Slide 2 Points: Glide in sequentially from LEFT (-slideDistance -> 0) on scroll and dock on RIGHT
   // Paper 06: 0.00 -> 0.08
-  const p6X = useTransform(slide2Progress, [0.00, 0.02, 0.05, 0.08], [-900, -380, -80, 0]);
+  const p6X = useTransform(slide2Progress, [0.00, 0.02, 0.05, 0.08], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
   const p6Opacity = useTransform(slide2Progress, [0.00, 0.02, 0.06], [0, 0.8, 1]);
 
   // Paper 07: 0.08 -> 0.16
-  const p7X = useTransform(slide2Progress, [0.08, 0.10, 0.13, 0.16], [-900, -380, -80, 0]);
+  const p7X = useTransform(slide2Progress, [0.08, 0.10, 0.13, 0.16], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
   const p7Opacity = useTransform(slide2Progress, [0.08, 0.10, 0.14], [0, 0.8, 1]);
 
   // Paper 08: 0.16 -> 0.24
-  const p8X = useTransform(slide2Progress, [0.16, 0.18, 0.21, 0.24], [-900, -380, -80, 0]);
+  const p8X = useTransform(slide2Progress, [0.16, 0.18, 0.21, 0.24], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
   const p8Opacity = useTransform(slide2Progress, [0.16, 0.18, 0.22], [0, 0.8, 1]);
 
   // Paper 09: 0.24 -> 0.32
-  const p9X = useTransform(slide2Progress, [0.24, 0.26, 0.29, 0.32], [-900, -380, -80, 0]);
+  const p9X = useTransform(slide2Progress, [0.24, 0.26, 0.29, 0.32], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
   const p9Opacity = useTransform(slide2Progress, [0.24, 0.26, 0.30], [0, 0.8, 1]);
 
   // Paper 10: 0.32 -> 0.40
-  const p10X = useTransform(slide2Progress, [0.32, 0.34, 0.37, 0.40], [-900, -380, -80, 0]);
+  const p10X = useTransform(slide2Progress, [0.32, 0.34, 0.37, 0.40], [-slideDistance, -slideDistance * 0.42, -slideDistance * 0.09, 0]);
   const p10Opacity = useTransform(slide2Progress, [0.32, 0.34, 0.38], [0, 0.8, 1]);
 
   // Papers 06-10 transforms array
@@ -374,10 +394,10 @@ export const PublishedPapersPage = ({ onBookClick }) => {
 
       {/* ── AMBIENT SCIENTIFIC LIGHTING & MICRO-GRID ── */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#38BDF8]/15 blur-[160px] -z-10" />
-        <div className="absolute bottom-1/3 left-1/5 w-[420px] h-[420px] rounded-full bg-[#08284D]/40 blur-[150px] -z-10" />
-        <div className="absolute top-1/2 left-1/3 w-[380px] h-[380px] rounded-full bg-[#10B981]/10 blur-[170px] -z-10" />
-        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:28px_28px]" />
+        <div className="absolute top-1/4 right-1/4 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] rounded-full bg-[#38BDF8]/15 blur-[120px] sm:blur-[160px] -z-10" />
+        <div className="absolute bottom-1/3 left-1/5 w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] rounded-full bg-[#08284D]/40 blur-[110px] sm:blur-[150px] -z-10" />
+        <div className="absolute top-1/2 left-1/3 w-[260px] sm:w-[380px] h-[260px] sm:h-[380px] rounded-full bg-[#10B981]/10 blur-[120px] sm:blur-[170px] -z-10" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] sm:[background-size:28px_28px]" />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
@@ -389,23 +409,23 @@ export const PublishedPapersPage = ({ onBookClick }) => {
       <section
         ref={introSectionRef}
         id="papers-intro"
-        className="sticky top-[58px] sm:top-[60px] z-0 w-full min-h-[calc(100vh-58px)] sm:min-h-[calc(100vh-60px)] flex flex-col justify-between items-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-[#08284d] text-center overflow-hidden shadow-md"
+        className="sticky top-[58px] sm:top-[60px] z-0 w-full min-h-[calc(100dvh-58px)] sm:min-h-[calc(100vh-60px)] flex flex-col justify-between items-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8 bg-[#08284d] text-center overflow-hidden shadow-md"
       >
         {/* Subtle ambient gradient */}
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-500/15 via-transparent to-transparent" />
 
         <div className="w-full" />
 
-        <div className="relative z-10 max-w-4xl mx-auto space-y-4 my-auto">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-3 sm:space-y-4 my-auto px-2">
           {/* Punchy, Compact Headline */}
           <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
             Evidence-Based Orthopaedics. Scientifically Proven.
           </h1>
 
-          {/* Words appear one by one, on hover words enlarge slightly without box or color change, and reverses on scroll */}
+          {/* Words appear one by one, on hover words enlarge slightly without box or color change */}
           <motion.div
             style={{ y: heroWordsScrollY, opacity: heroWordsScrollOpacity }}
-            className="will-change-transform pt-2"
+            className="will-change-transform pt-1 sm:pt-2"
           >
             <motion.p
               variants={heroWordsContainer}
@@ -428,11 +448,11 @@ export const PublishedPapersPage = ({ onBookClick }) => {
           </motion.div>
 
           {/* Action Buttons */}
-          <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
+          <div className="pt-2 sm:pt-3 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
             <button
               type="button"
               onClick={onBookClick}
-              className="px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 shadow-md shadow-cyan-500/20 transition-all cursor-pointer"
+              className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 shadow-md shadow-cyan-500/20 transition-all cursor-pointer"
             >
               Book Priority Consultation
             </button>
@@ -441,7 +461,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
               href="https://scholar.google.co.in/citations?user=44RIVEQAAAAJ&hl=en"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-mono font-bold text-white hover:text-sky-200 bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-mono font-bold text-white hover:text-sky-200 bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer"
             >
               <span>Google Scholar Profile</span>
               <ExternalLink className="w-3.5 h-3.5 text-sky-300" />
@@ -453,7 +473,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                 navigate('/memorable-moments');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-mono font-bold text-sky-200/80 hover:text-white transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-mono font-bold text-sky-200/80 hover:text-white transition-all cursor-pointer"
             >
               <span>12 UK Milestones</span>
             </button>
@@ -461,13 +481,13 @@ export const PublishedPapersPage = ({ onBookClick }) => {
         </div>
 
         {/* Bouncing down indicator at bottom of Intro to scroll down to Slide 1 */}
-        <div className="relative z-10 w-full flex justify-center pt-4 pb-2">
+        <div className="relative z-10 w-full flex justify-center pt-3 pb-2">
           <button
             onClick={scrollToSlide1}
             aria-label="Scroll to First Slide"
             className="p-2 text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer group"
           >
-            <ChevronDown className="w-6 h-6 animate-bounce text-slate-400 group-hover:text-cyan-400" />
+            <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce text-slate-400 group-hover:text-cyan-400" />
           </button>
         </div>
       </section>
@@ -487,20 +507,20 @@ export const PublishedPapersPage = ({ onBookClick }) => {
         className="relative z-10 w-full h-[380vh]"
       >
         {/* Sticky Slide 1 Shutter Viewport: Rises from bottom and covers Stage 0 */}
-        <div className="sticky top-[58px] sm:top-[60px] z-10 w-full h-[calc(100vh-58px)] sm:h-[calc(100vh-60px)] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-cyan-500/40 shadow-[0_-35px_80px_rgba(0,0,0,0.9)] bg-[#030712] overflow-hidden flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 lg:px-14">
+        <div className="sticky top-[58px] sm:top-[60px] z-10 w-full h-[calc(100dvh-58px)] sm:h-[calc(100vh-60px)] rounded-t-[32px] sm:rounded-t-[48px] border-t-2 border-cyan-500/40 shadow-[0_-35px_80px_rgba(0,0,0,0.9)] bg-[#030712] overflow-hidden flex flex-col justify-between py-2 sm:py-5 px-3.5 sm:px-8 lg:px-14">
 
           <div className="w-full h-full flex flex-col justify-between relative">
             {/* Shutter Pull Handle */}
             <div className="w-full pt-1 pb-1 flex justify-center shrink-0 select-none z-10">
-              <div className="w-16 h-1 rounded-full bg-slate-700/80 shadow-inner" />
+              <div className="w-14 sm:w-16 h-1 rounded-full bg-slate-700/80 shadow-inner" />
             </div>
 
-            {/* 🌟 REVOLVING HOSPITAL LOGO (DARK OBSIDIAN THEME - ANCHORED ON RIGHT) */}
+            {/* 🌟 REVOLVING HOSPITAL LOGO (DARK OBSIDIAN THEME - ANCHORED ON RIGHT / CENTER WATERMARK ON MOBILE) */}
             <RevolvingHospitalLogo theme="dark" position="right" />
 
             {/* Main Stage: 5 Points Settling on LEFT Side Directly Bound to Scroll */}
             <div className="relative z-10 max-w-7xl mx-auto w-full my-auto flex items-center">
-              <div className="w-full lg:w-[64%] xl:w-[58%] mr-auto flex flex-col gap-2.5 sm:gap-3">
+              <div className="w-full lg:w-[64%] xl:w-[58%] mr-auto flex flex-col gap-2 sm:gap-3">
                 {slide1Papers.map((paper, idx) => {
                   const { x, opacity } = slide1PaperTransforms[idx];
                   return (
@@ -513,24 +533,24 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                         onClick={() => setSelectedPaper(paper)}
                         role="button"
                         tabIndex={0}
-                        className="group relative bg-slate-900/85 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 border border-slate-700/80 hover:border-cyan-400 shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 flex items-center justify-between gap-3 sm:gap-4 overflow-hidden cursor-pointer"
+                        className="group relative bg-slate-900/90 backdrop-blur-md rounded-2xl p-2 sm:p-3 border border-slate-700/80 hover:border-cyan-400 shadow-md hover:shadow-cyan-500/20 transition-all duration-300 flex items-center justify-between gap-2.5 sm:gap-4 overflow-hidden cursor-pointer"
                       >
                         {/* Interactive subtle light sheen on hover */}
                         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent transition-transform pointer-events-none" />
 
                         {/* Left Block: Index Number & Pulsing Beacon Dot */}
-                        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                           <span className="font-mono text-xs sm:text-sm font-extrabold text-cyan-400 tracking-wider">
                             {paper.index}
                           </span>
-                          <span className="relative flex h-2 w-2 shrink-0">
+                          <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-cyan-400" />
                           </span>
                         </div>
 
                         {/* Thumbnail Preview */}
-                        <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden shrink-0 border border-slate-700/80 bg-slate-950">
+                        <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden shrink-0 border border-slate-700/80 bg-slate-950">
                           <img
                             src={paper.image}
                             alt={paper.title}
@@ -543,13 +563,13 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                         {/* Middle Block: Spec Code, Title & 1-Line Detail */}
                         <div className="flex-1 min-w-0 pr-1">
                           <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5">
-                            <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800/60 shrink-0">
+                            <span className="text-[9px] sm:text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/80 px-1.5 sm:px-2 py-0.5 rounded border border-cyan-800/60 shrink-0">
                               {paper.code}
                             </span>
-                            <span className="text-[10px] font-mono text-amber-300 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 shrink-0">
+                            <span className="text-[9px] sm:text-[10px] font-mono text-amber-300 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 shrink-0">
                               {paper.citations}
                             </span>
-                            <span className="text-[10px] font-mono text-slate-400 truncate hidden sm:inline">
+                            <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 truncate hidden sm:inline">
                               {paper.journal} ({paper.year})
                             </span>
                           </div>
@@ -558,7 +578,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                             {paper.title}
                           </h3>
 
-                          <p className="text-[11px] sm:text-xs text-slate-300 font-normal truncate mt-0.5 leading-normal">
+                          <p className="text-[10px] sm:text-xs text-slate-300 font-normal truncate mt-0.5 leading-normal">
                             {paper.detail}
                           </p>
                         </div>
@@ -579,9 +599,9 @@ export const PublishedPapersPage = ({ onBookClick }) => {
               <button
                 onClick={scrollToSlide2}
                 aria-label="Scroll to Next Slide"
-                className="p-2 text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer group"
+                className="p-1.5 sm:p-2 text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer group"
               >
-                <ChevronDown className="w-6 h-6 animate-bounce text-slate-400 group-hover:text-cyan-400" />
+                <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce text-slate-400 group-hover:text-cyan-400" />
               </button>
             </div>
           </div>
@@ -603,20 +623,20 @@ export const PublishedPapersPage = ({ onBookClick }) => {
         className="relative z-20 w-full h-[380vh] -mt-[100vh]"
       >
         {/* Sticky Slide 2 Shutter Viewport: Rises from bottom and covers Slide 1 */}
-        <div className="sticky top-[58px] sm:top-[60px] z-20 w-full h-[calc(100vh-58px)] sm:h-[calc(100vh-60px)] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-slate-300 shadow-[0_-35px_80px_rgba(0,0,0,0.25)] bg-white overflow-hidden flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 lg:px-14">
+        <div className="sticky top-[58px] sm:top-[60px] z-20 w-full h-[calc(100dvh-58px)] sm:h-[calc(100vh-60px)] rounded-t-[32px] sm:rounded-t-[48px] border-t-2 border-slate-300 shadow-[0_-35px_80px_rgba(0,0,0,0.25)] bg-white overflow-hidden flex flex-col justify-between py-2 sm:py-5 px-3.5 sm:px-8 lg:px-14">
 
           <div className="w-full h-full flex flex-col justify-between relative">
             {/* Shutter Pull Handle */}
             <div className="w-full pt-1 pb-1 flex justify-center shrink-0 select-none z-10">
-              <div className="w-16 h-1 rounded-full bg-slate-300 shadow-inner" />
+              <div className="w-14 sm:w-16 h-1 rounded-full bg-slate-300 shadow-inner" />
             </div>
 
-            {/* 🌟 REVOLVING HOSPITAL LOGO (CRISP WHITE THEME - ANCHORED ON LEFT) */}
+            {/* 🌟 REVOLVING HOSPITAL LOGO (CRISP WHITE THEME - ANCHORED ON LEFT / CENTER WATERMARK ON MOBILE) */}
             <RevolvingHospitalLogo theme="light" position="left" />
 
             {/* Main Stage: 5 Points Settling on RIGHT Side Directly Bound to Scroll */}
             <div className="relative z-10 max-w-7xl mx-auto w-full my-auto flex items-center justify-end">
-              <div className="w-full lg:w-[64%] xl:w-[58%] ml-auto flex flex-col gap-2.5 sm:gap-3">
+              <div className="w-full lg:w-[64%] xl:w-[58%] ml-auto flex flex-col gap-2 sm:gap-3">
                 {slide2Papers.map((paper, idx) => {
                   const { x, opacity } = slide2PaperTransforms[idx];
                   return (
@@ -629,24 +649,24 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                         onClick={() => setSelectedPaper(paper)}
                         role="button"
                         tabIndex={0}
-                        className="group relative bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 border border-slate-200 hover:border-sky-500 shadow-sm hover:shadow-xl hover:shadow-sky-500/15 transition-all duration-300 flex items-center justify-between gap-3 sm:gap-4 overflow-hidden cursor-pointer"
+                        className="group relative bg-white/95 backdrop-blur-md rounded-2xl p-2 sm:p-3 border border-slate-200 hover:border-sky-500 shadow-sm hover:shadow-xl hover:shadow-sky-500/15 transition-all duration-300 flex items-center justify-between gap-2.5 sm:gap-4 overflow-hidden cursor-pointer"
                       >
                         {/* Interactive subtle light sheen on hover */}
                         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-sky-500/10 to-transparent transition-transform pointer-events-none" />
 
                         {/* Left Block: Index Number & Pulsing Beacon Dot */}
-                        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                           <span className="font-mono text-xs sm:text-sm font-extrabold text-sky-600 tracking-wider">
                             {paper.index}
                           </span>
-                          <span className="relative flex h-2 w-2 shrink-0">
+                          <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2 shrink-0">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75" />
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-sky-500" />
                           </span>
                         </div>
 
                         {/* Thumbnail Preview */}
-                        <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-slate-50">
+                        <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-slate-50">
                           <img
                             src={paper.image}
                             alt={paper.title}
@@ -658,13 +678,13 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                         {/* Middle Block: Spec Code, Title & 1-Line Detail */}
                         <div className="flex-1 min-w-0 pr-1">
                           <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5">
-                            <span className="text-[10px] font-mono font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded border border-sky-200 shrink-0">
+                            <span className="text-[9px] sm:text-[10px] font-mono font-bold text-sky-800 bg-sky-50 px-1.5 sm:px-2 py-0.5 rounded border border-sky-200 shrink-0">
                               {paper.code}
                             </span>
-                            <span className="text-[10px] font-mono text-amber-700 font-bold bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 shrink-0">
+                            <span className="text-[9px] sm:text-[10px] font-mono text-amber-700 font-bold bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 shrink-0">
                               {paper.citations}
                             </span>
-                            <span className="text-[10px] font-mono text-slate-500 truncate hidden sm:inline">
+                            <span className="text-[9px] sm:text-[10px] font-mono text-slate-500 truncate hidden sm:inline">
                               {paper.journal} ({paper.year})
                             </span>
                           </div>
@@ -673,7 +693,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                             {paper.title}
                           </h3>
 
-                          <p className="text-[11px] sm:text-xs text-slate-600 font-normal truncate mt-0.5 leading-normal">
+                          <p className="text-[10px] sm:text-xs text-slate-600 font-normal truncate mt-0.5 leading-normal">
                             {paper.detail}
                           </p>
                         </div>
@@ -694,9 +714,9 @@ export const PublishedPapersPage = ({ onBookClick }) => {
               <button
                 onClick={scrollToFooter}
                 aria-label="Scroll to Hospital Footer"
-                className="p-2 text-slate-400 hover:text-sky-600 transition-colors cursor-pointer group"
+                className="p-1.5 sm:p-2 text-slate-400 hover:text-sky-600 transition-colors cursor-pointer group"
               >
-                <ChevronDown className="w-6 h-6 animate-bounce text-slate-400 group-hover:text-sky-600" />
+                <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce text-slate-400 group-hover:text-sky-600" />
               </button>
             </div>
           </div>
@@ -707,7 +727,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
           STAGE 3: THE FOOTER (MASTER SHUTTER CURTAIN RISING OVER SLIDE 2)
           • Positioned with -mt-[100vh] to rise over Slide 2.
           • Shutter Motion: Rises from bottom like a physical curtain and COVERS Slide 2 completely
-          • Curve is on top edge (rounded-t-[36px] sm:rounded-t-[48px])
+          • Curve is on top edge (rounded-t-[32px] sm:rounded-t-[48px])
           • Top pull handle & 24/7 Clinical Excellence Banner
           • Fully reversible when scrolling back up
           ───────────────────────────────────────────────────────────── */}
@@ -716,14 +736,15 @@ export const PublishedPapersPage = ({ onBookClick }) => {
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════
-          INTERACTIVE CLINICAL ABSTRACT MODAL
+          INTERACTIVE CLINICAL ABSTRACT MODAL (MOBILE RESPONSIVE DIALOG)
           • Displays in-depth peer-reviewed study specifications
           • Study Methodology, Clinical Advantage at Khetan Hospital,
             and direct link to verified Google Scholar citation
+          • max-h-[88dvh] overflow-y-auto for smooth mobile reading
       ═══════════════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {selectedPaper && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -739,7 +760,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-2xl bg-slate-900 border border-sky-500/40 rounded-3xl shadow-2xl p-6 sm:p-8 text-white z-10 overflow-hidden"
+              className="relative w-full max-w-2xl max-h-[88dvh] overflow-y-auto bg-slate-900 border border-sky-500/40 rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 text-white z-10"
             >
               {/* Subtle Ambient Glow */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -749,68 +770,68 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                 type="button"
                 onClick={() => setSelectedPaper(null)}
                 aria-label="Close Abstract"
-                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer z-20"
+                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer z-20"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
-              <div className="space-y-4">
+              <div className="space-y-3.5 sm:space-y-4">
                 {/* Header: Spec Code, Tag & Citations */}
-                <div className="flex flex-wrap items-center gap-2 border-b border-white/10 pb-3 pr-10">
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-700/50">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 border-b border-white/10 pb-2.5 sm:pb-3 pr-10">
+                  <span className="px-2 py-0.5 rounded text-[10px] sm:text-xs font-mono font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-700/50">
                     {selectedPaper.code}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full border border-sky-400/30 text-xs font-mono font-bold bg-sky-500/20 text-sky-200">
+                  <span className="px-2 py-0.5 rounded-full border border-sky-400/30 text-[10px] sm:text-xs font-mono font-bold bg-sky-500/20 text-sky-200">
                     {selectedPaper.tag}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-400/15 text-amber-300 border border-amber-300/30">
+                  <span className="px-2 py-0.5 rounded text-[10px] sm:text-xs font-mono font-bold bg-amber-400/15 text-amber-300 border border-amber-300/30">
                     {selectedPaper.citations}
                   </span>
                 </div>
 
                 {/* Paper Title */}
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug">
+                  <h3 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
                     {selectedPaper.title}
                   </h3>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-sky-200/90 font-medium mt-1.5">
+                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-sky-200/90 font-medium mt-1">
                     <span><strong>Journal:</strong> {selectedPaper.journal} ({selectedPaper.year})</span>
                     {selectedPaper.volume && <span>&bull; {selectedPaper.volume}</span>}
                   </div>
-                  <div className="text-xs text-slate-400 font-mono mt-1">
+                  <div className="text-[11px] sm:text-xs text-slate-400 font-mono mt-1">
                     <strong>Authors:</strong> {selectedPaper.authors}
                   </div>
                 </div>
 
                 {/* Study Significance & Methodology */}
-                <div className="space-y-1.5 pt-2">
-                  <div className="text-xs font-mono font-bold uppercase text-sky-300 flex items-center gap-1.5">
-                    <FlaskConical className="w-4 h-4 text-sky-400" />
+                <div className="space-y-1 sm:space-y-1.5 pt-1 sm:pt-2">
+                  <div className="text-[11px] sm:text-xs font-mono font-bold uppercase text-sky-300 flex items-center gap-1.5">
+                    <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-400" />
                     <span>Study Significance &amp; Methodology:</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-200 font-normal leading-relaxed bg-white/[0.05] p-3 rounded-xl border border-white/10">
+                  <p className="text-xs sm:text-sm text-slate-200 font-normal leading-relaxed bg-white/[0.05] p-2.5 sm:p-3 rounded-xl border border-white/10">
                     {selectedPaper.detail}
                   </p>
                 </div>
 
                 {/* Clinical Advantage at Khetan Hospital */}
-                <div className="space-y-1.5">
-                  <div className="text-xs font-mono font-bold uppercase text-emerald-300 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <div className="space-y-1 sm:space-y-1.5">
+                  <div className="text-[11px] sm:text-xs font-mono font-bold uppercase text-emerald-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
                     <span>Clinical Advantage at Khetan Hospital:</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-emerald-100 font-normal leading-relaxed bg-emerald-500/10 p-3 rounded-xl border border-emerald-400/20">
+                  <p className="text-xs sm:text-sm text-emerald-100 font-normal leading-relaxed bg-emerald-500/10 p-2.5 sm:p-3 rounded-xl border border-emerald-400/20">
                     {selectedPaper.takeaway}
                   </p>
                 </div>
 
                 {/* Actions */}
-                <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                <div className="pt-2 sm:pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
                   <a
                     href={selectedPaper.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 text-xs font-bold font-mono transition-all cursor-pointer shadow-md"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 text-xs font-bold font-mono transition-all cursor-pointer shadow-md"
                   >
                     <span>Read Full Citation on Google Scholar</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -822,7 +843,7 @@ export const PublishedPapersPage = ({ onBookClick }) => {
                       setSelectedPaper(null);
                       if (onBookClick) onBookClick();
                     }}
-                    className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
+                    className="px-3.5 sm:px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
                   >
                     Consult Dr. Vatsal Khetan
                   </button>
