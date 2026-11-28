@@ -56,11 +56,6 @@ export const HomeBlogsHighlight = () => {
                         e.target.src = '/images/dr-vatsal-rehab.webp';
                       }}
                     />
-                    <div className="absolute top-2.5 left-2.5">
-                      <span className="px-2 py-0.5 rounded-md bg-[#08284d]/90 backdrop-blur-xs text-white text-[9.5px] font-mono font-bold uppercase tracking-wider shadow-xs">
-                        {guide.category || 'Orthopaedics'}
-                      </span>
-                    </div>
                   </div>
 
                   {/* Body */}

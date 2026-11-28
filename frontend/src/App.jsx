@@ -21,9 +21,17 @@ import { ContactPage } from './pages/ContactPage';
 // Helper component to scroll to top whenever route changes
 function ScrollToTop() {
   const { pathname } = useLocation();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname]);
+
   return null;
 }
 

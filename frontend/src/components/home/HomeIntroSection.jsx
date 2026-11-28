@@ -263,7 +263,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                 <div className="flex flex-col sm:flex-row sm:items-center gap-5">
                   <div className="relative w-28 h-36 sm:w-32 sm:h-40 rounded-2xl border-2 border-slate-900 overflow-hidden bg-slate-100 shrink-0 shadow-md">
                     <img
-                      src="/images/dr-heli-khetan.png"
+                      src="/images/dr-heli-khetan.webp"
                       alt="Dr. Heli Khetan — Arthritis & Pain Specialist"
                       className="w-full h-full object-cover object-top select-none group-hover:scale-105 transition-transform duration-500"
                     />
@@ -658,14 +658,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                   <span>Call to Register: 9161995550</span>
                 </a>
 
-                <button
-                  type="button"
-                  onClick={() => setIsPosterModalOpen(true)}
-                  className="px-5 py-3 rounded-full border border-sky-400/40 bg-[#091f3a] text-white text-xs font-bold hover:bg-[#0f2e54] transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs"
-                >
-                  <ZoomIn className="w-3.5 h-3.5 text-sky-300" />
-                  <span>View Original Poster</span>
-                </button>
+
               </div>
             </motion.div>
 

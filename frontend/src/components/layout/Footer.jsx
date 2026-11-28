@@ -10,18 +10,22 @@ import { clinicInfo } from '../../data/navigationData';
  *   Rises smoothly like a physical shutter over preceding sections,
  *   covering the entire viewport with an authoritative hospital close.
  */
-export const Footer = forwardRef(({ onBookClick, isShutter = false, ...props }, ref) => {
+export const Footer = forwardRef(({ onBookClick, isShutter = false, shutterDirection = 'vertical', ...props }, ref) => {
+  const isHorizontal = shutterDirection === 'horizontal';
+
   return (
     <footer
       id="hospital-footer"
       ref={ref}
-      className={`w-full bg-slate-900 text-slate-300 text-xs select-none ${isShutter
-        ? 'min-h-screen flex flex-col justify-between shadow-[0_-35px_80px_rgba(0,0,0,0.9)] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-sky-500/40 pt-5 pb-6 sm:pb-8'
+      className={`w-full bg-slate-900 text-slate-300 text-xs select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${isShutter
+        ? isHorizontal
+          ? 'h-full min-h-full flex flex-col justify-between shadow-[-35px_0_80px_rgba(0,0,0,0.9)] rounded-l-[36px] sm:rounded-l-[48px] border-l-2 border-sky-500/40 py-6 sm:py-8'
+          : 'min-h-screen flex flex-col justify-between shadow-[0_-35px_80px_rgba(0,0,0,0.9)] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-sky-500/40 pt-5 pb-6 sm:pb-8'
         : 'border-t border-slate-800 py-10 sm:py-12'
         }`}
     >
-      {/* Shutter Pull Handle & Hospital Header (Shutter Mode Only) */}
-      {isShutter && (
+      {/* Shutter Pull Handle & Hospital Header (Vertical Shutter Mode on Home Page) */}
+      {isShutter && !isHorizontal && (
         <div className="w-full pt-1 pb-3 flex flex-col items-center select-none">
           <div className="w-20 h-1.5 rounded-full bg-slate-700/90 shadow-inner" />
           <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mt-2.5 font-bold">

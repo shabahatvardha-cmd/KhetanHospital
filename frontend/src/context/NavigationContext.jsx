@@ -34,6 +34,17 @@ export const NavigationProvider = ({ children }) => {
 
   const activeSectionId = getRouteSectionId(location.pathname);
 
+  const scrollToFirstPartOfSection = (sectionId) => {
+    if (sectionId === 'services') {
+      const intro = document.getElementById('services-intro') || document.getElementById('slide-1');
+      if (intro) {
+        intro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
+
   // Direct Site Navigation Trigger for Navbar links
   const goToSection = (sectionIdOrIndex) => {
     let targetItem = null;
@@ -46,14 +57,25 @@ export const NavigationProvider = ({ children }) => {
 
     if (!targetItem) return;
 
-    if (targetItem.id === 'home') {
-      if (isHomePage) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
+    // Reset carousel index to first slide whenever navigating to services
+    if (targetItem.id === 'services') {
+      setActiveIndex(0);
+    }
+
+    const isCurrentRoute = location.pathname === targetItem.route;
+
+    if (isCurrentRoute) {
+      scrollToFirstPartOfSection(targetItem.id);
+    } else {
+      if (targetItem.id === 'home') {
         navigate('/');
+      } else if (targetItem.route) {
+        navigate(targetItem.route);
       }
-    } else if (targetItem.route) {
-      navigate(targetItem.route);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      setTimeout(() => {
+        scrollToFirstPartOfSection(targetItem.id);
+      }, 50);
     }
   };
 

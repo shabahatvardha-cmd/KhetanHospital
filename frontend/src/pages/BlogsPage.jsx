@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { allBlogs, clinicInfo } from '../data/clinicContent';
 import { KineticDualTitle } from '../components/motion/KineticDualTitle';
+import { Footer } from '../components/layout/Footer';
 
 /**
  * 🏥 BLOGS & PATIENT EDUCATION HUB
@@ -60,17 +61,7 @@ export const BlogsPage = ({ onBookClick }) => {
     }
   }, [searchParams]);
 
-  // Extract popular and surgical search topics for instant 1-click search
-  const popularSearchTopics = useMemo(() => [
-    'Robotic Knee',
-    'ACL',
-    'Joint Preservation',
-    'Hip Replacement',
-    'Shoulder',
-    'Meniscus',
-    'Physiotherapy',
-    'Pain Management'
-  ], []);
+
 
   // Filtered blogs based on comprehensive search across EVERYTHING (title, excerpt, content, tags)
   const filteredBlogs = useMemo(() => {
@@ -229,44 +220,7 @@ export const BlogsPage = ({ onBookClick }) => {
                   )}
                 </div>
 
-                {/* Popular Search Suggestions / Quick Tags */}
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="text-[11px] font-extrabold text-slate-400 tracking-tight mr-0.5">
-                    Search Topics:
-                  </span>
-                  {popularSearchTopics.map((term) => {
-                    const isActive = searchQuery.toLowerCase().trim() === term.toLowerCase().trim();
-                    return (
-                      <button
-                        key={term}
-                        type="button"
-                        onClick={() => {
-                          if (isActive) {
-                            setSearchQuery('');
-                          } else {
-                            setSearchQuery(term);
-                          }
-                        }}
-                        className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border transition-all cursor-pointer tracking-tight ${
-                          isActive
-                            ? 'bg-[#08284d] text-white border-[#08284d] shadow-xs'
-                            : 'bg-white text-slate-700 border-slate-200/90 hover:border-[#08284d] hover:text-[#08284d]'
-                        }`}
-                      >
-                        {term}
-                      </button>
-                    );
-                  })}
-                  {searchQuery && (
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery('')}
-                      className="text-[11px] font-extrabold text-[#f59e0b] hover:text-amber-700 underline cursor-pointer ml-1 tracking-tight"
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
+
               </div>
             </div>
 
@@ -548,6 +502,9 @@ export const BlogsPage = ({ onBookClick }) => {
           </div>
         </div>
       )}
+
+      {/* Hospital Footer */}
+      <Footer onBookClick={onBookClick} />
 
     </div>
   );

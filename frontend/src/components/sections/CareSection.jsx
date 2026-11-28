@@ -94,16 +94,6 @@ export const CareSection = ({ onBookClick }) => {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-black/20"></div>
-
-                    {/* Floating Icon Badge */}
-                    <div className="absolute top-3.5 left-3.5 w-11 h-11 rounded-2xl bg-white/95 backdrop-blur-md shadow-md flex items-center justify-center text-[#00bcd4] group-hover:bg-[#00bcd4] group-hover:text-white transition-all duration-300">
-                      <Icon className="w-5 h-5 stroke-[2]" />
-                    </div>
-
-                    {/* Clinical Feature Tag */}
-                    <span className="absolute top-3.5 right-3.5 text-[10px] font-bold px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-slate-800 shadow-sm border border-slate-100">
-                      {srv.tag}
-                    </span>
                   </div>
 
                   {/* Card Body */}

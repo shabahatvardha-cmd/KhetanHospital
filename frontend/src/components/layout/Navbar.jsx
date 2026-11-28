@@ -71,7 +71,10 @@ export const Navbar = ({ onBookClick }) => {
         {/* Brand Logo */}
         <Link
           to="/"
-          onClick={() => handleItemClick('home')}
+          onClick={() => {
+            handleItemClick('home');
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          }}
           className="flex items-center gap-2.5 sm:gap-3 group shrink-0 cursor-pointer"
         >
           <img
@@ -122,7 +125,14 @@ export const Navbar = ({ onBookClick }) => {
                         <Link
                           key={sIdx}
                           to={sub.href}
-                          onClick={() => setActiveDropdown(null)}
+                          onClick={() => {
+                            setActiveDropdown(null);
+                            setMobileMenuOpen(false);
+                            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                            setTimeout(() => {
+                              window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                            }, 50);
+                          }}
                           className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors"
                         >
                           <span className="truncate">{sub.title}</span>
@@ -155,18 +165,41 @@ export const Navbar = ({ onBookClick }) => {
         <div className="md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2 animate-in slide-in-from-top-2 duration-150 shadow-lg">
           {mainNavigation.map((item) => {
             const isActive = activeSectionId === item.id;
+            const hasDropdown = !!subDropdowns[item.id];
             return (
-              <button
-                key={item.id}
-                onClick={() => handleItemClick(item.id)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-colors flex items-center justify-between ${isActive
-                  ? 'text-sky-700 bg-sky-50 border-l-4 border-sky-500 font-extrabold'
-                  : 'text-slate-700 hover:bg-slate-50'
-                  }`}
-              >
-                <span>{item.label}</span>
-                {isActive && <span className="text-[10px] text-sky-600 font-normal">Active</span>}
-              </button>
+              <div key={item.id} className="space-y-1">
+                <button
+                  onClick={() => handleItemClick(item.id)}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-colors flex items-center justify-between ${isActive
+                    ? 'text-sky-700 bg-sky-50 border-l-4 border-sky-500 font-extrabold'
+                    : 'text-slate-700 hover:bg-slate-50'
+                    }`}
+                >
+                  <span>{item.label}</span>
+                  {isActive && <span className="text-[10px] text-sky-600 font-normal">Active</span>}
+                </button>
+                {hasDropdown && (
+                  <div className="pl-3 pr-1 py-1 space-y-1 border-l border-slate-100 ml-2">
+                    {subDropdowns[item.id].map((sub, sIdx) => (
+                      <Link
+                        key={sIdx}
+                        to={sub.href}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setActiveDropdown(null);
+                          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                          setTimeout(() => {
+                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                          }, 50);
+                        }}
+                        className="block px-2.5 py-1 text-[11px] text-slate-600 hover:text-sky-700 hover:bg-sky-50 rounded font-medium"
+                      >
+                        {sub.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             );
           })}
 
