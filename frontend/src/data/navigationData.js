@@ -14,7 +14,7 @@ export const mainNavigation = [
     heading: 'HOME',
     supportingLine: 'Discover Khetan Hospital and our approach to orthopaedic care.',
     route: '/',
-    image: '/images/backgrounds/hospital-interior.jpg',
+    image: '/images/backgrounds/hospital-interior.webp',
     isDoctor: false
   },
   {
@@ -23,7 +23,7 @@ export const mainNavigation = [
     heading: 'SERVICES',
     supportingLine: 'Explore our orthopaedic treatments and specialised care.',
     route: '/services',
-    image: '/images/surgeries/robotic-knee.jpg',
+    image: '/images/surgeries/robotic-knee.webp',
     isDoctor: false
   },
   {
@@ -59,7 +59,7 @@ export const mainNavigation = [
     heading: 'CONTACT',
     supportingLine: 'Connect with our hospital and plan your visit.',
     route: '/contact',
-    image: '/images/backgrounds/modular-ot.jpg',
+    image: '/images/backgrounds/modular-ot.webp',
     isDoctor: false
   }
 ];
@@ -74,7 +74,7 @@ export const servicesNavigation = [
     heading: 'Robotic Knee Replacement',
     supportingLine: 'Sub-millimeter optical navigation ensuring exact implant alignment and maximal tissue preservation.',
     route: '/services/robotic-knee-surgery',
-    image: '/images/surgeries/robotic-knee.jpg',
+    image: '/images/surgeries/robotic-knee.webp',
     category: 'Knee Arthroplasty'
   },
   {
@@ -83,7 +83,7 @@ export const servicesNavigation = [
     heading: 'Total Knee Replacement',
     supportingLine: 'Advanced kinematic joint reconstruction restoring natural motion and rapid painless mobility.',
     route: '/services/knee-replacement',
-    image: '/images/surgeries/knee-replacement.jpg',
+    image: '/images/surgeries/knee-replacement.webp',
     category: 'Joint Reconstruction'
   },
   {
@@ -92,7 +92,7 @@ export const servicesNavigation = [
     heading: 'Hip Replacement Surgery',
     supportingLine: 'Muscle-sparing arthroplasty preserving soft tissues for lasting relief from osteoarthritis.',
     route: '/services/hip-replacement',
-    image: '/images/surgeries/hip-replacement.jpg',
+    image: '/images/surgeries/hip-replacement.webp',
     category: 'Hip Arthroplasty'
   },
   {
@@ -101,7 +101,7 @@ export const servicesNavigation = [
     heading: 'Shoulder Arthroscopy',
     supportingLine: 'Minimally invasive keyhole repair for rotator cuff tears and recurring joint instability.',
     route: '/services/shoulder-replacement',
-    image: '/images/surgeries/shoulder-surgery.jpg',
+    image: '/images/surgeries/shoulder-surgery.webp',
     category: 'Shoulder Arthroscopy'
   },
   {
@@ -110,7 +110,7 @@ export const servicesNavigation = [
     heading: 'ACL & Sports Medicine',
     supportingLine: 'High-definition keyhole cruciate restoration designed for active return to sports.',
     route: '/services/acl-surgery',
-    image: '/images/surgeries/acl-surgery.jpg',
+    image: '/images/surgeries/acl-surgery.webp',
     category: 'Sports Rehabilitation'
   },
   {
@@ -119,7 +119,7 @@ export const servicesNavigation = [
     heading: 'Spine & Lumbar Surgery',
     supportingLine: 'Targeted neurological decompression and motion-preserving conservative disc care.',
     route: '/services/spine-surgery',
-    image: '/images/surgeries/spine-surgery.jpg',
+    image: '/images/surgeries/spine-surgery.webp',
     category: 'Spine Care'
   }
 ];

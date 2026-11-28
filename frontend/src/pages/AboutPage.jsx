@@ -568,7 +568,7 @@ export const AboutPage = ({ onBookClick }) => {
               <div className="flex items-center gap-3.5">
                 <div className="relative w-16 h-20 sm:w-20 sm:h-24 rounded-xl border border-slate-200 overflow-hidden bg-slate-100 shrink-0 shadow-md">
                   <img
-                    src="/images/dr-vatsal-camp.png"
+                    src="/images/dr-vatsal-camp.webp"
                     alt="Dr. Vatsal Khetan — Surgical Lead"
                     className="w-full h-full object-cover object-top"
                   />
@@ -1149,7 +1149,7 @@ export const AboutPage = ({ onBookClick }) => {
                   <div className="absolute inset-0 border border-sky-400/40 rounded-2xl pointer-events-none z-20 group-hover:border-sky-500/70 transition-colors" />
 
                   <img
-                    src="/images/khetan-knee-camp-poster-general.png"
+                    src="/images/khetan-knee-camp-poster-general.webp"
                     alt="Official Khetan Knee Camp Poster"
                     className="w-full h-full object-contain p-1.5 group-hover:scale-102 transition-transform duration-500"
                   />
@@ -1411,7 +1411,7 @@ export const AboutPage = ({ onBookClick }) => {
       <PosterLightboxModal
         isOpen={isPosterModalOpen}
         onClose={() => setIsPosterModalOpen(false)}
-        imageSrc="/images/khetan-knee-camp-poster-general.png"
+        imageSrc="/images/khetan-knee-camp-poster-general.webp"
       />
     </div>
   );

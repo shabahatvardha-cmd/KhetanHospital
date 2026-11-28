@@ -21,7 +21,7 @@ export const FEATURED_SERVICES = [
     heading: 'Robotic Knee Replacement',
     description: 'Sub-millimeter optical navigation ensuring exact 0.5mm implant alignment, preserving healthy bone and ligaments, and enabling rapid mobility within 24 hours.',
     route: '/services/robotic-knee-surgery',
-    image: '/images/surgeries/robotic-knee.jpg',
+    image: '/images/surgeries/robotic-knee.webp',
     theme: {
       accent: '#0284c7', // Sky / Ocean Blue
       accentHover: '#0369a1',
@@ -40,7 +40,7 @@ export const FEATURED_SERVICES = [
     heading: 'Total Knee Replacement',
     description: 'Advanced kinematic joint reconstruction using 20+ year longevity implants engineered to eliminate chronic osteoarthritis pain and restore natural knee flexion.',
     route: '/services/knee-replacement',
-    image: '/images/surgeries/knee-replacement.jpg',
+    image: '/images/surgeries/knee-replacement.webp',
     theme: {
       accent: '#f59e0b', // Warm Golden Amber
       accentHover: '#d97706',
@@ -59,7 +59,7 @@ export const FEATURED_SERVICES = [
     heading: 'Total Hip Replacement',
     description: 'Muscle-sparing tissue-preserving arthroplasty with low-friction ceramic bearings, restoring smooth pain-free gait and lifelong joint mobility.',
     route: '/services/hip-replacement',
-    image: '/images/surgeries/hip-replacement.jpg',
+    image: '/images/surgeries/hip-replacement.webp',
     theme: {
       accent: '#10b981', // Fresh Emerald Green
       accentHover: '#059669',
@@ -78,7 +78,7 @@ export const FEATURED_SERVICES = [
     heading: 'Shoulder Arthroscopy & Repair',
     description: 'Minimally invasive keyhole repair for rotator cuff tears and anatomical/reverse shoulder replacement for complete overhead reach restoration.',
     route: '/services/shoulder-replacement',
-    image: '/images/surgeries/shoulder-surgery.jpg',
+    image: '/images/surgeries/shoulder-surgery.webp',
     theme: {
       accent: '#8b5cf6', // Royal Violet Purple
       accentHover: '#7c3aed',
@@ -97,7 +97,7 @@ export const FEATURED_SERVICES = [
     heading: 'ACL & Sports Arthroscopy',
     description: 'Anatomic keyhole cruciate ligament repair and biological meniscus preservation following Olympic Committee return-to-sport protocols.',
     route: '/services/acl-surgery',
-    image: '/images/surgeries/acl-surgery.jpg',
+    image: '/images/surgeries/acl-surgery.webp',
     theme: {
       accent: '#06b6d4', // Cyan / Electric Turquoise
       accentHover: '#0891b2',
@@ -116,7 +116,7 @@ export const FEATURED_SERVICES = [
     heading: 'Spine & Lumbar Decompression',
     description: 'Targeted neurological decompression and micro-endoscopic discectomy for disc herniation, sciatica relief, and spine stability.',
     route: '/services/spine-surgery',
-    image: '/images/surgeries/spine-surgery.jpg',
+    image: '/images/surgeries/spine-surgery.webp',
     theme: {
       accent: '#f43f5e', // Crimson / Coral Red
       accentHover: '#e11d48',
@@ -135,7 +135,7 @@ export const FEATURED_SERVICES = [
     heading: 'Complex Trauma & Fracture Care',
     description: '24/7 emergency polytrauma stabilization, anatomical locking plate fixation, and delicate multi-fragment limb reconstruction.',
     route: '/services/trauma-surgery',
-    image: '/images/surgeries/trauma-surgery.jpg',
+    image: '/images/surgeries/trauma-surgery.webp',
     theme: {
       accent: '#3b82f6', // Deep Cobalt Blue
       accentHover: '#1d4ed8',

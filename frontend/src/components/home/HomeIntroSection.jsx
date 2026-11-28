@@ -177,7 +177,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                 <div className="flex flex-col sm:flex-row sm:items-center gap-5">
                   <div className="relative w-28 h-36 sm:w-32 sm:h-40 rounded-2xl border-2 border-slate-900 overflow-hidden bg-slate-100 shrink-0 shadow-md">
                     <img
-                      src="/images/dr-vatsal-camp.png"
+                      src="/images/dr-vatsal-camp.webp"
                       alt="Dr. Vatsal Khetan — Senior Robotic Knee & Orthopaedic Surgeon"
                       className="w-full h-full object-cover object-top select-none group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
@@ -544,7 +544,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
                   title="Click to view full-size original poster"
                 >
                   <img
-                    src="/images/khetan-knee-camp-poster-general.png"
+                    src="/images/khetan-knee-camp-poster-general.webp"
                     alt="Khetan Knee N Shoulder Clinic — Monthly Free Knee Camp Poster"
                     className="w-full h-full object-contain p-1 group-hover:scale-102 transition-transform duration-300 select-none"
                   />
@@ -678,7 +678,7 @@ export const HomeIntroSection = forwardRef((props, forwardedRef) => {
       <PosterLightboxModal
         isOpen={isPosterModalOpen}
         onClose={() => setIsPosterModalOpen(false)}
-        imageSrc="/images/khetan-knee-camp-poster-general.png"
+        imageSrc="/images/khetan-knee-camp-poster-general.webp"
       />
     </section>
   );

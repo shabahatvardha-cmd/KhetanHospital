@@ -91,7 +91,7 @@ const slide2Services = [
     id: 'back-pain',
     name: 'Back Pain Management',
     detail: 'Tailored medical management to alleviate back pain and improve overall well-being.',
-    image: '/images/surgeries/indian-back-pain-therapy.jpg',
+    image: '/images/surgeries/indian-back-pain-therapy.webp',
     route: '/services/spine-surgery'
   },
   {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn, Download, ExternalLink, Calendar, MapPin, Phone } from 'lucide-react';
 
-export const PosterLightboxModal = ({ isOpen, onClose, imageSrc = '/images/khetan-knee-camp-poster-general.png' }) => {
+export const PosterLightboxModal = ({ isOpen, onClose, imageSrc = '/images/khetan-knee-camp-poster-general.webp' }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
